@@ -1,4 +1,6 @@
 import os
+import random
+
 import pygame
 import sys
 
@@ -32,6 +34,23 @@ class Player(pygame.sprite.Sprite):
         self.back = False
         self.last_skin_change_time = 0
         self.direction = ''
+
+    def stop(self):
+        image = self.image
+        if self.direction == 'left':
+            image = load_image(f'm.c.left_stop.jpg')
+        elif self.direction == 'right':
+            image = load_image(f'm.c.right_stop.jpg')
+        elif self.direction == 'down':
+            image = load_image(f'm.c.front_stop.jpg')
+        elif self.direction == 'up':
+            image = load_image(f'm.c.back_stop.jpg')
+        self.image = pygame.transform.scale(image, (40, 60))
+
+
+class PlayerAct1(Player):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(pos_x, pos_y)
 
     def update(self, move_up, move_down, move_left, move_right):
         global all_sprites, background, player, player_group
@@ -138,23 +157,87 @@ class Player(pygame.sprite.Sprite):
             background = Background('a1_m3.jpg', (1300, 600))
             all_sprites.add(background)
             player = PlayerAct1(750, 500)
+        elif background.get_rgb(self.x, self.y) == (8, 0, 0):
+            all_sprites = pygame.sprite.Group()
+            player_group = pygame.sprite.Group()
+            background = Background('a1_m4.jpg', (700, 500))
+            all_sprites.add(background)
+            player = PlayerAct1(335, 275)
+            mathGame()
 
-    def stop(self):
-        image = self.image
-        if self.direction == 'left':
-            image = load_image(f'm.c.left_stop.jpg')
-        elif self.direction == 'right':
-            image = load_image(f'm.c.right_stop.jpg')
-        elif self.direction == 'down':
-            image = load_image(f'm.c.front_stop.jpg')
-        elif self.direction == 'up':
-            image = load_image(f'm.c.back_stop.jpg')
-        self.image = pygame.transform.scale(image, (40, 60))
+        for sprite in all_sprites:
+            camera.apply(sprite)
+        camera.update(player)
 
 
-class PlayerAct1(Player):
-    def __init__(self, pos_x, pos_y):
-        super().__init__(pos_x, pos_y)
+def printTextMag(m, y=0):
+    m2 = ''
+    font = pygame.font.Font(None, 30)
+    for i in m:
+        m2 += i
+        t = font.render(m2, True, (255, 255, 255))
+        screen.blit(t, (230, 85 + y))
+        pygame.display.flip()
+        clock.tick(15)
+
+
+def mathGame():
+    global background, all_sprites, player_group, player
+    fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
+    screen.blit(fon, (0, 0))
+    printTextMag('Я великий маг этого подземелья,')
+    printTextMag('и я никому не дам ходить по нему', y=30)
+    printTextMag('без моего разрешения!', y=60)
+    clock.tick(FPS // 4)
+    screen.fill((0, 0, 0))
+    screen.blit(fon, (0, 0))
+    printTextMag('Но ты можешь попытать удачу,')
+    printTextMag('и решить мою задачу', y=30)
+    printTextMag('сколько будет:', y=60)
+
+    n1 = random.randint(0, 100)
+    n3 = random.randint(0, 10)
+    n2 = n3 - n1
+    if n2 < 0:
+        m = f"{n1}{n2}"
+    else:
+        m = f"{n1}+{n2}"
+    printTextMag(m, y=90)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN:
+                m = event.key - 48
+                if m == n3:
+                    screen.fill((0, 0, 0))
+                    screen.blit(fon, (0, 0))
+                    printTextMag('Я вижу, что ты силен в математике')
+                    printTextMag('на этот раз я тебя пропукаю,', y=30)
+                    printTextMag('но мы еще встретимся!', y=60)
+                    clock.tick(FPS // 4)
+                    all_sprites = pygame.sprite.Group()
+                    player_group = pygame.sprite.Group()
+                    background = Background('a1_m5.jpg', (1300, 600))
+                    all_sprites.add(background)
+                    player = PlayerAct1(750, 500)
+                    return
+                else:
+                    screen.fill((0, 0, 0))
+                    screen.blit(fon, (0, 0))
+                    printTextMag('Я вижу, что ты слаб,')
+                    printTextMag('возвращайся,', y=30)
+                    printTextMag('лишь когда будешь достоен', y=60)
+                    clock.tick(FPS // 4)
+                    act1()
+                    all_sprites = pygame.sprite.Group()
+                    player_group = pygame.sprite.Group()
+                    background = Background('a1_m1.jpg', (1360, 520))
+                    all_sprites.add(background)
+                    player = PlayerAct1(400, 100)
+                    return
+        clock.tick(FPS)
 
 
 class Background(pygame.sprite.Sprite):
@@ -304,7 +387,6 @@ if __name__ == '__main__':
         keys = pygame.key.get_pressed()
 
         screen.fill((0, 0, 0))
-        camera.update(player)
         # Обновление игровых объектов
         player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
                       keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
@@ -313,6 +395,7 @@ if __name__ == '__main__':
         # обновляем положение всех спрайтов
         for sprite in all_sprites:
             camera.apply(sprite)
+        camera.update(player)
         all_sprites.draw(screen)
         player_group.draw(screen)
 
