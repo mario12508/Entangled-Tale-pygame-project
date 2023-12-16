@@ -33,39 +33,41 @@ class Player(pygame.sprite.Sprite):
 class PlayerAct1(Player):
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.CanPlay = True
 
     def update(self, move_up, move_down, move_left, move_right):
         global all_sprites, background, player, player_group
         image = self.image
-        if move_left:
-            self.rect.x -= 6
-            self.x -= 6
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                self.rect.x += 6
-                self.x += 6
-            image = load_image('m.c.left_stop.jpg')
-        if move_right:
-            self.rect.x += 6
-            self.x += 6
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+        if self.CanPlay:
+            if move_left:
                 self.rect.x -= 6
                 self.x -= 6
-            image = load_image('m.c.right_stop.jpg')
-        if move_up:
-            self.rect.y -= 6
-            self.y -= 6
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                self.rect.y += 6
-                self.y += 6
-            image = load_image('m.c.back_stop.jpg')
-        if move_down:
-            self.rect.y += 6
-            self.y += 6
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                    self.rect.x += 6
+                    self.x += 6
+                image = load_image('m.c.left_stop.jpg')
+            if move_right:
+                self.rect.x += 6
+                self.x += 6
+                if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                    self.rect.x -= 6
+                    self.x -= 6
+                image = load_image('m.c.right_stop.jpg')
+            if move_up:
                 self.rect.y -= 6
                 self.y -= 6
-            image = load_image('m.c.front_stop.jpg')
-        self.image = pygame.transform.scale(image, (40, 60))
+                if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                    self.rect.y += 6
+                    self.y += 6
+                image = load_image('m.c.back_stop.jpg')
+            if move_down:
+                self.rect.y += 6
+                self.y += 6
+                if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                    self.rect.y -= 6
+                    self.y -= 6
+                image = load_image('m.c.front_stop.jpg')
+            self.image = pygame.transform.scale(image, (40, 60))
         if background.get_rgb(self.x, self.y) == (10, 0, 0):
             all_sprites = pygame.sprite.Group()
             player_group = pygame.sprite.Group()
@@ -78,6 +80,13 @@ class PlayerAct1(Player):
             background = Background('a1_m3.jpg', (1300, 600))
             all_sprites.add(background)
             player = PlayerAct1(750, 500)
+        elif background.get_rgb(self.x, self.y) == (8, 0, 0):
+            all_sprites = pygame.sprite.Group()
+            player_group = pygame.sprite.Group()
+            background = Background('a1_m4.jpg', (700, 500))
+            all_sprites.add(background)
+            player = PlayerAct1(335, 275)
+            player.CanPlay = False
 
 
 class Background(pygame.sprite.Sprite):
@@ -226,14 +235,14 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))
         camera.update(player)
+        # обновляем положение всех спрайтов
+        for sprite in all_sprites:
+            camera.apply(sprite)
         # Обновление игровых объектов
         player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
                       keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
         player.update(keys[pygame.K_w], keys[pygame.K_s],
                       keys[pygame.K_a], keys[pygame.K_d])
-        # обновляем положение всех спрайтов
-        for sprite in all_sprites:
-            camera.apply(sprite)
         all_sprites.draw(screen)
         player_group.draw(screen)
 
