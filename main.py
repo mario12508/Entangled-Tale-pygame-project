@@ -29,7 +29,13 @@ class Player(pygame.sprite.Sprite):
         self.x = pos_x + 20
         self.y = pos_y + 60
 
+
+class PlayerAct1(Player):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(pos_x, pos_y)
+
     def update(self, move_up, move_down, move_left, move_right):
+        global all_sprites, background, player, player_group
         image = self.image
         if move_left:
             self.rect.x -= 6
@@ -60,6 +66,18 @@ class Player(pygame.sprite.Sprite):
                 self.y -= 6
             image = load_image('m.c.front_stop.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
+        if background.get_rgb(self.x, self.y) == (10, 0, 0):
+            all_sprites = pygame.sprite.Group()
+            player_group = pygame.sprite.Group()
+            background = Background('a1_m2.jpg', (600, 1300))
+            all_sprites.add(background)
+            player = PlayerAct1(285, 910)
+        elif background.get_rgb(self.x, self.y) == (9, 0, 0):
+            all_sprites = pygame.sprite.Group()
+            player_group = pygame.sprite.Group()
+            background = Background('a1_m3.jpg', (1300, 600))
+            all_sprites.add(background)
+            player = PlayerAct1(750, 500)
 
 
 class Background(pygame.sprite.Sprite):
@@ -74,13 +92,6 @@ class Background(pygame.sprite.Sprite):
         return self.image.unmap_rgb(pixel[x][y])
 
 
-# группы спрайтов
-all_sprites = pygame.sprite.Group()
-player_group = pygame.sprite.Group()
-
-background = Background('a1_m1.jpg', (1360, 520))
-all_sprites.add(background)
-player = Player(400, 100)
 clock = pygame.time.Clock()
 FPS = 60
 
@@ -94,7 +105,7 @@ def start_screen():
     fon = pygame.transform.scale(load_image('fon.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
-    clock.tick(0.3)
+    clock.tick(0.7)
     fon = pygame.transform.scale(load_image('blackfon.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -110,11 +121,25 @@ def start_screen():
         clock.tick(FPS)
 
 
+# группы спрайтов
+all_sprites = pygame.sprite.Group()
+player_group = pygame.sprite.Group()
+background = Background('a1_m1.jpg', (1360, 520))
+all_sprites.add(background)
+player = Player(400, 100)
+
+
 def act1():
+    global all_sprites, player_group, player, background
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     clock.tick(1)
+    all_sprites = pygame.sprite.Group()
+    player_group = pygame.sprite.Group()
+    background = Background('a1_m1.jpg', (1360, 520))
+    all_sprites.add(background)
+    player = PlayerAct1(400, 100)
 
 
 def act2():
@@ -200,6 +225,7 @@ if __name__ == '__main__':
         keys = pygame.key.get_pressed()
 
         screen.fill((0, 0, 0))
+        camera.update(player)
         # Обновление игровых объектов
         player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
                       keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
@@ -208,7 +234,6 @@ if __name__ == '__main__':
         # обновляем положение всех спрайтов
         for sprite in all_sprites:
             camera.apply(sprite)
-        camera.update(player)
         all_sprites.draw(screen)
         player_group.draw(screen)
 
