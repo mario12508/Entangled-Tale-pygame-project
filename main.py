@@ -28,46 +28,104 @@ class Player(pygame.sprite.Sprite):
             pos_x, pos_y)
         self.x = pos_x + 20
         self.y = pos_y + 60
-
-
-class PlayerAct1(Player):
-    def __init__(self, pos_x, pos_y):
-        super().__init__(pos_x, pos_y)
-        self.CanPlay = True
+        self.step = 1
+        self.back = False
+        self.last_skin_change_time = 0
+        self.direction = ''
 
     def update(self, move_up, move_down, move_left, move_right):
         global all_sprites, background, player, player_group
         image = self.image
-        if self.CanPlay:
-            if move_left:
-                self.rect.x -= 6
-                self.x -= 6
-                if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                    self.rect.x += 6
-                    self.x += 6
-                image = load_image('m.c.left_stop.jpg')
-            if move_right:
+        current_time = pygame.time.get_ticks()
+        if move_left:
+            self.direction = 'left'
+            self.rect.x -= 6
+            self.x -= 6
+            if background.get_rgb(self.x, self.y) == (2, 0, 0):
                 self.rect.x += 6
                 self.x += 6
-                if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                    self.rect.x -= 6
-                    self.x -= 6
-                image = load_image('m.c.right_stop.jpg')
-            if move_up:
-                self.rect.y -= 6
-                self.y -= 6
-                if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                    self.rect.y += 6
-                    self.y += 6
-                image = load_image('m.c.back_stop.jpg')
-            if move_down:
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
+                        self.step -= 1
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+
+            image = load_image(f'm.c.left_walk_{self.step}.jpg')
+        if move_right:
+            self.direction = 'right'
+            self.rect.x += 6
+            self.x += 6
+            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                self.rect.x -= 6
+                self.x -= 6
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
+                        self.step -= 1
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+
+            image = load_image(f'm.c.right_walk_{self.step}.jpg')
+        if move_up:
+            self.direction = 'up'
+            self.rect.y -= 6
+            self.y -= 6
+            if background.get_rgb(self.x, self.y) == (2, 0, 0):
                 self.rect.y += 6
                 self.y += 6
-                if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                    self.rect.y -= 6
-                    self.y -= 6
-                image = load_image('m.c.front_stop.jpg')
-            self.image = pygame.transform.scale(image, (40, 60))
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
+                        self.step -= 1
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+
+            image = load_image(f'm.c.back_walk_{self.step}.jpg')
+        if move_down:
+            self.direction = 'down'
+            self.rect.y += 6
+            self.y += 6
+            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+                self.rect.y -= 6
+                self.y -= 6
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
+                        self.step -= 1
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+
+            image = load_image(f'm.c.front_walk_{self.step}.jpg')
+        self.image = pygame.transform.scale(image, (40, 60))
         if background.get_rgb(self.x, self.y) == (10, 0, 0):
             all_sprites = pygame.sprite.Group()
             player_group = pygame.sprite.Group()
@@ -80,13 +138,23 @@ class PlayerAct1(Player):
             background = Background('a1_m3.jpg', (1300, 600))
             all_sprites.add(background)
             player = PlayerAct1(750, 500)
-        elif background.get_rgb(self.x, self.y) == (8, 0, 0):
-            all_sprites = pygame.sprite.Group()
-            player_group = pygame.sprite.Group()
-            background = Background('a1_m4.jpg', (700, 500))
-            all_sprites.add(background)
-            player = PlayerAct1(335, 275)
-            player.CanPlay = False
+
+    def stop(self):
+        image = self.image
+        if self.direction == 'left':
+            image = load_image(f'm.c.left_stop.jpg')
+        elif self.direction == 'right':
+            image = load_image(f'm.c.right_stop.jpg')
+        elif self.direction == 'down':
+            image = load_image(f'm.c.front_stop.jpg')
+        elif self.direction == 'up':
+            image = load_image(f'm.c.back_stop.jpg')
+        self.image = pygame.transform.scale(image, (40, 60))
+
+
+class PlayerAct1(Player):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(pos_x, pos_y)
 
 
 class Background(pygame.sprite.Sprite):
@@ -231,18 +299,20 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_o:
                     menu()
+            if event.type == pygame.KEYUP:
+                player.stop()
         keys = pygame.key.get_pressed()
 
         screen.fill((0, 0, 0))
         camera.update(player)
-        # обновляем положение всех спрайтов
-        for sprite in all_sprites:
-            camera.apply(sprite)
         # Обновление игровых объектов
         player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
                       keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
         player.update(keys[pygame.K_w], keys[pygame.K_s],
                       keys[pygame.K_a], keys[pygame.K_d])
+        # обновляем положение всех спрайтов
+        for sprite in all_sprites:
+            camera.apply(sprite)
         all_sprites.draw(screen)
         player_group.draw(screen)
 
