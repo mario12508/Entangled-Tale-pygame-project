@@ -153,7 +153,7 @@ class PlayerAct1(Player):
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a1_m2.jpg', (600, 1300))
+                background = Background('a1_m2.png', (600, 1300))
                 all_sprites.add(background)
                 player = PlayerAct1(285, 950)
                 player.loc = 1
@@ -162,7 +162,7 @@ class PlayerAct1(Player):
                 wizardRus.canRun = False
                 wizardRus.y = 600
                 all_sprites.add(wizardRus)
-                door = Door(260, 300)
+                door = Door(260, 100)
             elif self.loc == 1:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -392,7 +392,7 @@ def act1():
     all_sprites = pygame.sprite.Group()
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
-    background = Background('a1_m1(1).png', (1360, 760))
+    background = Background('a1_m1.png', (1360, 760))
     door = Door(1180, 440)
     all_sprites.add(background)
     door_group.add(door)
