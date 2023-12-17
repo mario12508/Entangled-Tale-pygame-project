@@ -179,7 +179,6 @@ class PlayerAct1(Player):
                 player = PlayerAct1(375, 300)
                 player.loc = 3
                 mathGame()
-                door = Door(20000, 20000)
 
         camera.update(player)
         for sprite in all_sprites:
@@ -195,7 +194,7 @@ def newDialog():
 
 
 def mathGame():
-    global background, all_sprites, player_group, player
+    global background, all_sprites, player_group, player, door, door_group
     fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
 
@@ -321,15 +320,8 @@ def start_screen():
         clock.tick(FPS)
 
 
-# группы спрайтов
-all_sprites = pygame.sprite.Group()
-player_group = pygame.sprite.Group()
-door_group = pygame.sprite.Group()
-player = Player(400, 100)
-
-
 class Door(pygame.sprite.Sprite):
-    image = load_image('door.png', colorkey=-1)
+    image = load_image('exit-enter_a1.png', colorkey=-1)
     image = pygame.transform.scale(image, (140, 120))
 
     def __init__(self, pos_x, pos_y):
@@ -339,7 +331,11 @@ class Door(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-door = Door(20000, 20000)
+# группы спрайтов
+all_sprites = pygame.sprite.Group()
+player_group = pygame.sprite.Group()
+door_group = pygame.sprite.Group()
+player = Player(400, 100)
 
 
 class wizardRus(pygame.sprite.Sprite):
