@@ -150,7 +150,12 @@ class PlayerAct1(Player):
             player_group = pygame.sprite.Group()
             background = Background('a1_m2.jpg', (600, 1300))
             all_sprites.add(background)
-            player = PlayerAct1(285, 910)
+            player = PlayerAct1(285, 950)
+            wizardRus.rect.x = 300
+            wizardRus.rect.y = 600
+            wizardRus.canRun = False
+            wizardRus.y = 600
+            all_sprites.add(wizardRus)
         elif background.get_rgb(self.x, self.y) == (9, 0, 0):
             all_sprites = pygame.sprite.Group()
             player_group = pygame.sprite.Group()
@@ -296,6 +301,31 @@ all_sprites.add(background)
 player = Player(400, 100)
 
 
+class wizardRus(pygame.sprite.Sprite):
+    image = load_image('wizardRus.jpg')
+    image = pygame.transform.scale(image, (80, 90))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = wizardRus.image
+        self.rect = self.image.get_rect().move(
+            pos_x, pos_y)
+        self.canRun = False
+        self.y = pos_y
+
+    def update(self):
+        if self.canRun:
+            self.rect.y -= 10
+            self.y -= 10
+            if self.y <= 300:
+                self.rect.y = -1000
+        if player.y <= 800:
+            self.canRun = True
+
+
+wizardRus = wizardRus(2000, 2000)
+
+
 def act1():
     global all_sprites, player_group, player, background
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
@@ -323,13 +353,6 @@ def act3():
     clock.tick(1)
 
 
-def act4():
-    fon = pygame.transform.scale(load_image('act4.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    clock.tick(1)
-
-
 def menu():
     fon = pygame.transform.scale(load_image('Menu.png'), (800, 500))
     screen.blit(fon, (0, 0))
@@ -347,9 +370,6 @@ def menu():
                     return
                 if event.key == pygame.K_3:
                     act3()
-                    return
-                if event.key == pygame.K_4:
-                    act4()
                     return
                 if event.key == pygame.K_p:
                     return
@@ -403,6 +423,7 @@ if __name__ == '__main__':
         for sprite in all_sprites:
             camera.apply(sprite)
         camera.update(player)
+        wizardRus.update()
         all_sprites.draw(screen)
         player_group.draw(screen)
 
