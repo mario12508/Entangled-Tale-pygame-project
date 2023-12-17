@@ -34,6 +34,7 @@ class Player(pygame.sprite.Sprite):
         self.back = False
         self.last_skin_change_time = 0
         self.direction = ''
+        self.mask = pygame.mask.from_surface(self.image)
 
     def stop(self):
         image = self.image
@@ -51,9 +52,10 @@ class Player(pygame.sprite.Sprite):
 class PlayerAct1(Player):
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.loc = 0
 
     def update(self, move_up, move_down, move_left, move_right):
-        global all_sprites, background, player, player_group
+        global all_sprites, background, player, player_group, door_group, door
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -145,30 +147,39 @@ class PlayerAct1(Player):
 
             image = load_image(f'm.c.front_walk_{self.step}.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
-        if background.get_rgb(self.x, self.y) == (10, 0, 0):
-            all_sprites = pygame.sprite.Group()
-            player_group = pygame.sprite.Group()
-            background = Background('a1_m2.jpg', (600, 1300))
-            all_sprites.add(background)
-            player = PlayerAct1(285, 950)
-            wizardRus.rect.x = 285
-            wizardRus.rect.y = 600
-            wizardRus.canRun = False
-            wizardRus.y = 600
-            all_sprites.add(wizardRus)
-        elif background.get_rgb(self.x, self.y) == (9, 0, 0):
-            all_sprites = pygame.sprite.Group()
-            player_group = pygame.sprite.Group()
-            background = Background('a1_m3.jpg', (1300, 600))
-            all_sprites.add(background)
-            player = PlayerAct1(650, 300)
-        elif background.get_rgb(self.x, self.y) == (8, 0, 0):
-            all_sprites = pygame.sprite.Group()
-            player_group = pygame.sprite.Group()
-            background = Background('a1_m4.jpg', (700, 500))
-            all_sprites.add(background)
-            player = PlayerAct1(375, 300)
-            mathGame()
+        if pygame.sprite.collide_mask(self, door):
+            if self.loc == 0:
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a1_m2.jpg', (600, 1300))
+                all_sprites.add(background)
+                player = PlayerAct1(285, 950)
+                player.loc = 1
+                wizardRus.rect.x = 285
+                wizardRus.rect.y = 600
+                wizardRus.canRun = False
+                wizardRus.y = 600
+                all_sprites.add(wizardRus)
+                door = Door(260, 300)
+            elif self.loc == 1:
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a1_m3.jpg', (1300, 600))
+                all_sprites.add(background)
+                door = Door(80, 60)
+                player = PlayerAct1(650, 300)
+                player.loc = 2
+            elif self.loc == 2:
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                background = Background('a1_m4.jpg', (700, 500))
+                all_sprites.add(background)
+                player = PlayerAct1(375, 300)
+                player.loc = 3
+                mathGame()
+                door = Door(20000, 20000)
 
         camera.update(player)
         for sprite in all_sprites:
@@ -251,14 +262,6 @@ def mathGame():
                         return
                     else:
                         act1()
-                        all_sprites = pygame.sprite.Group()
-                        player_group = pygame.sprite.Group()
-                        background = Background('a1_m1.jpg', (1360, 520))
-                        all_sprites.add(background)
-                        player = PlayerAct1(400, 100)
-                        camera.update(player)
-                        for sprite in all_sprites:
-                            camera.apply(sprite)
                         return
 
         if i <= len(m):
@@ -321,9 +324,22 @@ def start_screen():
 # группы спрайтов
 all_sprites = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
-background = Background('a1_m1.jpg', (1360, 520))
-all_sprites.add(background)
+door_group = pygame.sprite.Group()
 player = Player(400, 100)
+
+
+class Door(pygame.sprite.Sprite):
+    image = load_image('door.png', colorkey=-1)
+    image = pygame.transform.scale(image, (140, 120))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Door.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.mask = pygame.mask.from_surface(self.image)
+
+
+door = Door(20000, 20000)
 
 
 class wizardRus(pygame.sprite.Sprite):
@@ -352,15 +368,18 @@ wizardRus = wizardRus(2000, 2000)
 
 
 def act1():
-    global all_sprites, player_group, player, background
+    global all_sprites, player_group, player, background, door, door_group
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     clock.tick(1)
     all_sprites = pygame.sprite.Group()
     player_group = pygame.sprite.Group()
+    door_group = pygame.sprite.Group()
     background = Background('a1_m1.jpg', (1360, 520))
+    door = Door(1200, 200)
     all_sprites.add(background)
+    door_group.add(door)
     player = PlayerAct1(400, 100)
 
 
@@ -451,6 +470,7 @@ if __name__ == '__main__':
         wizardRus.update()
         all_sprites.draw(screen)
         player_group.draw(screen)
+        door_group.draw(screen)
 
         pygame.display.flip()
         clock.tick(FPS)
