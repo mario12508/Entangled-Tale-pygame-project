@@ -162,12 +162,12 @@ class PlayerAct1(Player):
             player_group = pygame.sprite.Group()
             background = Background('a1_m4.jpg', (700, 500))
             all_sprites.add(background)
-            player = PlayerAct1(335, 275)
+            player = PlayerAct1(375, 300)
             mathGame()
 
+        camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
-        camera.update(player)
 
 
 def printTextMag(m, y=0):
@@ -177,6 +177,7 @@ def printTextMag(m, y=0):
         m2 += i
         t = font.render(m2, True, (255, 255, 255))
         screen.blit(t, (230, 85 + y))
+        player_group.draw(screen)
         pygame.display.flip()
         clock.tick(15)
 
@@ -196,7 +197,7 @@ def mathGame():
     printTextMag('сколько будет:', y=60)
 
     n1 = random.randint(0, 100)
-    n3 = random.randint(0, 10)
+    n3 = random.randint(0, 9)
     n2 = n3 - n1
     if n2 < 0:
         m = f"{n1}{n2}"
@@ -219,9 +220,12 @@ def mathGame():
                     clock.tick(FPS // 4)
                     all_sprites = pygame.sprite.Group()
                     player_group = pygame.sprite.Group()
-                    background = Background('a1_m5.jpg', (1300, 600))
+                    background = Background('a1_m5.jpg', (1200, 700))
                     all_sprites.add(background)
-                    player = PlayerAct1(750, 500)
+                    player = PlayerAct1(600, 450)
+                    camera.update(player)
+                    for sprite in all_sprites:
+                        camera.apply(sprite)
                     return
                 else:
                     screen.fill((0, 0, 0))
@@ -236,6 +240,9 @@ def mathGame():
                     background = Background('a1_m1.jpg', (1360, 520))
                     all_sprites.add(background)
                     player = PlayerAct1(400, 100)
+                    camera.update(player)
+                    for sprite in all_sprites:
+                        camera.apply(sprite)
                     return
         clock.tick(FPS)
 
