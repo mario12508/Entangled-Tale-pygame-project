@@ -151,7 +151,7 @@ class PlayerAct1(Player):
             background = Background('a1_m2.jpg', (600, 1300))
             all_sprites.add(background)
             player = PlayerAct1(285, 950)
-            wizardRus.rect.x = 300
+            wizardRus.rect.x = 285
             wizardRus.rect.y = 600
             wizardRus.canRun = False
             wizardRus.y = 600
@@ -161,7 +161,7 @@ class PlayerAct1(Player):
             player_group = pygame.sprite.Group()
             background = Background('a1_m3.jpg', (1300, 600))
             all_sprites.add(background)
-            player = PlayerAct1(750, 500)
+            player = PlayerAct1(650, 300)
         elif background.get_rgb(self.x, self.y) == (8, 0, 0):
             all_sprites = pygame.sprite.Group()
             player_group = pygame.sprite.Group()
@@ -175,80 +175,105 @@ class PlayerAct1(Player):
             camera.apply(sprite)
 
 
-def printTextMag(m, y=0):
-    m2 = ''
+def newDialog():
     font = pygame.font.Font(None, 30)
-    for i in m:
-        m2 += i
-        t = font.render(m2, True, (255, 255, 255))
-        screen.blit(t, (230, 85 + y))
-        player_group.draw(screen)
-        pygame.display.flip()
-        clock.tick(15)
+    t1 = font.render('', True, (255, 255, 255))
+    t2 = font.render('', True, (255, 255, 255))
+    t3 = font.render('', True, (255, 255, 255))
+    return t1, t2, t3
 
 
 def mathGame():
     global background, all_sprites, player_group, player
     fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
-    printTextMag('Я великий маг этого подземелья,')
-    printTextMag('и я никому не дам ходить по нему', y=30)
-    printTextMag('без моего разрешения!', y=60)
-    clock.tick(FPS // 4)
-    screen.fill((0, 0, 0))
-    screen.blit(fon, (0, 0))
-    printTextMag('Но ты можешь попытать удачу,')
-    printTextMag('и решить мою задачу', y=30)
-    printTextMag('сколько будет:', y=60)
 
     n1 = random.randint(0, 100)
     n3 = random.randint(0, 9)
     n2 = n3 - n1
-    if n2 < 0:
-        m = f"{n1}{n2}"
-    else:
-        m = f"{n1}+{n2}"
-    printTextMag(m, y=90)
+    m = 'Я великий маг этого подземелья,'
+    m2 = 'и я никому не дам ходить по нему'
+    m3 = 'без моего разрешения!'
+    screen.fill((0, 0, 0))
+    screen.blit(fon, (0, 0))
+    font = pygame.font.Font(None, 30)
+    t1, t2, t3 = newDialog()
 
+    win = False
+    i = 1
+    a = 0
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN:
-                m = event.key - 48
-                if m == n3:
+                if event.key == pygame.K_z and a == 0:
                     screen.fill((0, 0, 0))
                     screen.blit(fon, (0, 0))
-                    printTextMag('Я вижу, что ты силен в математике')
-                    printTextMag('на этот раз я тебя пропукаю,', y=30)
-                    printTextMag('но мы еще встретимся!', y=60)
-                    clock.tick(FPS // 4)
-                    all_sprites = pygame.sprite.Group()
-                    player_group = pygame.sprite.Group()
-                    background = Background('a1_m5.jpg', (1200, 700))
-                    all_sprites.add(background)
-                    player = PlayerAct1(600, 450)
-                    camera.update(player)
-                    for sprite in all_sprites:
-                        camera.apply(sprite)
-                    return
-                else:
-                    screen.fill((0, 0, 0))
-                    screen.blit(fon, (0, 0))
-                    printTextMag('Я вижу, что ты слаб,')
-                    printTextMag('возвращайся,', y=30)
-                    printTextMag('лишь когда будешь достоен', y=60)
-                    clock.tick(FPS // 4)
-                    act1()
-                    all_sprites = pygame.sprite.Group()
-                    player_group = pygame.sprite.Group()
-                    background = Background('a1_m1.jpg', (1360, 520))
-                    all_sprites.add(background)
-                    player = PlayerAct1(400, 100)
-                    camera.update(player)
-                    for sprite in all_sprites:
-                        camera.apply(sprite)
-                    return
+                    if n2 < 0:
+                        m1 = f"{n1}{n2}"
+                    else:
+                        m1 = f"{n1}+{n2}"
+                    m = 'Но ты можешь попытать удачу,'
+                    m2 = 'и решить мою задачу'
+                    m3 = 'сколько будет:' + m1
+                    t1, t2, t3 = newDialog()
+                    i = 1
+                    a = 1
+                elif 48 <= event.key <= 58 and a == 1:
+                    m = event.key - 48
+                    t1, t2, t3 = newDialog()
+                    if m == n3:
+                        screen.fill((0, 0, 0))
+                        screen.blit(fon, (0, 0))
+                        m = 'Я вижу, что ты силен в математике'
+                        m2 = 'на этот раз я тебя пропукаю,'
+                        m3 = 'но мы еще встретимся!'
+                        win = True
+                    else:
+                        screen.fill((0, 0, 0))
+                        screen.blit(fon, (0, 0))
+                        m = 'Я вижу, что ты слаб,'
+                        m2 = 'возвращайся,'
+                        m3 = 'лишь когда будешь достоен'
+                    i = 1
+                    a = 2
+                elif event.key == pygame.K_z and a == 2:
+                    if win:
+                        all_sprites = pygame.sprite.Group()
+                        player_group = pygame.sprite.Group()
+                        background = Background('a1_m5.jpg', (1200, 700))
+                        all_sprites.add(background)
+                        player = PlayerAct1(600, 450)
+                        camera.update(player)
+                        for sprite in all_sprites:
+                            camera.apply(sprite)
+                        return
+                    else:
+                        act1()
+                        all_sprites = pygame.sprite.Group()
+                        player_group = pygame.sprite.Group()
+                        background = Background('a1_m1.jpg', (1360, 520))
+                        all_sprites.add(background)
+                        player = PlayerAct1(400, 100)
+                        camera.update(player)
+                        for sprite in all_sprites:
+                            camera.apply(sprite)
+                        return
+
+        if i <= len(m):
+            t1 = font.render(m[:i], True, (255, 255, 255))
+        elif i <= len(m) + len(m2):
+            t2 = font.render(m2[:i - len(m)], True, (255, 255, 255))
+        elif i <= len(m) + len(m2) + len(m3):
+            t3 = font.render(m3[:i - len(m) - len(m2)], True, (255, 255, 255))
+        i += 1
+        screen.blit(t1, (230, 85))
+        screen.blit(t2, (230, 115))
+        screen.blit(t3, (230, 145))
+        player_group.draw(screen)
+        pygame.display.flip()
+        clock.tick(20)
         clock.tick(FPS)
 
 
