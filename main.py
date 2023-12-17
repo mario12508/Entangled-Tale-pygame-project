@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.last_skin_change_time = 0
         self.direction = ''
         self.mask = pygame.mask.from_surface(self.image)
+        self.loc = 0
 
     def stop(self):
         image = self.image
@@ -52,7 +53,6 @@ class Player(pygame.sprite.Sprite):
 class PlayerAct1(Player):
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
-        self.loc = 0
 
     def update(self, move_up, move_down, move_left, move_right):
         global all_sprites, background, player, player_group, door_group, door
@@ -166,10 +166,10 @@ class PlayerAct1(Player):
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a1_m3.jpg', (1300, 600))
+                background = Background('a1_m3.jpg', (2100, 500))
                 all_sprites.add(background)
-                door = Door(80, 60)
-                player = PlayerAct1(650, 300)
+                door = Door(1900, 200)
+                player = PlayerAct1(450, 200)
                 player.loc = 2
             elif self.loc == 2:
                 all_sprites = pygame.sprite.Group()
@@ -183,6 +183,18 @@ class PlayerAct1(Player):
         camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
+
+
+class Slova(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        a = random.choice(['sl1.jpg', 'sl2.jpg', 'sl3.jpg', 'sl4.jpg', 'sl5.jpg'])
+        image_path = load_image(a)
+        self.image = pygame.transform.scale(image_path, (40, 60))
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+
+    def update(self):
+        self.rect.x -= 10
 
 
 def newDialog():
@@ -442,6 +454,10 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     start_screen()
 
+    i = 0
+
+    slova_group = pygame.sprite.Group()
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -467,6 +483,13 @@ if __name__ == '__main__':
         wizardRus.update()
         all_sprites.draw(screen)
         player_group.draw(screen)
+        if player.loc == 2:
+            i += 1
+            if i % 25 == 0:
+                slovo = Slova(1500, random.randint(200, 300))
+                slova_group.add(slovo)
+            slova_group.update()
+            slova_group.draw(screen)
         door_group.draw(screen)
 
         pygame.display.flip()
