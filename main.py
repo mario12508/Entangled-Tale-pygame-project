@@ -321,13 +321,14 @@ def start_screen():
 
 
 class Door(pygame.sprite.Sprite):
-    image = load_image('exit-enter_a1.png', colorkey=-1)
-    image = pygame.transform.scale(image, (140, 120))
+    image_path = load_image('exit-enter_a1.png')
+    image_path = pygame.transform.scale(image_path, (450, 450))
+    sprite_image = image_path
 
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
-        self.image = Door.image
-        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.image = Door.sprite_image
+        self.rect = self.image.get_rect().move(pos_x - 125, pos_y - 125)
         self.mask = pygame.mask.from_surface(self.image)
 
 
