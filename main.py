@@ -55,7 +55,7 @@ class PlayerAct1(Player):
         super().__init__(pos_x, pos_y)
 
     def update(self, move_up, move_down, move_left, move_right):
-        global all_sprites, background, player, player_group, door_group, door
+        global all_sprites, background, player, player_group, door_group, door, slova_group
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -165,6 +165,7 @@ class PlayerAct1(Player):
             elif self.loc == 1:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
+                slova_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a1_m3.jpg', (2100, 500))
                 all_sprites.add(background)
@@ -194,7 +195,10 @@ class Slova(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
     def update(self):
-        self.rect.x -= 10
+        self.rect.x -= 8
+        if pygame.sprite.collide_mask(self, player):
+            act1()
+            return
 
 
 def newDialog():
