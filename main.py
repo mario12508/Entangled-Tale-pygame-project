@@ -55,7 +55,8 @@ class PlayerAct1(Player):
         super().__init__(pos_x, pos_y)
 
     def update(self, move_up, move_down, move_left, move_right):
-        global all_sprites, background, player, player_group, door_group, door, slova_group
+        global all_sprites, background, player, player_group, door_group, \
+            door, slova_group
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -186,10 +187,12 @@ class PlayerAct1(Player):
             camera.apply(sprite)
 
 
-class Slova(pygame.sprite.Sprite):
+class Letters(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
-        a = random.choice(['sl1.jpg', 'sl2.jpg', 'sl3.jpg', 'sl4.jpg', 'sl5.jpg'])
+        a = random.choice(
+            ['letter_a.png', 'letter_b.png', 'letter_v.png', 'letter_g.png',
+             'letter_d.png'])
         image_path = load_image(a)
         self.image = pygame.transform.scale(image_path, (40, 60))
         self.rect = self.image.get_rect().move(pos_x, pos_y)
@@ -338,13 +341,13 @@ def start_screen():
 
 class Door(pygame.sprite.Sprite):
     image_path = load_image('exit-enter_a1.png')
-    image_path = pygame.transform.scale(image_path, (450, 450))
+    image_path = pygame.transform.scale(image_path, (120, 96))
     sprite_image = image_path
 
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
         self.image = Door.sprite_image
-        self.rect = self.image.get_rect().move(pos_x - 125, pos_y - 125)
+        self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
         self.mask = pygame.mask.from_surface(self.image)
 
 
@@ -490,8 +493,8 @@ if __name__ == '__main__':
         if player.loc == 2:
             i += 1
             if i % 25 == 0:
-                slovo = Slova(1500, random.randint(200, 300))
-                slova_group.add(slovo)
+                letter = Letters(1500, random.randint(200, 300))
+                slova_group.add(letter)
             slova_group.update()
             slova_group.draw(screen)
         door_group.draw(screen)
