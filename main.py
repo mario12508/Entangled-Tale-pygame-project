@@ -272,6 +272,7 @@ def mathGame():
                         all_sprites.add(background)
                         player = PlayerAct1(600, 450)
                         camera.update(player)
+                        door = Door(20000, 20000)
                         for sprite in all_sprites:
                             camera.apply(sprite)
                         return
