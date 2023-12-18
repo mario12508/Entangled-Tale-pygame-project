@@ -60,11 +60,11 @@ class PlayerAct1(Player):
         current_time = pygame.time.get_ticks()
         if move_left:
             self.direction = 'left'
-            self.rect.x -= 6
-            self.x -= 6
+            self.rect.x -= 5
+            self.x -= 5
             if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                self.rect.x += 6
-                self.x += 6
+                self.rect.x += 5
+                self.x += 5
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -82,11 +82,11 @@ class PlayerAct1(Player):
             image = load_image(f'm.c.left_walk_{self.step}.jpg')
         if move_right:
             self.direction = 'right'
-            self.rect.x += 6
-            self.x += 6
+            self.rect.x += 5
+            self.x += 5
             if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                self.rect.x -= 6
-                self.x -= 6
+                self.rect.x -= 5
+                self.x -= 5
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -104,11 +104,11 @@ class PlayerAct1(Player):
             image = load_image(f'm.c.right_walk_{self.step}.jpg')
         if move_up:
             self.direction = 'up'
-            self.rect.y -= 6
-            self.y -= 6
+            self.rect.y -= 5
+            self.y -= 5
             if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                self.rect.y += 6
-                self.y += 6
+                self.rect.y += 5
+                self.y += 5
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -126,11 +126,11 @@ class PlayerAct1(Player):
             image = load_image(f'm.c.back_walk_{self.step}.jpg')
         if move_down:
             self.direction = 'down'
-            self.rect.y += 6
-            self.y += 6
+            self.rect.y += 5
+            self.y += 5
             if background.get_rgb(self.x, self.y) == (2, 0, 0):
-                self.rect.y -= 6
-                self.y -= 6
+                self.rect.y -= 5
+                self.y -= 5
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -154,23 +154,23 @@ class PlayerAct1(Player):
                 door_group = pygame.sprite.Group()
                 background = Background('a1_m2.png', (600, 1300))
                 all_sprites.add(background)
-                player = PlayerAct1(285, 950)
+                player = PlayerAct1(240, 950)
                 player.loc = 1
-                wizardRus.rect.x = 285
+                wizardRus.rect.x = 240
                 wizardRus.rect.y = 600
                 wizardRus.canRun = False
                 wizardRus.y = 600
                 all_sprites.add(wizardRus)
-                door = Door(260, 100)
+                door = Door(240, 100)
             elif self.loc == 1:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 slova_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a1_m3.jpg', (2100, 500))
+                background = Background('a1_m3.png', (2100, 500))
                 all_sprites.add(background)
-                door = Door(1900, 200)
-                player = PlayerAct1(450, 200)
+                door = Door(1800, 200)
+                player = PlayerAct1(200, 330)
                 player.loc = 2
             elif self.loc == 2:
                 all_sprites = pygame.sprite.Group()
