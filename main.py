@@ -55,8 +55,7 @@ class PlayerAct1(Player):
         super().__init__(pos_x, pos_y)
 
     def update(self, move_up, move_down, move_left, move_right):
-        global all_sprites, background, player, player_group, door_group, \
-            door, slova_group
+        global all_sprites, background, player, player_group, door_group, door, slova_group, x, y
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -181,6 +180,8 @@ class PlayerAct1(Player):
                 player = PlayerAct1(375, 300)
                 player.loc = 3
                 mathGame()
+                x = player.x
+                y = player.y
 
         camera.update(player)
         for sprite in all_sprites:
@@ -212,7 +213,7 @@ def newDialog():
 
 
 def mathGame():
-    global background, all_sprites, player_group, player, door, door_group
+    global background, all_sprites, player_group, player, door, door_group, ball_group, rectangle_group, horizontal_borders, vertical_borders
     fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
 
@@ -244,7 +245,7 @@ def mathGame():
                         m1 = f"{n1}+{n2}"
                     m = 'Но ты можешь попытать удачу,'
                     m2 = 'и решить мою задачу'
-                    m3 = 'сколько будет:' + m1
+                    m3 = 'сколько будет: ' + m1
                     t1, t2, t3 = newDialog()
                     i = 1
                     a = 1
@@ -270,9 +271,18 @@ def mathGame():
                     if win:
                         all_sprites = pygame.sprite.Group()
                         player_group = pygame.sprite.Group()
-                        background = Background('a1_m5.jpg', (1200, 700))
+                        ball_group = pygame.sprite.Group()
+                        rectangle_group = pygame.sprite.Group()
+                        background = Background('a1_m5.jpg', (900, 500))
                         all_sprites.add(background)
-                        player = PlayerAct1(600, 450)
+                        player = PlayerAct1(450, 300)
+                        player.loc = 4
+                        horizontal_borders = pygame.sprite.Group()
+                        vertical_borders = pygame.sprite.Group()
+                        Border(0, 0, 800, 0)
+                        Border(0, 480, 880, 480)
+                        Border(0, 0, 0, 480)
+                        Border(880, 0, 880, 480)
                         camera.update(player)
                         door = Door(20000, 20000)
                         for sprite in all_sprites:
@@ -296,6 +306,11 @@ def mathGame():
         pygame.display.flip()
         clock.tick(20)
         clock.tick(FPS)
+
+
+def ball(x, y):
+    Ball(20, x, y, -1, 1)
+    Ball(20, x, y, 1, 1)
 
 
 class Background(pygame.sprite.Sprite):
@@ -355,7 +370,93 @@ class Door(pygame.sprite.Sprite):
 all_sprites = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 door_group = pygame.sprite.Group()
-player = Player(500, 100)
+rectangle_group = pygame.sprite.Group()
+horizontal_borders = pygame.sprite.Group()
+vertical_borders = pygame.sprite.Group()
+ball_group = pygame.sprite.Group()
+
+x, y = 0, 0
+
+
+class Ball(pygame.sprite.Sprite):
+    def __init__(self, radius, x, y, vx, vy):
+        super().__init__(ball_group, all_sprites)
+        self.radius = radius
+        self.image = pygame.Surface((2 * radius, 2 * radius),
+                                    pygame.SRCALPHA, 32)
+        pygame.draw.circle(self.image, pygame.Color("red"),
+                           (radius, radius), radius)
+        self.rect = pygame.Rect(x, y, 2 * radius, 2 * radius)
+        self.vx = vx
+        self.vy = vy
+
+    def update(self):
+        global rectangle_group, ball_group
+        self.rect.x += 3 * self.vx
+        self.rect.y += 3 * self.vy
+        if pygame.sprite.spritecollideany(self, horizontal_borders):
+            self.vy = -self.vy
+        if pygame.sprite.spritecollideany(self, vertical_borders):
+            self.vx = -self.vx
+
+        if pygame.sprite.collide_mask(self, player):
+            for j in rectangle_group:
+                j.rect.x = 10000
+
+            for j in ball_group:
+                j.rect.x = 10000
+            rectangle_group = pygame.sprite.Group()
+            ball_group = pygame.sprite.Group()
+            act1()
+            return
+
+
+class Rectangle(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, vx, vy, xx, yy):
+        image_path = load_image('rect.jpg')
+        image_path = pygame.transform.scale(image_path, (xx, yy))
+        sprite_image = image_path
+        super().__init__(rectangle_group, all_sprites)
+        self.image = sprite_image
+        self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.vx = vx
+        self.vy = vy
+
+    def update(self):
+        global rectangle_group, ball_group
+        self.rect.x += 3 * self.vx
+        self.rect.y += 3 * self.vy
+        if pygame.sprite.spritecollideany(self, horizontal_borders):
+            self.rect.x = 10000
+        if pygame.sprite.spritecollideany(self, vertical_borders):
+            self.rect.x = 10000
+
+        if pygame.sprite.collide_mask(self, player):
+            for j in rectangle_group:
+                j.rect.x = 10000
+
+            for j in ball_group:
+                j.rect.x = 10000
+
+            rectangle_group = pygame.sprite.Group()
+            ball_group = pygame.sprite.Group()
+            act1()
+            return
+
+
+class Border(pygame.sprite.Sprite):
+    # строго вертикальный или строго горизонтальный отрезок
+    def __init__(self, x1, y1, x2, y2):
+        super().__init__(all_sprites)
+        if x1 == x2:  # вертикальная стенка
+            self.add(vertical_borders)
+            self.image = pygame.Surface([1, y2 - y1])
+            self.rect = pygame.Rect(x1, y1, 1, y2 - y1)
+        else:  # горизонтальная стенка
+            self.add(horizontal_borders)
+            self.image = pygame.Surface([x2 - x1, 1])
+            self.rect = pygame.Rect(x1, y1, x2 - x1, 1)
 
 
 class wizardRus(pygame.sprite.Sprite):
@@ -497,6 +598,25 @@ if __name__ == '__main__':
                 slova_group.add(letter)
             slova_group.update()
             slova_group.draw(screen)
+        if player.loc == 4:
+            if 100 <= i <= 1000 and i % 100 == 0:
+                ball(x - player.x + 300, y - player.y - 50)
+            if i == 2000:
+                for j in ball_group:
+                    j.rect.x = 10000
+            if 2000 <= i <= 3000 and i % 100 == 0:
+                Rectangle(x - player.x - 50, y - player.y - 10, 1, 0, 10, random.randint(200, 380))
+                Rectangle(x - player.x + 800, y - player.y + random.randint(-10, 100), -1, 0, 10,
+                          random.randint(100, 200))
+            if 3000 <= i <= 3900 and i % 100 == 0:
+                ball(x - player.x + 300, y - player.y - 50)
+            if i == 4000:
+                for j in ball_group:
+                    j.rect.x = 10000
+            i += 1
+
+            rectangle_group.update()
+            ball_group.update()
         door_group.draw(screen)
 
         pygame.display.flip()
