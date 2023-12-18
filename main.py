@@ -198,7 +198,7 @@ class Letters(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
     def update(self):
-        self.rect.x -= 8
+        self.rect.x -= 9
         if pygame.sprite.collide_mask(self, player):
             act1()
             return
@@ -213,7 +213,7 @@ def newDialog():
 
 
 def mathGame():
-    global background, all_sprites, player_group, player, door, door_group, ball_group, rectangle_group, horizontal_borders, vertical_borders
+    global background, all_sprites, player_group, player, door, door_group, ball_group, rectangle_group, loc5
     fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
 
@@ -277,12 +277,8 @@ def mathGame():
                         all_sprites.add(background)
                         player = PlayerAct1(450, 300)
                         player.loc = 4
-                        horizontal_borders = pygame.sprite.Group()
-                        vertical_borders = pygame.sprite.Group()
-                        Border(0, 0, 800, 0)
-                        Border(0, 480, 880, 480)
-                        Border(0, 0, 0, 480)
-                        Border(880, 0, 880, 480)
+
+                        loc5 = 0
                         camera.update(player)
                         door = Door(20000, 20000)
                         for sprite in all_sprites:
@@ -309,8 +305,8 @@ def mathGame():
 
 
 def ball(x, y):
-    Ball(20, x, y, -1, 1)
-    Ball(20, x, y, 1, 1)
+    Ball(20, x, y, -3, 3)
+    Ball(20, x, y, 3, 3)
 
 
 class Background(pygame.sprite.Sprite):
@@ -319,6 +315,7 @@ class Background(pygame.sprite.Sprite):
         self.image = load_image(image_path)
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_threshold(self.image, (237, 28, 36), (1, 1, 1, 255))
 
     def get_rgb(self, x, y):
         pixel = pygame.PixelArray(self.image)
@@ -391,13 +388,21 @@ class Ball(pygame.sprite.Sprite):
         self.vy = vy
 
     def update(self):
-        global rectangle_group, ball_group
-        self.rect.x += 3 * self.vx
-        self.rect.y += 3 * self.vy
-        if pygame.sprite.spritecollideany(self, horizontal_borders):
-            self.vy = -self.vy
-        if pygame.sprite.spritecollideany(self, vertical_borders):
-            self.vx = -self.vx
+        global rectangle_group, ball_group, x, y
+        self.rect.x += self.vx // 2
+        self.rect.y += self.vy // 2
+
+        if pygame.sprite.collide_mask(self, background):
+            self.rect.x -= self.vx
+            self.rect.y -= self.vy
+            if player.x > self.rect.x:
+                self.vx = random.randint(1, 6)
+            else:
+                self.vx = random.randint(-5, 0)
+            if player.y > self.rect.y:
+                self.vy = random.randint(1, 6)
+            else:
+                self.vy = random.randint(-5, 0)
 
         if pygame.sprite.collide_mask(self, player):
             for j in rectangle_group:
@@ -445,20 +450,6 @@ class Rectangle(pygame.sprite.Sprite):
             return
 
 
-class Border(pygame.sprite.Sprite):
-    # строго вертикальный или строго горизонтальный отрезок
-    def __init__(self, x1, y1, x2, y2):
-        super().__init__(all_sprites)
-        if x1 == x2:  # вертикальная стенка
-            self.add(vertical_borders)
-            self.image = pygame.Surface([1, y2 - y1])
-            self.rect = pygame.Rect(x1, y1, 1, y2 - y1)
-        else:  # горизонтальная стенка
-            self.add(horizontal_borders)
-            self.image = pygame.Surface([x2 - x1, 1])
-            self.rect = pygame.Rect(x1, y1, x2 - x1, 1)
-
-
 class wizardRus(pygame.sprite.Sprite):
     image = load_image('wizardRus.jpg')
     image = pygame.transform.scale(image, (80, 90))
@@ -498,6 +489,9 @@ def act1():
     all_sprites.add(background)
     door_group.add(door)
     player = PlayerAct1(290, 470)
+    camera.update(player)
+    for sprite in all_sprites:
+        camera.apply(sprite)
 
 
 def act2():
@@ -554,6 +548,7 @@ class Camera:
         self.dy = -(target.rect.y + target.rect.h // 2 - height // 2)
 
 
+loc5 = 0
 camera = Camera()
 if __name__ == '__main__':
     pygame.init()
@@ -562,10 +557,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     start_screen()
 
-    i = 0
-
     slova_group = pygame.sprite.Group()
 
+    i = 0
     running = True
     while running:
         for event in pygame.event.get():
@@ -593,27 +587,27 @@ if __name__ == '__main__':
         player_group.draw(screen)
         if player.loc == 2:
             i += 1
-            if i % 25 == 0:
-                letter = Letters(1500, random.randint(200, 300))
+            if i % 40 == 0:
+                letter = Letters(x - player.x + 2500, random.randint(y - player.y + 450, y - player.y + 660))
                 slova_group.add(letter)
             slova_group.update()
             slova_group.draw(screen)
         if player.loc == 4:
-            if 100 <= i <= 1000 and i % 100 == 0:
+            if 100 <= loc5 <= 1000 and loc5 % 100 == 0:
                 ball(x - player.x + 300, y - player.y - 50)
-            if i == 2000:
+            if loc5 == 2000:
                 for j in ball_group:
                     j.rect.x = 10000
-            if 2000 <= i <= 3000 and i % 100 == 0:
+            if 2000 <= loc5 <= 3000 and loc5 % 250 == 0:
                 Rectangle(x - player.x - 50, y - player.y - 10, 1, 0, 10, random.randint(200, 380))
                 Rectangle(x - player.x + 800, y - player.y + random.randint(-10, 100), -1, 0, 10,
                           random.randint(100, 200))
-            if 3000 <= i <= 3900 and i % 100 == 0:
+            if 3000 <= loc5 <= 3900 and loc5 % 100 == 0:
                 ball(x - player.x + 300, y - player.y - 50)
-            if i == 4000:
+            if loc5 == 4000:
                 for j in ball_group:
                     j.rect.x = 10000
-            i += 1
+            loc5 += 1
 
             rectangle_group.update()
             ball_group.update()
