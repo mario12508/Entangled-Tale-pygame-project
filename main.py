@@ -1,8 +1,8 @@
 import os
 import random
+import sys
 
 import pygame
-import sys
 
 
 def load_image(name, colorkey=None):
@@ -17,6 +17,201 @@ def load_image(name, colorkey=None):
             colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey)
     return image
+
+
+def newDialog():
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    font = pygame.font.Font(font_path, 20)
+    render_fraze_1 = font.render('', True, (255, 255, 255))
+    render_fraze_2 = font.render('', True, (255, 255, 255))
+    render_fraze_3 = font.render('', True, (255, 255, 255))
+    return render_fraze_1, render_fraze_2, render_fraze_3
+
+
+def mathGame():
+    global background, all_sprites, player_group, player, door, door_group, \
+        ball_group, rectangle_group, loc5
+    fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
+    screen.blit(fon, (0, 0))
+
+    a = random.randint(0, 100)
+    difference = random.randint(0, 9)
+    b = difference - a
+    fraze_1 = 'Я великий маг этого подземелья,'
+    fraze_2 = 'и я никому не дам ходить по нему'
+    fraze_3 = 'без моего разрешения!'
+    screen.fill((0, 0, 0))
+    screen.blit(fon, (0, 0))
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    font = pygame.font.Font(font_path, 20)
+    render_fraze_1, render_fraze_2, render_fraze_3 = newDialog()
+
+    win = False
+    i = 1
+    k = 0
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_z and k == 0:
+                    screen.fill((0, 0, 0))
+                    screen.blit(fon, (0, 0))
+                    if b < 0:
+                        question = f"{a}{b}"
+                    else:
+                        question = f"{a} + {b}"
+                    fraze_1 = 'Но ты можешь попытать удачу,'
+                    fraze_2 = 'и решить мою задачу'
+                    fraze_3 = 'сколько будет: ' + question
+                    render_fraze_1, render_fraze_2, render_fraze_3 = (
+                        newDialog())
+                    i = 1
+                    k = 1
+                elif 48 <= event.key <= 58 and k == 1:
+                    fraze_1 = event.key - 48
+                    render_fraze_1, render_fraze_2, render_fraze_3 = (
+                        newDialog())
+                    if fraze_1 == difference:
+                        screen.fill((0, 0, 0))
+                        screen.blit(fon, (0, 0))
+                        fraze_1 = 'Я вижу, что ты неплох в математике'
+                        fraze_2 = 'на этот раз я тебя пропукаю,'
+                        fraze_3 = 'но мы еще встретимся!'
+                        win = True
+                    else:
+                        screen.fill((0, 0, 0))
+                        screen.blit(fon, (0, 0))
+                        fraze_1 = 'Я вижу, что ты слаб,'
+                        fraze_2 = 'возвращайся,'
+                        fraze_3 = 'лишь когда будешь достоен'
+                    i = 1
+                    k = 2
+                elif event.key == pygame.K_z and k == 2:
+                    if win:
+                        all_sprites = pygame.sprite.Group()
+                        player_group = pygame.sprite.Group()
+                        ball_group = pygame.sprite.Group()
+                        rectangle_group = pygame.sprite.Group()
+                        background = Background('a1_m5.jpg', (900, 500))
+                        all_sprites.add(background)
+                        player = PlayerAct1(450, 300)
+                        player.loc = 4
+
+                        loc5 = 0
+                        camera.update(player)
+                        door = Door(20000, 20000)
+                        for sprite in all_sprites:
+                            camera.apply(sprite)
+                        return
+                    else:
+                        act1()
+                        return
+
+        if i <= len(fraze_1):
+            render_fraze_1 = font.render(fraze_1[:i], True, (255, 255, 255))
+        elif i <= len(fraze_1) + len(fraze_2):
+            render_fraze_2 = font.render(fraze_2[:i - len(fraze_1)], True,
+                                         (255, 255, 255))
+        elif i <= len(fraze_1) + len(fraze_2) + len(fraze_3):
+            render_fraze_3 = font.render(
+                fraze_3[:i - len(fraze_1) - len(fraze_2)], True,
+                (255, 255, 255))
+        i += 1
+        screen.blit(render_fraze_1, (230, 85))
+        screen.blit(render_fraze_2, (230, 115))
+        screen.blit(render_fraze_3, (230, 145))
+        player_group.draw(screen)
+        pygame.display.flip()
+        clock.tick(20)
+        clock.tick(FPS)
+
+
+def ball(x_dif, y_dif):
+    Ball(20, x_dif, y_dif, -3, 3)
+    Ball(20, x_dif, y_dif, 3, 3)
+
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+
+def start_screen():
+    fon = pygame.transform.scale(load_image('fon.jpg'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    clock.tick(0.7)
+    fon = pygame.transform.scale(load_image('blackfon.png'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif (event.type == pygame.KEYDOWN or event.type ==
+                  pygame.MOUSEBUTTONDOWN):
+                if True:
+                    act1()
+                    return
+        clock.tick(FPS)
+
+
+def act1():
+    global all_sprites, player_group, player, background, door, door_group
+    fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    clock.tick(1)
+    all_sprites = pygame.sprite.Group()
+    player_group = pygame.sprite.Group()
+    door_group = pygame.sprite.Group()
+    background = Background('a1_m1.png', (1360, 760))
+    door = Door(1180, 440)
+    all_sprites.add(background)
+    door_group.add(door)
+    player = PlayerAct1(290, 470)
+    camera.update(player)
+    for sprite in all_sprites:
+        camera.apply(sprite)
+
+
+def act2():
+    fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    clock.tick(1)
+
+
+def act3():
+    fon = pygame.transform.scale(load_image('act3.png'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    clock.tick(1)
+
+
+def menu():
+    fon = pygame.transform.scale(load_image('Menu.png'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    act1()
+                    return
+                if event.key == pygame.K_2:
+                    act2()
+                    return
+                if event.key == pygame.K_3:
+                    act3()
+                    return
+                if event.key == pygame.K_p:
+                    return
+
+        clock.tick(FPS)
 
 
 class Player(pygame.sprite.Sprite):
@@ -55,7 +250,8 @@ class PlayerAct1(Player):
         super().__init__(pos_x, pos_y)
 
     def update(self, move_up, move_down, move_left, move_right):
-        global all_sprites, background, player, player_group, door_group, door, slova_group, x, y
+        global all_sprites, background, player, player_group, door_group, \
+            door, slova_group, x, y
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -204,151 +400,18 @@ class Letters(pygame.sprite.Sprite):
             return
 
 
-def newDialog():
-    font = pygame.font.Font(None, 30)
-    t1 = font.render('', True, (255, 255, 255))
-    t2 = font.render('', True, (255, 255, 255))
-    t3 = font.render('', True, (255, 255, 255))
-    return t1, t2, t3
-
-
-def mathGame():
-    global background, all_sprites, player_group, player, door, door_group, ball_group, rectangle_group, loc5
-    fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
-    screen.blit(fon, (0, 0))
-
-    n1 = random.randint(0, 100)
-    n3 = random.randint(0, 9)
-    n2 = n3 - n1
-    m = 'Я великий маг этого подземелья,'
-    m2 = 'и я никому не дам ходить по нему'
-    m3 = 'без моего разрешения!'
-    screen.fill((0, 0, 0))
-    screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    t1, t2, t3 = newDialog()
-
-    win = False
-    i = 1
-    a = 0
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_z and a == 0:
-                    screen.fill((0, 0, 0))
-                    screen.blit(fon, (0, 0))
-                    if n2 < 0:
-                        m1 = f"{n1}{n2}"
-                    else:
-                        m1 = f"{n1}+{n2}"
-                    m = 'Но ты можешь попытать удачу,'
-                    m2 = 'и решить мою задачу'
-                    m3 = 'сколько будет: ' + m1
-                    t1, t2, t3 = newDialog()
-                    i = 1
-                    a = 1
-                elif 48 <= event.key <= 58 and a == 1:
-                    m = event.key - 48
-                    t1, t2, t3 = newDialog()
-                    if m == n3:
-                        screen.fill((0, 0, 0))
-                        screen.blit(fon, (0, 0))
-                        m = 'Я вижу, что ты силен в математике'
-                        m2 = 'на этот раз я тебя пропукаю,'
-                        m3 = 'но мы еще встретимся!'
-                        win = True
-                    else:
-                        screen.fill((0, 0, 0))
-                        screen.blit(fon, (0, 0))
-                        m = 'Я вижу, что ты слаб,'
-                        m2 = 'возвращайся,'
-                        m3 = 'лишь когда будешь достоен'
-                    i = 1
-                    a = 2
-                elif event.key == pygame.K_z and a == 2:
-                    if win:
-                        all_sprites = pygame.sprite.Group()
-                        player_group = pygame.sprite.Group()
-                        ball_group = pygame.sprite.Group()
-                        rectangle_group = pygame.sprite.Group()
-                        background = Background('a1_m5.jpg', (900, 500))
-                        all_sprites.add(background)
-                        player = PlayerAct1(450, 300)
-                        player.loc = 4
-
-                        loc5 = 0
-                        camera.update(player)
-                        door = Door(20000, 20000)
-                        for sprite in all_sprites:
-                            camera.apply(sprite)
-                        return
-                    else:
-                        act1()
-                        return
-
-        if i <= len(m):
-            t1 = font.render(m[:i], True, (255, 255, 255))
-        elif i <= len(m) + len(m2):
-            t2 = font.render(m2[:i - len(m)], True, (255, 255, 255))
-        elif i <= len(m) + len(m2) + len(m3):
-            t3 = font.render(m3[:i - len(m) - len(m2)], True, (255, 255, 255))
-        i += 1
-        screen.blit(t1, (230, 85))
-        screen.blit(t2, (230, 115))
-        screen.blit(t3, (230, 145))
-        player_group.draw(screen)
-        pygame.display.flip()
-        clock.tick(20)
-        clock.tick(FPS)
-
-
-def ball(x, y):
-    Ball(20, x, y, -3, 3)
-    Ball(20, x, y, 3, 3)
-
-
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_path, size):
         super().__init__()
         self.image = load_image(image_path)
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
-        self.mask = pygame.mask.from_threshold(self.image, (237, 28, 36), (1, 1, 1, 255))
+        self.mask = pygame.mask.from_threshold(self.image, (237, 28, 36),
+                                               (1, 1, 1, 255))
 
     def get_rgb(self, x, y):
         pixel = pygame.PixelArray(self.image)
         return self.image.unmap_rgb(pixel[x][y])
-
-
-clock = pygame.time.Clock()
-FPS = 60
-
-
-def terminate():
-    pygame.quit()
-    sys.exit()
-
-
-def start_screen():
-    fon = pygame.transform.scale(load_image('fon.jpg'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    clock.tick(0.7)
-    fon = pygame.transform.scale(load_image('blackfon.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-            elif (event.type == pygame.KEYDOWN or event.type ==
-                  pygame.MOUSEBUTTONDOWN):
-                if True:
-                    act1()
-                    return
-        clock.tick(FPS)
 
 
 class Door(pygame.sprite.Sprite):
@@ -363,26 +426,16 @@ class Door(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-# группы спрайтов
-all_sprites = pygame.sprite.Group()
-player_group = pygame.sprite.Group()
-door_group = pygame.sprite.Group()
-rectangle_group = pygame.sprite.Group()
-horizontal_borders = pygame.sprite.Group()
-vertical_borders = pygame.sprite.Group()
-ball_group = pygame.sprite.Group()
-
-x, y = 0, 0
-
-
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, radius, x, y, vx, vy):
+    def __init__(self, radius, x_dif, y_dif, vx, vy):
         super().__init__(ball_group, all_sprites)
         self.radius = radius
         self.image = pygame.Surface((2 * radius, 2 * radius),
                                     pygame.SRCALPHA, 32)
         pygame.draw.circle(self.image, pygame.Color("red"),
                            (radius, radius), radius)
+        x = random.randint(80, 600) + x_dif
+        y = random.randint(80, 350) + y_dif
         self.rect = pygame.Rect(x, y, 2 * radius, 2 * radius)
         self.vx = vx
         self.vy = vy
@@ -455,7 +508,7 @@ class wizardRus(pygame.sprite.Sprite):
     image = pygame.transform.scale(image, (80, 90))
 
     def __init__(self, pos_x, pos_y):
-        super().__init__(all_sprites)
+        super().__init__()
         self.image = wizardRus.image
         self.rect = self.image.get_rect().move(
             pos_x, pos_y)
@@ -475,63 +528,6 @@ class wizardRus(pygame.sprite.Sprite):
 wizardRus = wizardRus(2000, 2000)
 
 
-def act1():
-    global all_sprites, player_group, player, background, door, door_group
-    fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    clock.tick(1)
-    all_sprites = pygame.sprite.Group()
-    player_group = pygame.sprite.Group()
-    door_group = pygame.sprite.Group()
-    background = Background('a1_m1.png', (1360, 760))
-    door = Door(1180, 440)
-    all_sprites.add(background)
-    door_group.add(door)
-    player = PlayerAct1(290, 470)
-    camera.update(player)
-    for sprite in all_sprites:
-        camera.apply(sprite)
-
-
-def act2():
-    fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    clock.tick(1)
-
-
-def act3():
-    fon = pygame.transform.scale(load_image('act3.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    clock.tick(1)
-
-
-def menu():
-    fon = pygame.transform.scale(load_image('Menu.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
-                    act1()
-                    return
-                if event.key == pygame.K_2:
-                    act2()
-                    return
-                if event.key == pygame.K_3:
-                    act3()
-                    return
-                if event.key == pygame.K_p:
-                    return
-
-        clock.tick(FPS)
-
-
 class Camera:
     # зададим начальный сдвиг камеры
     def __init__(self):
@@ -548,8 +544,22 @@ class Camera:
         self.dy = -(target.rect.y + target.rect.h // 2 - height // 2)
 
 
+clock = pygame.time.Clock()
+FPS = 60
+# группы спрайтов
+all_sprites = pygame.sprite.Group()
+player_group = pygame.sprite.Group()
+door_group = pygame.sprite.Group()
+rectangle_group = pygame.sprite.Group()
+horizontal_borders = pygame.sprite.Group()
+vertical_borders = pygame.sprite.Group()
+ball_group = pygame.sprite.Group()
+
+x, y = 0, 0
+
 loc5 = 0
 camera = Camera()
+
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption('Entangled Tale')
@@ -588,22 +598,26 @@ if __name__ == '__main__':
         if player.loc == 2:
             i += 1
             if i % 40 == 0:
-                letter = Letters(x - player.x + 2500, random.randint(y - player.y + 450, y - player.y + 660))
+                letter = Letters(x - player.x + 2500,
+                                 random.randint(y - player.y + 450,
+                                                y - player.y + 660))
                 slova_group.add(letter)
             slova_group.update()
             slova_group.draw(screen)
         if player.loc == 4:
-            if 100 <= loc5 <= 1000 and loc5 % 100 == 0:
-                ball(x - player.x + 300, y - player.y - 50)
-            if loc5 == 2000:
+            if 100 <= loc5 <= 500 and loc5 % 100 == 0:
+                ball(x - player.x, y - player.y)
+            if loc5 == 800:
                 for j in ball_group:
                     j.rect.x = 10000
-            if 2000 <= loc5 <= 3000 and loc5 % 250 == 0:
-                Rectangle(x - player.x - 50, y - player.y - 10, 1, 0, 10, random.randint(200, 380))
-                Rectangle(x - player.x + 800, y - player.y + random.randint(-10, 100), -1, 0, 10,
+            if 1000 <= loc5 <= 3000 and loc5 % 250 == 0:
+                Rectangle(x - player.x - 50, y - player.y - 10, 1, 0, 10,
+                          random.randint(200, 380))
+                Rectangle(x - player.x + 800,
+                          y - player.y + random.randint(-10, 100), -1, 0, 10,
                           random.randint(100, 200))
             if 3000 <= loc5 <= 3900 and loc5 % 100 == 0:
-                ball(x - player.x + 300, y - player.y - 50)
+                ball(x - player.x, y - player.y)
             if loc5 == 4000:
                 for j in ball_group:
                     j.rect.x = 10000
