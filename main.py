@@ -1,3 +1,4 @@
+import datetime
 import os
 import random
 import sys
@@ -105,7 +106,7 @@ def mathGame():
                             camera.apply(sprite)
                         return
                     else:
-                        act1()
+                        end_screen(1, False)
                         return
 
         if i <= len(fraze_1):
@@ -157,8 +158,42 @@ def start_screen():
         clock.tick(FPS)
 
 
+def end_screen(n, winOrdie):
+    fon = pygame.transform.scale(load_image('gameover.jpg'), (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    font = pygame.font.Font(font_path, 35)
+    if winOrdie:
+        t = font.render(f"Win", True, (0, 0, 0))
+    else:
+        t = font.render(f"Lose", True, (0, 0, 0))
+    t2 = font.render(f"{int((datetime.datetime.now() - time).total_seconds() // 60)} mins", True, (0, 0, 0))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif (event.type == pygame.KEYDOWN or event.type ==
+                  pygame.MOUSEBUTTONDOWN):
+                if True:
+                    if n == 1:
+                        act1()
+                    elif n == 2:
+                        act2()
+                    elif n == 3:
+                        act3()
+                    return
+
+        screen.blit(t, (300, 200))
+        screen.blit(t2, (300, 300))
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
 def act1():
-    global all_sprites, player_group, player, background, door, door_group, i, slova_group, x, y, loc5
+    global all_sprites, player_group, player, background, door, door_group, i, slova_group, x, y, loc5, time
+    time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -400,7 +435,7 @@ class Letters(pygame.sprite.Sprite):
     def update(self):
         self.rect.x -= 9
         if pygame.sprite.collide_mask(self, player):
-            act1()
+            end_screen(1, False)
             return
 
 
@@ -465,7 +500,7 @@ class Ball(pygame.sprite.Sprite):
                 j.rect.x = 10000
             rectangle_group = pygame.sprite.Group()
             ball_group = pygame.sprite.Group()
-            act1()
+            end_screen(1, False)
             return
 
 
@@ -499,7 +534,7 @@ class Rectangle(pygame.sprite.Sprite):
 
             rectangle_group = pygame.sprite.Group()
             ball_group = pygame.sprite.Group()
-            act1()
+            end_screen(1, False)
             return
 
 
@@ -556,6 +591,7 @@ vertical_borders = pygame.sprite.Group()
 ball_group = pygame.sprite.Group()
 slova_group = pygame.sprite.Group()
 
+time = datetime.datetime.now()
 x, y = 0, 0
 
 loc5 = 0
@@ -618,6 +654,8 @@ if __name__ == '__main__':
             if loc5 == 4000:
                 for j in ball_group:
                     j.rect.x = 10000
+            if loc5 == 4100:
+                end_screen(2, True)
             loc5 += 1
 
             rectangle_group.update()
