@@ -158,7 +158,7 @@ def start_screen():
 
 
 def act1():
-    global all_sprites, player_group, player, background, door, door_group
+    global all_sprites, player_group, player, background, door, door_group, i, slova_group, x, y, loc5
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -171,6 +171,10 @@ def act1():
     all_sprites.add(background)
     door_group.add(door)
     player = PlayerAct1(290, 470)
+    slova_group = pygame.sprite.Group()
+    x, y = 0, 0
+    loc5 = 0
+    i = 0
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
@@ -441,21 +445,17 @@ class Ball(pygame.sprite.Sprite):
         self.vy = vy
 
     def update(self):
-        global rectangle_group, ball_group, x, y
-        self.rect.x += self.vx // 2
-        self.rect.y += self.vy // 2
+        global rectangle_group, ball_group
+        self.rect.x += self.vx
+        self.rect.y += self.vy
 
         if pygame.sprite.collide_mask(self, background):
             self.rect.x -= self.vx
             self.rect.y -= self.vy
-            if player.x > self.rect.x:
-                self.vx = random.randint(1, 6)
-            else:
-                self.vx = random.randint(-5, 0)
-            if player.y > self.rect.y:
-                self.vy = random.randint(1, 6)
-            else:
-                self.vy = random.randint(-5, 0)
+            if self.rect.x < 100 or self.rect.x > 500:
+                self.vx = - self.vx
+            if self.rect.y < 100 or self.rect.y > 300:
+                self.vy = - self.vy
 
         if pygame.sprite.collide_mask(self, player):
             for j in rectangle_group:
@@ -483,8 +483,8 @@ class Rectangle(pygame.sprite.Sprite):
 
     def update(self):
         global rectangle_group, ball_group
-        self.rect.x += 3 * self.vx
-        self.rect.y += 3 * self.vy
+        self.rect.x += 2 * self.vx
+        self.rect.y += 2 * self.vy
         if pygame.sprite.spritecollideany(self, horizontal_borders):
             self.rect.x = 10000
         if pygame.sprite.spritecollideany(self, vertical_borders):
@@ -554,6 +554,7 @@ rectangle_group = pygame.sprite.Group()
 horizontal_borders = pygame.sprite.Group()
 vertical_borders = pygame.sprite.Group()
 ball_group = pygame.sprite.Group()
+slova_group = pygame.sprite.Group()
 
 x, y = 0, 0
 
@@ -566,8 +567,6 @@ if __name__ == '__main__':
     size = width, height = 800, 500
     screen = pygame.display.set_mode(size)
     start_screen()
-
-    slova_group = pygame.sprite.Group()
 
     i = 0
     running = True
@@ -610,13 +609,11 @@ if __name__ == '__main__':
             if loc5 == 800:
                 for j in ball_group:
                     j.rect.x = 10000
-            if 1000 <= loc5 <= 3000 and loc5 % 250 == 0:
-                Rectangle(x - player.x - 50, y - player.y - 10, 1, 0, 10,
-                          random.randint(200, 380))
+            if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-10, 100), -1, 0, 10,
-                          random.randint(100, 200))
-            if 3000 <= loc5 <= 3900 and loc5 % 100 == 0:
+                          y - player.y + random.randint(-100, 150), -3, 0, 10,
+                          random.randint(50, 300))
+            if 3000 <= loc5 <= 3500 and loc5 % 100 == 0:
                 ball(x - player.x, y - player.y)
             if loc5 == 4000:
                 for j in ball_group:
