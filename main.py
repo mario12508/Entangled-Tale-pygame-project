@@ -411,6 +411,9 @@ class PlayerAct1(Player):
                 mathGame()
                 x = player.x
                 y = player.y
+            elif self.loc == 5:
+                door.rect.x = 20000
+                end_screen(2, True)
 
         camera.update(player)
         for sprite in all_sprites:
@@ -623,8 +626,12 @@ if __name__ == '__main__':
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 80, 0, 0, 450,
                                  455, True)
-            if loc5 == 4250:
-                end_screen(2, True)
+            if loc5 == 4200:
+                rect.rect.x = 20000
+
+            if loc5 == 4400:
+                door = Door(500, 200)
+                player.loc = 5
             loc5 += 1
 
             rectangle_group.update()
