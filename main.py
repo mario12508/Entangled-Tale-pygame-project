@@ -30,8 +30,7 @@ def newDialog():
 
 
 def mathGame():
-    global background, all_sprites, player_group, player, door, door_group, \
-        ball_group, rectangle_group, loc5
+    global background, all_sprites, player_group, player, door, door_group, rectangle_group, loc5
     fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
 
@@ -92,7 +91,6 @@ def mathGame():
                     if win:
                         all_sprites = pygame.sprite.Group()
                         player_group = pygame.sprite.Group()
-                        ball_group = pygame.sprite.Group()
                         rectangle_group = pygame.sprite.Group()
                         background = Background('a1_m5.jpg', (900, 500))
                         all_sprites.add(background)
@@ -126,11 +124,6 @@ def mathGame():
         pygame.display.flip()
         clock.tick(20)
         clock.tick(FPS)
-
-
-def ball(x_dif, y_dif):
-    Ball(20, x_dif, y_dif, -3, 3)
-    Ball(20, x_dif, y_dif, 3, 3)
 
 
 def terminate():
@@ -169,7 +162,8 @@ def end_screen(n, winOrdie):
         t = font.render(f"Win", True, (0, 0, 0))
     else:
         t = font.render(f"Lose", True, (0, 0, 0))
-    t2 = font.render(f"{int((datetime.datetime.now() - time).total_seconds() // 60)} mins", True, (0, 0, 0))
+    tm = (datetime.datetime.now() - time).total_seconds()
+    t2 = font.render(f"{int(tm // 60)} mins {int(tm - (tm // 60) * 60)} sec", True, (0, 0, 0))
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -465,48 +459,12 @@ class Door(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class Ball(pygame.sprite.Sprite):
-    def __init__(self, radius, x_dif, y_dif, vx, vy):
-        super().__init__(ball_group, all_sprites)
-        self.radius = radius
-        self.image = pygame.Surface((2 * radius, 2 * radius),
-                                    pygame.SRCALPHA, 32)
-        pygame.draw.circle(self.image, pygame.Color("red"),
-                           (radius, radius), radius)
-        x = random.randint(80, 600) + x_dif
-        y = random.randint(80, 350) + y_dif
-        self.rect = pygame.Rect(x, y, 2 * radius, 2 * radius)
-        self.vx = vx
-        self.vy = vy
-
-    def update(self):
-        global rectangle_group, ball_group
-        self.rect.x += self.vx
-        self.rect.y += self.vy
-
-        if pygame.sprite.collide_mask(self, background):
-            self.rect.x -= self.vx
-            self.rect.y -= self.vy
-            if self.rect.x < 100 or self.rect.x > 500:
-                self.vx = - self.vx
-            if self.rect.y < 100 or self.rect.y > 300:
-                self.vy = - self.vy
-
-        if pygame.sprite.collide_mask(self, player):
-            for j in rectangle_group:
-                j.rect.x = 10000
-
-            for j in ball_group:
-                j.rect.x = 10000
-            rectangle_group = pygame.sprite.Group()
-            ball_group = pygame.sprite.Group()
-            end_screen(1, False)
-            return
-
-
 class Rectangle(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, vx, vy, xx, yy):
-        image_path = load_image('rect.jpg')
+    def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamege):
+        if canDamege:
+            image_path = load_image('redrect.jpg')
+        else:
+            image_path = load_image('yellorect.jpg')
         image_path = pygame.transform.scale(image_path, (xx, yy))
         sprite_image = image_path
         super().__init__(rectangle_group, all_sprites)
@@ -515,27 +473,25 @@ class Rectangle(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.vx = vx
         self.vy = vy
+        self.canDamege = canDamege
 
     def update(self):
-        global rectangle_group, ball_group
+        global rectangle_group
         self.rect.x += 2 * self.vx
         self.rect.y += 2 * self.vy
-        if pygame.sprite.spritecollideany(self, horizontal_borders):
-            self.rect.x = 10000
-        if pygame.sprite.spritecollideany(self, vertical_borders):
-            self.rect.x = 10000
+        if self.canDamege:
+            if pygame.sprite.spritecollideany(self, horizontal_borders):
+                self.rect.x = 10000
+            if pygame.sprite.spritecollideany(self, vertical_borders):
+                self.rect.x = 10000
 
-        if pygame.sprite.collide_mask(self, player):
-            for j in rectangle_group:
-                j.rect.x = 10000
+            if pygame.sprite.collide_mask(self, player):
+                for j in rectangle_group:
+                    j.rect.x = 10000
 
-            for j in ball_group:
-                j.rect.x = 10000
-
-            rectangle_group = pygame.sprite.Group()
-            ball_group = pygame.sprite.Group()
-            end_screen(1, False)
-            return
+                rectangle_group = pygame.sprite.Group()
+                end_screen(1, False)
+                return
 
 
 class wizardRus(pygame.sprite.Sprite):
@@ -588,11 +544,11 @@ door_group = pygame.sprite.Group()
 rectangle_group = pygame.sprite.Group()
 horizontal_borders = pygame.sprite.Group()
 vertical_borders = pygame.sprite.Group()
-ball_group = pygame.sprite.Group()
 slova_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
+rect = Rectangle(20000, 20000, 0, 0, 10, 500, False)
 
 loc5 = 0
 camera = Camera()
@@ -640,26 +596,38 @@ if __name__ == '__main__':
             slova_group.update()
             slova_group.draw(screen)
         if player.loc == 4:
-            if 100 <= loc5 <= 500 and loc5 % 100 == 0:
-                ball(x - player.x, y - player.y)
-            if loc5 == 800:
-                for j in ball_group:
-                    j.rect.x = 10000
+            if loc5 <= 1000 and loc5 % 200 == 0:
+                m = random.randint(-100, 500)
+                rect.rect.x = 20000
+                rect = Rectangle(x - player.x + m,
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, False)
+            if loc5 <= 1000 and loc5 % 200 == 140:
+                rect.rect.x = 20000
+                rect = Rectangle(x - player.x + m,
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, True)
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
+                rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 150), -3, 0, 10,
-                          random.randint(50, 300))
-            if 3000 <= loc5 <= 3500 and loc5 % 100 == 0:
-                ball(x - player.x, y - player.y)
-            if loc5 == 4000:
-                for j in ball_group:
-                    j.rect.x = 10000
-            if loc5 == 4100:
+                          random.randint(50, 300), True)
+            if 3200 <= loc5 <= 4000 and loc5 % 200 == 0:
+                m = random.randint(-100, 500)
+                rect.rect.x = 20000
+                rect = Rectangle(x - player.x + m,
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, False)
+            if 3200 <= loc5 <= 4140 and loc5 % 200 == 140:
+                rect.rect.x = 20000
+                rect = Rectangle(x - player.x + m,
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, True)
+            if loc5 == 4250:
                 end_screen(2, True)
             loc5 += 1
 
             rectangle_group.update()
-            ball_group.update()
         door_group.draw(screen)
 
         pygame.display.flip()
