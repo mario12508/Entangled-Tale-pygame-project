@@ -30,9 +30,8 @@ def newDialog():
 
 
 def mathGame():
-    global background, all_sprites, player_group, player, door, door_group, \
-        rectangle_group, loc5
-    fon = pygame.transform.scale(load_image('a1_m4.png'), (800, 500))
+    global background, all_sprites, player_group, player, door, door_group, rectangle_group, loc5
+    fon = pygame.transform.scale(load_image('a1_m4.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
 
     a = random.randint(0, 100)
@@ -77,7 +76,7 @@ def mathGame():
                         screen.fill((0, 0, 0))
                         screen.blit(fon, (0, 0))
                         fraze_1 = 'Я вижу, что ты неплох в математике'
-                        fraze_2 = 'на этот раз я тебя пропускаю,'
+                        fraze_2 = 'на этот раз я тебя пропукаю,'
                         fraze_3 = 'но мы еще встретимся!'
                         win = True
                     else:
@@ -85,7 +84,7 @@ def mathGame():
                         screen.blit(fon, (0, 0))
                         fraze_1 = 'Я вижу, что ты слаб,'
                         fraze_2 = 'возвращайся,'
-                        fraze_3 = 'лишь когда будешь достоин'
+                        fraze_3 = 'лишь когда будешь достоен'
                     i = 1
                     k = 2
                 elif event.key == pygame.K_z and k == 2:
@@ -93,7 +92,7 @@ def mathGame():
                         all_sprites = pygame.sprite.Group()
                         player_group = pygame.sprite.Group()
                         rectangle_group = pygame.sprite.Group()
-                        background = Background('a1_m5.png', (900, 784))
+                        background = Background('a1_m5.jpg', (900, 500))
                         all_sprites.add(background)
                         player = PlayerAct1(450, 300)
                         player.loc = 4
@@ -164,8 +163,7 @@ def end_screen(n, winOrdie):
     else:
         t = font.render(f"Lose", True, (0, 0, 0))
     tm = (datetime.datetime.now() - time).total_seconds()
-    t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec",
-                     True, (0, 0, 0))
+    t2 = font.render(f"{int(tm // 60)} mins {int(tm - (tm // 60) * 60)} sec", True, (0, 0, 0))
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -188,8 +186,7 @@ def end_screen(n, winOrdie):
 
 
 def act1():
-    global all_sprites, player_group, player, background, door, door_group, \
-        i, word_group, x, y, loc5, time
+    global all_sprites, player_group, player, background, door, door_group, i, slova_group, x, y, loc5, time
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
     screen.blit(fon, (0, 0))
@@ -203,7 +200,7 @@ def act1():
     all_sprites.add(background)
     door_group.add(door)
     player = PlayerAct1(290, 470)
-    word_group = pygame.sprite.Group()
+    slova_group = pygame.sprite.Group()
     x, y = 0, 0
     loc5 = 0
     i = 0
@@ -287,7 +284,7 @@ class PlayerAct1(Player):
 
     def update(self, move_up, move_down, move_left, move_right):
         global all_sprites, background, player, player_group, door_group, \
-            door, word_group, x, y
+            door, slova_group, x, y
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -397,7 +394,7 @@ class PlayerAct1(Player):
             elif self.loc == 1:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
-                word_group = pygame.sprite.Group()
+                slova_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a1_m3.png', (2100, 500))
                 all_sprites.add(background)
@@ -463,11 +460,11 @@ class Door(pygame.sprite.Sprite):
 
 
 class Rectangle(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamage):
-        if canDamage:
+    def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamege):
+        if canDamege:
             image_path = load_image('redrect.jpg')
         else:
-            image_path = load_image('warning rect.png')
+            image_path = load_image('yellorect.jpg')
         image_path = pygame.transform.scale(image_path, (xx, yy))
         sprite_image = image_path
         super().__init__(rectangle_group, all_sprites)
@@ -476,13 +473,13 @@ class Rectangle(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.vx = vx
         self.vy = vy
-        self.canDamage = canDamage
+        self.canDamege = canDamege
 
     def update(self):
         global rectangle_group
         self.rect.x += 2 * self.vx
         self.rect.y += 2 * self.vy
-        if self.canDamage:
+        if self.canDamege:
             if pygame.sprite.spritecollideany(self, horizontal_borders):
                 self.rect.x = 10000
             if pygame.sprite.spritecollideany(self, vertical_borders):
@@ -498,7 +495,7 @@ class Rectangle(pygame.sprite.Sprite):
 
 
 class wizardRus(pygame.sprite.Sprite):
-    image = load_image('wizardRus.png')
+    image = load_image('wizardRus.jpg')
     image = pygame.transform.scale(image, (80, 90))
 
     def __init__(self, pos_x, pos_y):
@@ -547,7 +544,7 @@ door_group = pygame.sprite.Group()
 rectangle_group = pygame.sprite.Group()
 horizontal_borders = pygame.sprite.Group()
 vertical_borders = pygame.sprite.Group()
-word_group = pygame.sprite.Group()
+slova_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
@@ -595,21 +592,21 @@ if __name__ == '__main__':
                 letter = Letters(x - player.x + 2500,
                                  random.randint(y - player.y + 450,
                                                 y - player.y + 660))
-                word_group.add(letter)
-            word_group.update()
-            word_group.draw(screen)
+                slova_group.add(letter)
+            slova_group.update()
+            slova_group.draw(screen)
         if player.loc == 4:
             if loc5 <= 1000 and loc5 % 200 == 0:
                 m = random.randint(-100, 500)
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
-                                 y - player.y - 78, 0, 0, 450,
-                                 519, False)
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, False)
             if loc5 <= 1000 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
-                                 y - player.y - 78, 0, 0, 450,
-                                 519, True)
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, True)
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
@@ -619,13 +616,13 @@ if __name__ == '__main__':
                 m = random.randint(-100, 500)
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
-                                 y - player.y - 78, 0, 0, 450,
-                                 519, False)
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, False)
             if 3200 <= loc5 <= 4140 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
-                                 y - player.y - 78, 0, 0, 450,
-                                 519, True)
+                                 y - player.y - 80, 0, 0, 450,
+                                 455, True)
             if loc5 == 4250:
                 end_screen(2, True)
             loc5 += 1
