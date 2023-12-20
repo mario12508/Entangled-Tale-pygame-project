@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="third location design done">
-      <change afterPath="$PROJECT_DIR$/data/fonts/comic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/fonts/comicbd.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/fonts/comici.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/fonts/comicz.ttf" afterDir="false" />
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="bugs fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +198,31 @@
       <option name="project" value="LOCAL" />
       <updated>1702920196004</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="third location design done">
+      <option name="closed" value="true" />
+      <created>1703013610372</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1703013610372</updated>
+    </task>
+    <task id="LOCAL-00014" summary="third location design done">
+      <option name="closed" value="true" />
+      <created>1703013631006</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1703013631006</updated>
+    </task>
+    <task id="LOCAL-00015" summary="bugs fix">
+      <option name="closed" value="true" />
+      <created>1703013686583</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1703013686583</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -222,13 +241,14 @@
     <MESSAGE value="описание Entangled Tale.txt" />
     <MESSAGE value="сюжет акта 1" />
     <MESSAGE value="animations main character" />
-    <MESSAGE value="Add files via upload" />
     <MESSAGE value="exit-enter_a1" />
     <MESSAGE value="letters and doors fix" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="first location done" />
     <MESSAGE value="second location drawn" />
+    <MESSAGE value="Add files via upload" />
     <MESSAGE value="third location design done" />
-    <option name="LAST_COMMIT_MESSAGE" value="third location design done" />
+    <MESSAGE value="bugs fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugs fix" />
   </component>
 </project>
