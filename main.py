@@ -720,7 +720,7 @@ if __name__ == '__main__':
             if loc5 == 4200:
                 rect.rect.x = 20000
             if loc5 == 4400:
-                door = Door(350, 150, 1)
+                door = Door(x - player.x + 350, y - player.y + 150, 1)
                 player.loc = 5
             loc5 += 1
 
