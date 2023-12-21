@@ -624,8 +624,9 @@ if __name__ == '__main__':
             if loc5 <= 1000 and loc5 % 200 == 0:
                 try:
                     n = random.randint(-1, 3) * 200
-                    while n != m:
-                        m = random.randint(-1, 3) * 200
+                    while n == m:
+                        n = random.randint(-1, 3) * 200
+                    m = n
                 except:
                     m = random.randint(-1, 3) * 200
                 rect.rect.x = 20000
@@ -644,8 +645,9 @@ if __name__ == '__main__':
                           random.randint(50, 300), True)
             if 3200 <= loc5 <= 4000 and loc5 % 200 == 0:
                 n = random.randint(-1, 3) * 200
-                while n != m:
-                    m = random.randint(-1, 3) * 200
+                while n == m:
+                    n = random.randint(-1, 3) * 200
+                m = n
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
