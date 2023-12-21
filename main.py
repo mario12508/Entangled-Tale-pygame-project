@@ -215,7 +215,7 @@ def act1():
 
 def act2():
     global all_sprites, player_group, player, background, door, \
-        door_group, time
+        door_group, time, x, y
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
     screen.blit(fon, (0, 0))
@@ -231,6 +231,7 @@ def act2():
     all_sprites.add(background)
     door_group.add(door)
     door_group.add(door2)
+    x, y = 0, 0
     player = Player(1090, 720, 2)
     player.loc = 6
     camera.update(player)
@@ -273,7 +274,7 @@ class Player(pygame.sprite.Sprite):
     image = load_image('m.c.front_stop.jpg')
     image = pygame.transform.scale(image, (40, 60))
 
-    def __init__(self, pos_x, pos_y, stena):
+    def __init__(self, pos_x, pos_y, stena, key=False):
         super().__init__(player_group, all_sprites)
         self.image = Player.image
         self.rect = self.image.get_rect().move(
@@ -286,6 +287,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = ''
         self.mask = pygame.mask.from_surface(self.image)
         self.loc = 0
+        self.key = key
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
@@ -305,7 +307,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, move_up, move_down, move_left, move_right):
         global all_sprites, background, player, player_group, door_group, \
-            door, word_group, x, y
+            door, word_group, x, y, task_text, ok_tip
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -436,6 +438,36 @@ class Player(pygame.sprite.Sprite):
                 door.rect.x = 20000
                 self.loc = 6
                 end_screen(2, True)
+            elif self.loc == 6:
+                a = ['Птица', "Медведь", "Заяц", "Человек"]
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                word_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a2_m2.jpg', (2000, 1500))
+                all_sprites.add(background)
+                door = Door(1330, 750, 2)
+                for j in range(1, 5):
+                    button_group.add(Button(575 + j * 150, 800, j))
+                player = Player(1270, 750, 2, key=player.key)
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 50)
+                ok_tip = random.randint(0, 3)
+                task_text = font.render(a[ok_tip], True, (255, 255, 255))
+                x, y = 700, 640
+                player.loc = 7
+            elif self.loc == 7:
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a2_m1.jpg', (3000, 1500))
+                door = Door(580, 640, 2)
+                door2 = Door(1860, 640, 2)
+                all_sprites.add(background)
+                door_group.add(door)
+                door_group.add(door2)
+                player = Player(700, 640, 2, key=player.key)
+                player.loc = 6
 
         camera.update(player)
         for sprite in all_sprites:
@@ -505,11 +537,6 @@ class Rectangle(pygame.sprite.Sprite):
         self.rect.x += 2 * self.vx
         self.rect.y += 2 * self.vy
         if self.canDamage:
-            if pygame.sprite.spritecollideany(self, horizontal_borders):
-                self.rect.x = 10000
-            if pygame.sprite.spritecollideany(self, vertical_borders):
-                self.rect.x = 10000
-
             if pygame.sprite.collide_mask(self, player):
                 for j in rectangle_group:
                     j.rect.x = 10000
@@ -519,13 +546,41 @@ class Rectangle(pygame.sprite.Sprite):
                 return
 
 
-class wizardRus(pygame.sprite.Sprite):
+class Button(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, tip):
+        super().__init__(all_sprites)
+        image_path = load_image(f'button{tip}.jpg')
+        self.image = pygame.transform.scale(image_path, (80, 80))
+        self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.tip = tip
+        self.tm = 300
+
+    def update(self):
+        if pygame.sprite.spritecollideany(self, player_group):
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 50)
+            screen.blit(font.render(str(self.tm // 100 + 1), True, (0, 0, 0)), (350, 0))
+            if self.tm // 100 + 1 == 0:
+                if self.tip == ok_tip + 1:
+                    self.tm += 1
+                    player.key = True
+                else:
+                    for j in button_group:
+                        j.rect.x = 20000
+                    end_screen(2, False)
+            self.tm -= 1
+        else:
+            self.tm = 300
+
+
+class WizardRus(pygame.sprite.Sprite):
     image = load_image('wizardRus.png')
     image = pygame.transform.scale(image, (80, 90))
 
     def __init__(self, pos_x, pos_y):
         super().__init__()
-        self.image = wizardRus.image
+        self.image = WizardRus.image
         self.rect = self.image.get_rect().move(
             pos_x, pos_y)
         self.canRun = False
@@ -541,7 +596,7 @@ class wizardRus(pygame.sprite.Sprite):
             self.canRun = True
 
 
-wizardRus = wizardRus(2000, 2000)
+wizardRus = WizardRus(2000, 2000)
 
 
 class Camera:
@@ -567,13 +622,14 @@ all_sprites = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 door_group = pygame.sprite.Group()
 rectangle_group = pygame.sprite.Group()
-horizontal_borders = pygame.sprite.Group()
-vertical_borders = pygame.sprite.Group()
+button_group = pygame.sprite.Group()
 word_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
 rect = Rectangle(20000, 20000, 0, 0, 10, 500, False)
+img = load_image('key.jpg')
+img = pygame.transform.scale(img, (50, 50))
 
 loc5 = 0
 camera = Camera()
@@ -610,6 +666,8 @@ if __name__ == '__main__':
         camera.update(player)
         wizardRus.update()
         all_sprites.draw(screen)
+        if player.loc == 7:
+            screen.blit(task_text, (x - player.x + 500, y - player.y + 200))
         player_group.draw(screen)
         if player.loc == 2:
             i += 1
@@ -620,6 +678,8 @@ if __name__ == '__main__':
                 word_group.add(letter)
             word_group.update()
             word_group.draw(screen)
+        if player.key:
+            screen.blit(img, (750, 0))
         if player.loc == 4:
             if loc5 <= 1000 and loc5 % 200 == 0:
                 try:
@@ -665,6 +725,7 @@ if __name__ == '__main__':
             loc5 += 1
 
             rectangle_group.update()
+        button_group.update()
         door_group.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
