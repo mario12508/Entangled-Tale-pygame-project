@@ -226,9 +226,13 @@ def act2():
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
     background = Background('a2_m1.jpg', (3000, 1500))
+    door = Door(580, 640, 2)
+    door2 = Door(1860, 640, 2)
     all_sprites.add(background)
     door_group.add(door)
+    door_group.add(door2)
     player = Player(1090, 720, 2)
+    player.loc = 6
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
@@ -474,7 +478,7 @@ class Door(pygame.sprite.Sprite):
         if tip == 1:
             image_path = load_image('exit-enter_a1.png')
         elif tip == 2:
-            image_path = load_image('exit-enter_2.png')
+            image_path = load_image('exit-enter_a2.png')
         self.image = pygame.transform.scale(image_path, (120, 96))
         self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
         self.mask = pygame.mask.from_surface(self.image)
