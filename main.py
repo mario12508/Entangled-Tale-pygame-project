@@ -30,8 +30,7 @@ def newDialog():
 
 
 def mathGame():
-    global background, all_sprites, player_group, player, door, door_group, \
-        rectangle_group, loc5
+    global background, all_sprites, player_group, player, door, door_group, rectangle_group, loc5
     fon = pygame.transform.scale(load_image('a1_m4.png'), (800, 500))
     screen.blit(fon, (0, 0))
 
@@ -95,7 +94,7 @@ def mathGame():
                         rectangle_group = pygame.sprite.Group()
                         background = Background('a1_m5.png', (900, 784))
                         all_sprites.add(background)
-                        player = Player(450, 300)
+                        player = Player(450, 300, 1)
                         player.loc = 4
 
                         loc5 = 0
@@ -202,7 +201,7 @@ def act1():
     door = Door(1180, 440)
     all_sprites.add(background)
     door_group.add(door)
-    player = Player(290, 470)
+    player = Player(290, 470, 1)
     word_group = pygame.sprite.Group()
     x, y = 0, 0
     loc5 = 0
@@ -226,7 +225,7 @@ def act2():
     background = Background('a2_m1.jpg', (3000, 1500))
     all_sprites.add(background)
     door_group.add(door)
-    player = Player(1090, 720)
+    player = Player(1090, 720, 2)
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
@@ -267,7 +266,7 @@ class Player(pygame.sprite.Sprite):
     image = load_image('m.c.front_stop.jpg')
     image = pygame.transform.scale(image, (40, 60))
 
-    def __init__(self, pos_x, pos_y):
+    def __init__(self, pos_x, pos_y, stena):
         super().__init__(player_group, all_sprites)
         self.image = Player.image
         self.rect = self.image.get_rect().move(
@@ -280,6 +279,10 @@ class Player(pygame.sprite.Sprite):
         self.direction = ''
         self.mask = pygame.mask.from_surface(self.image)
         self.loc = 0
+        if stena == 1:
+            self.stena = [(2, 0, 0)]
+        elif stena == 2:
+            self.stena = [(34, 177, 76), (0, 162, 232)]
 
     def stop(self):
         image = self.image
@@ -301,7 +304,7 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'left'
             self.rect.x -= 5
             self.x -= 5
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+            if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.x += 5
                 self.x += 5
             if current_time - self.last_skin_change_time > 150:
@@ -323,7 +326,7 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'right'
             self.rect.x += 5
             self.x += 5
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+            if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.x -= 5
                 self.x -= 5
             if current_time - self.last_skin_change_time > 150:
@@ -345,7 +348,7 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'up'
             self.rect.y -= 5
             self.y -= 5
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+            if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.y += 5
                 self.y += 5
             if current_time - self.last_skin_change_time > 150:
@@ -367,7 +370,7 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'down'
             self.rect.y += 5
             self.y += 5
-            if background.get_rgb(self.x, self.y) == (2, 0, 0):
+            if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.y -= 5
                 self.y -= 5
             if current_time - self.last_skin_change_time > 150:
@@ -393,7 +396,7 @@ class Player(pygame.sprite.Sprite):
                 door_group = pygame.sprite.Group()
                 background = Background('a1_m2.png', (600, 1300))
                 all_sprites.add(background)
-                player = Player(240, 950)
+                player = Player(240, 950, 1)
                 player.loc = 1
                 wizardRus.rect.x = 240
                 wizardRus.rect.y = 600
@@ -409,14 +412,14 @@ class Player(pygame.sprite.Sprite):
                 background = Background('a1_m3.png', (2100, 500))
                 all_sprites.add(background)
                 door = Door(1800, 200)
-                player = Player(200, 330)
+                player = Player(200, 330, 1)
                 player.loc = 2
             elif self.loc == 2:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 background = Background('a1_m4.jpg', (700, 500))
                 all_sprites.add(background)
-                player = Player(375, 300)
+                player = Player(375, 300, 1)
                 player.loc = 3
                 mathGame()
                 x = player.x
@@ -611,7 +614,12 @@ if __name__ == '__main__':
             word_group.draw(screen)
         if player.loc == 4:
             if loc5 <= 1000 and loc5 % 200 == 0:
-                m = random.randint(-2, 5) * 100
+                try:
+                    n = random.randint(-1, 3) * 100
+                    while n == m:
+                        m = random.randint(-1, 3) * 200
+                except:
+                    pass
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
@@ -627,7 +635,9 @@ if __name__ == '__main__':
                           y - player.y + random.randint(-100, 150), -3, 0, 10,
                           random.randint(50, 300), True)
             if 3200 <= loc5 <= 4000 and loc5 % 200 == 0:
-                m = random.randint(-2, 5) * 100
+                n = random.randint(-1, 3) * 100
+                while n == m:
+                    m = random.randint(-1, 3) * 200
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
@@ -640,12 +650,11 @@ if __name__ == '__main__':
             if loc5 == 4200:
                 rect.rect.x = 20000
             if loc5 == 4400:
-                door = Door(450, 200)
+                door = Door(350, 150)
                 player.loc = 5
             loc5 += 1
 
             rectangle_group.update()
         door_group.draw(screen)
-
         pygame.display.flip()
         clock.tick(FPS)
