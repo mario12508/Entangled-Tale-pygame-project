@@ -215,7 +215,7 @@ def act1():
 
 def act2():
     global all_sprites, player_group, player, background, door, \
-        door_group, time, x, y
+        door_group, time, x, y, door2, door3, pas
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
     screen.blit(fon, (0, 0))
@@ -226,11 +226,14 @@ def act2():
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
     background = Background('a2_m1.jpg', (3000, 1500))
-    door = Door(580, 640, 2)
-    door2 = Door(1860, 640, 2)
+    door = Door(580, 840, 2)
+    door2 = Door(1860, 540, 2)
+    door3 = Door(580, 540, 2)
     all_sprites.add(background)
     door_group.add(door)
     door_group.add(door2)
+    door_group.add(door3)
+    pas = Pass(1300, 700)
     x, y = 0, 0
     player = Player(1090, 720, 2)
     player.loc = 6
@@ -274,11 +277,10 @@ class Player(pygame.sprite.Sprite):
     image = load_image('m.c.front_stop.jpg')
     image = pygame.transform.scale(image, (40, 60))
 
-    def __init__(self, pos_x, pos_y, stena, key=False):
+    def __init__(self, pos_x, pos_y, stena, key=False, pas=False):
         super().__init__(player_group, all_sprites)
         self.image = Player.image
-        self.rect = self.image.get_rect().move(
-            pos_x, pos_y)
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x + 20
         self.y = pos_y + 60
         self.step = 1
@@ -288,6 +290,7 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.loc = 0
         self.key = key
+        self.pas = pas
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
@@ -305,9 +308,10 @@ class Player(pygame.sprite.Sprite):
             image = load_image(f'm.c.back_stop.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
 
-    def update(self, move_up, move_down, move_left, move_right):
+    def update(self, move_up, move_down, move_left, move_right, passaa=None):
         global all_sprites, background, player, player_group, door_group, \
-            door, word_group, x, y, task_text, ok_tip
+            door, word_group, x, y, task_text, ok_tip, door2, door3, \
+            chest, img, pas
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -449,7 +453,7 @@ class Player(pygame.sprite.Sprite):
                 door = Door(1330, 750, 2)
                 for j in range(1, 5):
                     button_group.add(Button(575 + j * 150, 800, j))
-                player = Player(1270, 750, 2, key=player.key)
+                player = Player(1270, 750, 2, key=player.key, pas=player.pas)
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 ok_tip = random.randint(0, 3)
@@ -461,13 +465,69 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m1.jpg', (3000, 1500))
-                door = Door(580, 640, 2)
-                door2 = Door(1860, 640, 2)
+                pas = Pass(1300, 700)
+                door = Door(580, 840, 2)
+                door2 = Door(1860, 540, 2)
+                door3 = Door(580, 540, 2)
                 all_sprites.add(background)
                 door_group.add(door)
                 door_group.add(door2)
-                player = Player(700, 640, 2, key=player.key)
+                door_group.add(door3)
+                pas = Pass(1300, 700)
+                player = Player(700, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
+        if pygame.sprite.collide_mask(self, door3):
+            if self.loc == 6:
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                word_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a2_m3.jpg', (2000, 5500))
+                all_sprites.add(background)
+                chest = Chest(1000, 1100)
+                door3 = Door(1390, 3350, 2)
+                player = Player(1340, 3350, 2, key=player.key, pas=player.pas)
+                x, y = 700, 640
+                player.loc = 8
+            elif self.loc == 8:
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a2_m1.jpg', (3000, 1500))
+                door = Door(580, 840, 2)
+                door2 = Door(1860, 540, 2)
+                door3 = Door(580, 540, 2)
+                all_sprites.add(background)
+                door_group.add(door)
+                door_group.add(door2)
+                door_group.add(door3)
+                pas = Pass(1300, 700)
+                player = Player(700, 540, 2, key=player.key, pas=player.pas)
+                player.loc = 6
+        if pygame.sprite.collide_mask(self, chest):
+            if player.key:
+                player.pas = True
+                img = load_image('cash.jpg')
+                img = pygame.transform.scale(img, (50, 50))
+        if pygame.sprite.collide_mask(self, pas):
+            if player.pas:
+                player.key = False
+                player.pas = False
+                all_sprites = pygame.sprite.Group()
+                player_group = pygame.sprite.Group()
+                door_group = pygame.sprite.Group()
+                background = Background('a2_m4.jpg', (3000, 1500))
+                pas = Pass(1300, 700)
+                door = Door(580, 840, 2)
+                door2 = Door(1860, 540, 2)
+                door3 = Door(580, 540, 2)
+                all_sprites.add(background)
+                door_group.add(door)
+                door_group.add(door2)
+                door_group.add(door3)
+                pas = Pass(1300, 700)
+                player = Player(player.x, player.y, 2, key=player.key, pas=player.pas)
+                player.loc = 9
 
         camera.update(player)
         for sprite in all_sprites:
@@ -574,6 +634,26 @@ class Button(pygame.sprite.Sprite):
             self.tm = 300
 
 
+class Pass(pygame.sprite.Sprite):
+    image = load_image('pass.jpg')
+    image = pygame.transform.scale(image, (40, 60))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Pass.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+
+
+class Chest(pygame.sprite.Sprite):
+    image = load_image('chest.jpg')
+    image = pygame.transform.scale(image, (60, 40))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Chest.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+
+
 class WizardRus(pygame.sprite.Sprite):
     image = load_image('wizardRus.png')
     image = pygame.transform.scale(image, (80, 90))
@@ -634,6 +714,11 @@ img = pygame.transform.scale(img, (50, 50))
 loc5 = 0
 camera = Camera()
 
+door2 = Door(20000, 20000, 2)
+door3 = Door(20000, 20000, 2)
+chest = Chest(20000, 20000)
+pas = Pass(20000, 20000)
+
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption('Entangled Tale')
@@ -668,6 +753,16 @@ if __name__ == '__main__':
         all_sprites.draw(screen)
         if player.loc == 7:
             screen.blit(task_text, (x - player.x + 500, y - player.y + 200))
+        if not player.key and pygame.sprite.collide_mask(player, chest):
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 40)
+            task_text = font.render("Нужен ключ!", True, (255, 255, 255))
+            screen.blit(task_text, (300, 0))
+        if not player.pas and pygame.sprite.collide_mask(player, pas) and player.loc == 6:
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 40)
+            task_text = font.render("Нужна монета!", True, (255, 255, 255))
+            screen.blit(task_text, (300, 0))
         player_group.draw(screen)
         if player.loc == 2:
             i += 1
@@ -680,6 +775,7 @@ if __name__ == '__main__':
             word_group.draw(screen)
         if player.key:
             screen.blit(img, (750, 0))
+
         if player.loc == 4:
             if loc5 <= 1000 and loc5 % 200 == 0:
                 try:
