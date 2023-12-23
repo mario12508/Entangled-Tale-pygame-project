@@ -29,18 +29,23 @@ def newDialog():
     return render_fraze_1, render_fraze_2, render_fraze_3
 
 
-def mathGame():
+def mathGame(m):
     global background, all_sprites, player_group, player, door, \
-        door_group, rectangle_group, loc5
-    fon = pygame.transform.scale(load_image('a1_m4.png'), (800, 500))
+        door_group, rectangle_group, loc5, x, y
+    fon = pygame.transform.scale(load_image(m), (800, 500))
     screen.blit(fon, (0, 0))
 
     a = random.randint(0, 100)
     difference = random.randint(0, 9)
     b = difference - a
-    fraze_1 = 'Я великий маг этого подземелья,'
-    fraze_2 = 'и я никому не дам ходить по нему'
-    fraze_3 = 'без моего разрешения!'
+    if m == 'a1_m4.jpg':
+        fraze_1 = 'Я великий маг этого подземелья,'
+        fraze_2 = 'и я никому не дам ходить по нему'
+        fraze_3 = 'без моего разрешения!'
+    elif m == 'a2_m5.jpg':
+        fraze_1 = 'Вот мы снова встретились,'
+        fraze_2 = 'и в этот раз ты в моем лесу'
+        fraze_3 = 'дальше я тебя не пропущу!'
     screen.fill((0, 0, 0))
     screen.blit(fon, (0, 0))
     font_path = os.path.join("data/fonts", "comic.ttf")
@@ -90,22 +95,38 @@ def mathGame():
                     k = 2
                 elif event.key == pygame.K_z and k == 2:
                     if win:
-                        all_sprites = pygame.sprite.Group()
-                        player_group = pygame.sprite.Group()
-                        rectangle_group = pygame.sprite.Group()
-                        background = Background('a1_m5.png', (839, 1300))
-                        all_sprites.add(background)
-                        player = Player(419, 1100, 1)
-                        door = Door(362, 30, 1, 2)
-                        player.loc = 3
-
-                        loc5 = 0
+                        if m == 'a1_m4.jpg':
+                            all_sprites = pygame.sprite.Group()
+                            player_group = pygame.sprite.Group()
+                            rectangle_group = pygame.sprite.Group()
+                            background = Background('a1_m5.png', (839, 1300))
+                            all_sprites.add(background)
+                            player = Player(419, 1100, 1)
+                            door = Door(362, 30, 1, 2)
+                            player.loc = 3
+                            loc5 = 0
+                        elif m == 'a2_m5.jpg':
+                            all_sprites = pygame.sprite.Group()
+                            player_group = pygame.sprite.Group()
+                            rectangle_group = pygame.sprite.Group()
+                            background = Background('a2_m6.jpg', (1500, 1000))
+                            all_sprites.add(background)
+                            player = Player(750, 500, 2)
+                            player.loc = 11
+                            door.rect.x = 20000
+                            door2.rect.x = 20000
+                            door3.rect.x = 20000
+                            x = player.x
+                            y = player.y
                         camera.update(player)
                         for sprite in all_sprites:
                             camera.apply(sprite)
                         return
                     else:
-                        end_screen(1, False)
+                        if m == 'a1_m4.jpg':
+                            end_screen(1, False)
+                        elif m == 'a2_m5.jpg':
+                            end_screen(2, False)
                         return
 
         if i <= len(fraze_1):
@@ -291,6 +312,7 @@ class Player(pygame.sprite.Sprite):
         self.loc = 0
         self.key = key
         self.pas = pas
+        self.run = 5
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
@@ -316,11 +338,11 @@ class Player(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if move_left:
             self.direction = 'left'
-            self.rect.x -= 5
-            self.x -= 5
+            self.rect.x -= self.run
+            self.x -= self.run
             if background.get_rgb(self.x, self.y) in self.stena:
-                self.rect.x += 5
-                self.x += 5
+                self.rect.x += self.run
+                self.x += self.run
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -338,11 +360,11 @@ class Player(pygame.sprite.Sprite):
             image = load_image(f'm.c.left_walk_{self.step}.jpg')
         if move_right:
             self.direction = 'right'
-            self.rect.x += 5
-            self.x += 5
+            self.rect.x += self.run
+            self.x += self.run
             if background.get_rgb(self.x, self.y) in self.stena:
-                self.rect.x -= 5
-                self.x -= 5
+                self.rect.x -= self.run
+                self.x -= self.run
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -360,11 +382,11 @@ class Player(pygame.sprite.Sprite):
             image = load_image(f'm.c.right_walk_{self.step}.jpg')
         if move_up:
             self.direction = 'up'
-            self.rect.y -= 5
-            self.y -= 5
+            self.rect.y -= self.run
+            self.y -= self.run
             if background.get_rgb(self.x, self.y) in self.stena:
-                self.rect.y += 5
-                self.y += 5
+                self.rect.y += self.run
+                self.y += self.run
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -382,11 +404,11 @@ class Player(pygame.sprite.Sprite):
             image = load_image(f'm.c.back_walk_{self.step}.jpg')
         if move_down:
             self.direction = 'down'
-            self.rect.y += 5
-            self.y += 5
+            self.rect.y += self.run
+            self.y += self.run
             if background.get_rgb(self.x, self.y) in self.stena:
-                self.rect.y -= 5
-                self.y -= 5
+                self.rect.y -= self.run
+                self.y -= self.run
             if current_time - self.last_skin_change_time > 150:
                 self.last_skin_change_time = current_time
                 if self.step == 1:
@@ -436,7 +458,7 @@ class Player(pygame.sprite.Sprite):
                 all_sprites.add(background)
                 player = Player(375, 300, 1)
                 player.loc = 3
-                mathGame()
+                mathGame('a1_m4.jpg')
             elif self.loc == 3:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -454,7 +476,7 @@ class Player(pygame.sprite.Sprite):
                 door.rect.x = 20000
                 self.loc = 6
                 end_screen(2, True)
-            elif self.loc == 6:
+            elif self.loc == 6 or self.loc == 9:
                 a = ['Птица', "Медведь", "Заяц", "Человек"]
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -489,7 +511,7 @@ class Player(pygame.sprite.Sprite):
                 player = Player(700, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
         if pygame.sprite.collide_mask(self, door3):
-            if self.loc == 6:
+            if self.loc == 6 or self.loc == 9:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 word_group = pygame.sprite.Group()
@@ -516,15 +538,15 @@ class Player(pygame.sprite.Sprite):
                 pas = Pass(1300, 700)
                 player = Player(700, 540, 2, key=player.key, pas=player.pas)
                 player.loc = 6
-        if pygame.sprite.collide_mask(self, chest):
+        if pygame.sprite.collide_mask(self, chest) and self.loc != 9:
             if player.key:
                 player.pas = True
                 img = load_image('cash.jpg')
                 img = pygame.transform.scale(img, (50, 50))
-        if pygame.sprite.collide_mask(self, pas):
+                chest.image = pygame.transform.scale(load_image('chest_open.jpg'), (60, 40))
+
+        if pygame.sprite.collide_mask(self, pas) and self.loc != 9:
             if player.pas:
-                player.key = False
-                player.pas = False
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
@@ -538,8 +560,16 @@ class Player(pygame.sprite.Sprite):
                 door_group.add(door2)
                 door_group.add(door3)
                 pas = Pass(1300, 700)
-                player = Player(player.x, player.y, 2, key=player.key, pas=player.pas)
+                player = Player(player.x, player.y, 2)
                 player.loc = 9
+        if pygame.sprite.collide_mask(self, door2):
+            all_sprites = pygame.sprite.Group()
+            player_group = pygame.sprite.Group()
+            background = Background('a1_m4.jpg', (750, 400))
+            all_sprites.add(background)
+            player = Player(750, 1000, 1)
+            player.loc = 10
+            mathGame('a2_m5.jpg')
 
         camera.update(player)
         for sprite in all_sprites:
@@ -732,6 +762,7 @@ img = load_image('key.jpg')
 img = pygame.transform.scale(img, (50, 50))
 
 loc5 = 0
+runi = -600
 camera = Camera()
 
 door2 = Door(20000, 20000, 2, 1)
@@ -755,8 +786,12 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_o:
                     menu()
+                if event.key == pygame.K_e and runi == -600:
+                    player.run = 9
+                    runi = 300
             if event.type == pygame.KEYUP:
                 player.stop()
+
         keys = pygame.key.get_pressed()
 
         screen.fill((2, 0, 0))
@@ -784,6 +819,11 @@ if __name__ == '__main__':
             task_text = font.render("Нужна монета!", True, (255, 255, 255))
             screen.blit(task_text, (300, 0))
         player_group.draw(screen)
+        if runi > -600:
+            runi -= 1
+        if runi <= 0:
+            player.run = 5
+
         if player.loc == 2:
             i += 1
             if i % 40 == 0:
