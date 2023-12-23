@@ -93,10 +93,10 @@ def mathGame():
                         all_sprites = pygame.sprite.Group()
                         player_group = pygame.sprite.Group()
                         rectangle_group = pygame.sprite.Group()
-                        background = Background('a1_m5.png', (700, 1517))
+                        background = Background('a1_m5.png', (839, 1300))
                         all_sprites.add(background)
-                        player = Player(290, 1000, 1)
-                        door = Door(290, 150, 1)
+                        player = Player(419, 1100, 1)
+                        door = Door(362, 30, 1, 2)
                         player.loc = 3
 
                         loc5 = 0
@@ -200,7 +200,7 @@ def act1():
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
     background = Background('a1_m1.png', (1360, 760))
-    door = Door(1180, 440, 1)
+    door = Door(1180, 440, 1, 1)
     all_sprites.add(background)
     door_group.add(door)
     player = Player(290, 470, 1)
@@ -226,9 +226,9 @@ def act2():
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
     background = Background('a2_m1.jpg', (3000, 1500))
-    door = Door(580, 840, 2)
-    door2 = Door(1860, 540, 2)
-    door3 = Door(580, 540, 2)
+    door = Door(580, 840, 2, 1)
+    door2 = Door(1860, 540, 2, 1)
+    door3 = Door(580, 540, 2, 1)
     all_sprites.add(background)
     door_group.add(door)
     door_group.add(door2)
@@ -409,16 +409,16 @@ class Player(pygame.sprite.Sprite):
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a1_m2.png', (600, 1300))
+                background = Background('a1_m2.png', (839, 1300))
                 all_sprites.add(background)
-                player = Player(240, 950, 1)
+                player = Player(419, 950, 1)
                 player.loc = 1
-                wizardRus.rect.x = 240
+                wizardRus.rect.x = 419
                 wizardRus.rect.y = 600
                 wizardRus.canRun = False
                 wizardRus.y = 600
                 all_sprites.add(wizardRus)
-                door = Door(240, 100, 1)
+                door = Door(363, 48, 1, 2)
             elif self.loc == 1:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -426,7 +426,7 @@ class Player(pygame.sprite.Sprite):
                 door_group = pygame.sprite.Group()
                 background = Background('a1_m3.png', (2100, 500))
                 all_sprites.add(background)
-                door = Door(1800, 200, 1)
+                door = Door(1800, 200, 1, 1)
                 player = Player(200, 330, 1)
                 player.loc = 2
             elif self.loc == 2:
@@ -449,7 +449,7 @@ class Player(pygame.sprite.Sprite):
                 y = player.y
 
                 loc5 = 0
-                door = Door(20000, 20000, 1)
+                door = Door(20000, 20000, 1, 1)
             elif self.loc == 5:
                 door.rect.x = 20000
                 self.loc = 6
@@ -462,7 +462,7 @@ class Player(pygame.sprite.Sprite):
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m2.jpg', (2000, 1500))
                 all_sprites.add(background)
-                door = Door(1330, 750, 2)
+                door = Door(1330, 750, 2, 1)
                 for j in range(1, 5):
                     button_group.add(Button(575 + j * 150, 800, j))
                 player = Player(1270, 750, 2, key=player.key, pas=player.pas)
@@ -478,9 +478,9 @@ class Player(pygame.sprite.Sprite):
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m1.jpg', (3000, 1500))
                 pas = Pass(1300, 700)
-                door = Door(580, 840, 2)
-                door2 = Door(1860, 540, 2)
-                door3 = Door(580, 540, 2)
+                door = Door(580, 840, 2, 1)
+                door2 = Door(1860, 540, 2, 1)
+                door3 = Door(580, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door)
                 door_group.add(door2)
@@ -497,7 +497,7 @@ class Player(pygame.sprite.Sprite):
                 background = Background('a2_m3.jpg', (2000, 5500))
                 all_sprites.add(background)
                 chest = Chest(1000, 1100)
-                door3 = Door(1390, 3350, 2)
+                door3 = Door(1390, 3350, 2, 1)
                 player = Player(1340, 3350, 2, key=player.key, pas=player.pas)
                 x, y = 700, 640
                 player.loc = 8
@@ -506,9 +506,9 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m1.jpg', (3000, 1500))
-                door = Door(580, 840, 2)
-                door2 = Door(1860, 540, 2)
-                door3 = Door(580, 540, 2)
+                door = Door(580, 840, 2, 1)
+                door2 = Door(1860, 540, 2, 1)
+                door3 = Door(580, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door)
                 door_group.add(door2)
@@ -530,9 +530,9 @@ class Player(pygame.sprite.Sprite):
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m4.jpg', (3000, 1500))
                 pas = Pass(1300, 700)
-                door = Door(580, 840, 2)
-                door2 = Door(1860, 540, 2)
-                door3 = Door(580, 540, 2)
+                door = Door(580, 840, 2, 1)
+                door2 = Door(1860, 540, 2, 1)
+                door3 = Door(580, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door)
                 door_group.add(door2)
@@ -544,6 +544,11 @@ class Player(pygame.sprite.Sprite):
         camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
+
+
+# class Sign(pygame.sprite.Sprite):
+#     def __init__(self, x_pos, y_pos, ):
+#         super().__init__()
 
 
 class Letters(pygame.sprite.Sprite):
@@ -577,13 +582,16 @@ class Background(pygame.sprite.Sprite):
 
 
 class Door(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, tip):
+    def __init__(self, pos_x, pos_y, act, tip):
         super().__init__(all_sprites)
-        if tip == 1:
-            image_path = load_image('exit-enter_a1.png')
-        elif tip == 2:
+        if act == 1:
+            image_path = load_image(f'door_a1_{tip}.png')
+        elif act == 2:
             image_path = load_image('exit-enter_a2.png')
-        self.image = pygame.transform.scale(image_path, (120, 96))
+        if tip == 1:
+            self.image = pygame.transform.scale(image_path, (120, 96))
+        elif tip == 2:
+            self.image = pygame.transform.scale(image_path, (112, 67))
         self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -726,8 +734,8 @@ img = pygame.transform.scale(img, (50, 50))
 loc5 = 0
 camera = Camera()
 
-door2 = Door(20000, 20000, 2)
-door3 = Door(20000, 20000, 2)
+door2 = Door(20000, 20000, 2, 1)
+door3 = Door(20000, 20000, 2, 1)
 chest = Chest(20000, 20000)
 pas = Pass(20000, 20000)
 
@@ -828,7 +836,7 @@ if __name__ == '__main__':
             if loc5 == 4200:
                 rect.rect.x = 20000
             if loc5 == 4400:
-                door = Door(x - player.x + 350, y - player.y + 150, 1)
+                door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 5
             loc5 += 1
 

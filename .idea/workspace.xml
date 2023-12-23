@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="boss location processed">
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="5 location">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/a1_m5.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/a1_m5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/exit-enter_a1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/yellorect.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +30,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -240,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703105401348</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="5 location">
+      <option name="closed" value="true" />
+      <created>1703339118774</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1703339118775</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,14 +277,15 @@
     <MESSAGE value="third location design done" />
     <MESSAGE value="bugs fix" />
     <MESSAGE value="boss location processed" />
-    <option name="LAST_COMMIT_MESSAGE" value="boss location processed" />
+    <MESSAGE value="5 location" />
+    <option name="LAST_COMMIT_MESSAGE" value="5 location" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>794</line>
+          <line>799</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
