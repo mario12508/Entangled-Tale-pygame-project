@@ -97,7 +97,7 @@ def mathGame():
                         all_sprites.add(background)
                         player = Player(290, 1000, 1)
                         door = Door(290, 150, 1)
-                        player.loc = 4
+                        player.loc = 3
 
                         loc5 = 0
                         camera.update(player)
@@ -311,7 +311,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, move_up, move_down, move_left, move_right, passaa=None):
         global all_sprites, background, player, player_group, door_group, \
             door, word_group, x, y, task_text, ok_tip, door2, door3, \
-            chest, img, pas, loc5, rectangle_group
+            chest, img, pas, rectangle_group, loc5
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -404,6 +404,7 @@ class Player(pygame.sprite.Sprite):
             image = load_image(f'm.c.front_walk_{self.step}.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
         if pygame.sprite.collide_mask(self, door):
+            print(player.loc)
             if self.loc == 0:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -436,28 +437,24 @@ class Player(pygame.sprite.Sprite):
                 player = Player(375, 300, 1)
                 player.loc = 3
                 mathGame()
-                x = player.x
-                y = player.y
-            elif self.loc == 4:
+            elif self.loc == 3:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 rectangle_group = pygame.sprite.Group()
                 background = Background('a1_m6.png', (900, 784))
                 all_sprites.add(background)
                 player = Player(450, 300, 1)
-                player.loc = 5
+                player.loc = 4
+                x = player.x
+                y = player.y
 
                 loc5 = 0
-                camera.update(player)
                 door = Door(20000, 20000, 1)
-                for sprite in all_sprites:
-                    camera.apply(sprite)
-                return
-            elif self.loc == 6:
+            elif self.loc == 5:
                 door.rect.x = 20000
-                self.loc = 7
+                self.loc = 6
                 end_screen(2, True)
-            elif self.loc == 7:
+            elif self.loc == 6:
                 a = ['Птица', "Медведь", "Заяц", "Человек"]
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -474,8 +471,8 @@ class Player(pygame.sprite.Sprite):
                 ok_tip = random.randint(0, 3)
                 task_text = font.render(a[ok_tip], True, (255, 255, 255))
                 x, y = 700, 640
-                player.loc = 8
-            elif self.loc == 8:
+                player.loc = 7
+            elif self.loc == 7:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
@@ -490,9 +487,9 @@ class Player(pygame.sprite.Sprite):
                 door_group.add(door3)
                 pas = Pass(1300, 700)
                 player = Player(700, 840, 2, key=player.key, pas=player.pas)
-                player.loc = 7
+                player.loc = 6
         if pygame.sprite.collide_mask(self, door3):
-            if self.loc == 7:
+            if self.loc == 6:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 word_group = pygame.sprite.Group()
@@ -503,8 +500,8 @@ class Player(pygame.sprite.Sprite):
                 door3 = Door(1390, 3350, 2)
                 player = Player(1340, 3350, 2, key=player.key, pas=player.pas)
                 x, y = 700, 640
-                player.loc = 9
-            elif self.loc == 9:
+                player.loc = 8
+            elif self.loc == 8:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
@@ -518,7 +515,7 @@ class Player(pygame.sprite.Sprite):
                 door_group.add(door3)
                 pas = Pass(1300, 700)
                 player = Player(700, 540, 2, key=player.key, pas=player.pas)
-                player.loc = 7
+                player.loc = 6
         if pygame.sprite.collide_mask(self, chest):
             if player.key:
                 player.pas = True
@@ -766,14 +763,14 @@ if __name__ == '__main__':
         camera.update(player)
         wizardRus.update()
         all_sprites.draw(screen)
-        if player.loc == 8:
+        if player.loc == 7:
             screen.blit(task_text, (x - player.x + 500, y - player.y + 200))
         if not player.key and pygame.sprite.collide_mask(player, chest):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужен ключ!", True, (255, 255, 255))
             screen.blit(task_text, (300, 0))
-        if not player.pas and pygame.sprite.collide_mask(player, pas) and player.loc == 7:
+        if not player.pas and pygame.sprite.collide_mask(player, pas) and player.loc == 6:
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужна монета!", True, (255, 255, 255))
@@ -791,8 +788,8 @@ if __name__ == '__main__':
         if player.key:
             screen.blit(img, (750, 0))
 
-        if player.loc == 5:
-            if loc5 <= 1000 and loc5 % 200 == 0:
+        if player.loc == 4:
+            if 200 <= loc5 <= 1000 and loc5 % 200 == 0:
                 try:
                     n = random.randint(-1, 3) * 200
                     while n == m:
@@ -804,7 +801,7 @@ if __name__ == '__main__':
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
                                  519, False)
-            if loc5 <= 1000 and loc5 % 200 == 140:
+            if 340 <= loc5 <= 1000 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
@@ -832,7 +829,7 @@ if __name__ == '__main__':
                 rect.rect.x = 20000
             if loc5 == 4400:
                 door = Door(x - player.x + 350, y - player.y + 150, 1)
-                player.loc = 6
+                player.loc = 5
             loc5 += 1
 
             rectangle_group.update()
