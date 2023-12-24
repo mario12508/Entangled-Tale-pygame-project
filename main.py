@@ -31,14 +31,14 @@ def newDialog():
 
 def mathGame(m):
     global background, all_sprites, player_group, player, door, \
-        door_group, rectangle_group, loc5, x, y
+        door_group, rectangle_group, loc5, loc11, x, y
     fon = pygame.transform.scale(load_image(m), (800, 500))
     screen.blit(fon, (0, 0))
 
     a = random.randint(0, 100)
     difference = random.randint(0, 9)
     b = difference - a
-    if m == 'a1_m4.jpg':
+    if m == 'a1_m4.png':
         fraze_1 = 'Я великий маг этого подземелья,'
         fraze_2 = 'и я никому не дам ходить по нему'
         fraze_3 = 'без моего разрешения!'
@@ -95,7 +95,7 @@ def mathGame(m):
                     k = 2
                 elif event.key == pygame.K_z and k == 2:
                     if win:
-                        if m == 'a1_m4.jpg':
+                        if m == 'a1_m4.png':
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
@@ -109,21 +109,22 @@ def mathGame(m):
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('a2_m6.jpg', (1500, 1000))
+                            background = Background('a2_m6.jpg', (1700, 1000))
                             all_sprites.add(background)
-                            player = Player(750, 500, 2)
+                            player = Player(850, 500, 2)
                             player.loc = 11
                             door.rect.x = 20000
                             door2.rect.x = 20000
                             door3.rect.x = 20000
                             x = player.x
                             y = player.y
+                            loc11 = 0
                         camera.update(player)
                         for sprite in all_sprites:
                             camera.apply(sprite)
                         return
                     else:
-                        if m == 'a1_m4.jpg':
+                        if m == 'a1_m4.png':
                             end_screen(1, False)
                         elif m == 'a2_m5.jpg':
                             end_screen(2, False)
@@ -236,7 +237,7 @@ def act1():
 
 def act2():
     global all_sprites, player_group, player, background, door, \
-        door_group, time, x, y, door2, door3, pas
+        door_group, time, x, y, door2, door3, pas, loc11, img
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
     screen.blit(fon, (0, 0))
@@ -255,7 +256,10 @@ def act2():
     door_group.add(door2)
     door_group.add(door3)
     pas = Pass(1300, 700)
+    img = load_image('key.jpg')
+    img = pygame.transform.scale(img, (50, 50))
     x, y = 0, 0
+    loc11 = 0
     player = Player(1090, 720, 2)
     player.loc = 6
     camera.update(player)
@@ -333,7 +337,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, move_up, move_down, move_left, move_right, passaa=None):
         global all_sprites, background, player, player_group, door_group, \
             door, word_group, x, y, task_text, ok_tip, door2, door3, \
-            chest, img, pas, rectangle_group, loc5
+            chest, img, pas, rectangle_group, loc5, loc11
         image = self.image
         current_time = pygame.time.get_ticks()
         if move_left:
@@ -454,11 +458,11 @@ class Player(pygame.sprite.Sprite):
             elif self.loc == 2:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
-                background = Background('a1_m4.jpg', (700, 500))
+                background = Background('a1_m4.png', (700, 500))
                 all_sprites.add(background)
                 player = Player(375, 300, 1)
                 player.loc = 3
-                mathGame('a1_m4.jpg')
+                mathGame('a1_m4.png')
             elif self.loc == 3:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -565,7 +569,7 @@ class Player(pygame.sprite.Sprite):
         if pygame.sprite.collide_mask(self, door2):
             all_sprites = pygame.sprite.Group()
             player_group = pygame.sprite.Group()
-            background = Background('a1_m4.jpg', (750, 400))
+            background = Background('a1_m4.png', (750, 400))
             all_sprites.add(background)
             player = Player(750, 1000, 1)
             player.loc = 10
@@ -762,6 +766,7 @@ img = load_image('key.jpg')
 img = pygame.transform.scale(img, (50, 50))
 
 loc5 = 0
+loc11 = 0
 runi = -600
 camera = Camera()
 
@@ -879,6 +884,32 @@ if __name__ == '__main__':
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 5
             loc5 += 1
+        if player.loc == 11:
+            if loc11 <= 2000 and loc11 % 100 == 0:
+                Rectangle(x - player.x + 800,
+                          y - player.y + random.randint(-50, 200), -3, 0, random.randint(100, 300),
+                          10, True)
+                Rectangle(x - player.x + 800,
+                          y - player.y + random.randint(200, 450), -3, 0, random.randint(100, 300),
+                          10, True)
+            if 2300 <= loc11 <= 4000 and loc11 % 100 == 0:
+                Rectangle(x - player.x + random.randint(-200, 300),
+                          y - player.y - 200, 0, 1, 20, random.randint(100, 300),
+                          True)
+                Rectangle(x - player.x + random.randint(300, 800),
+                          y - player.y - 200, 0, 1, 20, random.randint(100, 300),
+                          True)
+            if 4300 <= loc11 <= 6000 and loc11 % 100 == 0:
+                Rectangle(x - player.x + 800,
+                          y - player.y + random.randint(-50, 200), -3, 0, random.randint(100, 300),
+                          10, True)
+                Rectangle(x - player.x - 300,
+                          y - player.y + random.randint(200, 450), 3, 0, random.randint(100, 300),
+                          10, True)
+            if loc11 == 6400:
+                door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
+                player.loc = 12
+            loc11 += 1
 
             rectangle_group.update()
         button_group.update()
