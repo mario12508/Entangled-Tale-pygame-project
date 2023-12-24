@@ -884,6 +884,7 @@ if __name__ == '__main__':
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 5
             loc5 += 1
+            rectangle_group.update()
         if player.loc == 11:
             if loc11 <= 2000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
@@ -910,7 +911,6 @@ if __name__ == '__main__':
                 door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
                 player.loc = 12
             loc11 += 1
-
             rectangle_group.update()
         button_group.update()
         door_group.draw(screen)
