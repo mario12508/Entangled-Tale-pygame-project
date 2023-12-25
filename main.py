@@ -101,6 +101,9 @@ def mathGame(m):
                             rectangle_group = pygame.sprite.Group()
                             background = Background('a1_m5.png', (839, 1300))
                             all_sprites.add(background)
+                            sign1 = Sign(110, 1000)
+                            all_sprites.add(sign1)
+                            sign_group.add(sign1)
                             player = Player(419, 1100, 1)
                             door = Door(362, 30, 1, 2)
                             player.loc = 3
@@ -336,7 +339,8 @@ class Player(pygame.sprite.Sprite):
         elif stena == 2:
             self.stena = [(34, 177, 76), (0, 162, 232)]
         elif stena == 3:
-            self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232), (187, 122, 87)]
+            self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232),
+                          (187, 122, 87)]
 
     def stop(self):
         image = self.image
@@ -446,7 +450,6 @@ class Player(pygame.sprite.Sprite):
             image = load_image(f'm.c.front_walk_{self.step}.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
         if pygame.sprite.collide_mask(self, door):
-            print(player.loc)
             if self.loc == 0:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -567,7 +570,8 @@ class Player(pygame.sprite.Sprite):
                 player.pas = True
                 img = load_image('cash.jpg')
                 img = pygame.transform.scale(img, (50, 50))
-                chest.image = pygame.transform.scale(load_image('chest_open.jpg'), (60, 40))
+                chest.image = pygame.transform.scale(
+                    load_image('chest_open.jpg'), (60, 40))
 
         if pygame.sprite.collide_mask(self, pas) and self.loc != 9:
             if player.pas:
@@ -603,9 +607,27 @@ class Player(pygame.sprite.Sprite):
             camera.apply(sprite)
 
 
-# class Sign(pygame.sprite.Sprite):
-#     def __init__(self, x_pos, y_pos, ):
-#         super().__init__()
+class Sign(pygame.sprite.Sprite):
+    image = load_image('sign.png')
+    image = pygame.transform.scale(image, (51, 54))
+
+    def __init__(self, x_pos, y_pos):
+        super().__init__(player_group, sign_group)
+        self.image = Sign.image
+        self.rect = self.image.get_rect().move(x_pos, y_pos)
+
+
+class TextWindow(pygame.sprite.Sprite):
+    image = load_image('text_window.png')
+    image = pygame.transform.scale(image, (300, 150))
+
+    def __init__(self, x_pos, y_pos):
+        super().__init__(player_group, text_group)
+        self.image = TextWindow.image
+        self.rect = self.image.get_rect().move(x_pos, y_pos)
+
+    # def update(self, *args, **kwargs):
+    #     if pygame.sprite.collide_mask(self, )
 
 
 class Letters(pygame.sprite.Sprite):
@@ -700,7 +722,8 @@ class Button(pygame.sprite.Sprite):
         if pygame.sprite.spritecollideany(self, player_group):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 50)
-            screen.blit(font.render(str(self.tm // 100 + 1), True, (0, 0, 0)), (350, 0))
+            screen.blit(font.render(str(self.tm // 100 + 1), True, (0, 0, 0)),
+                        (350, 0))
             if self.tm // 100 + 1 == 0:
                 if self.tip == ok_tip + 1:
                     self.tm += 1
@@ -795,6 +818,8 @@ door_group = pygame.sprite.Group()
 rectangle_group = pygame.sprite.Group()
 button_group = pygame.sprite.Group()
 word_group = pygame.sprite.Group()
+sign_group = pygame.sprite.Group()
+text_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
@@ -848,6 +873,8 @@ if __name__ == '__main__':
         camera.update(player)
         wizardRus.update()
         all_sprites.draw(screen)
+        if player.loc == 3:
+            sign_group.update()
         if player.loc == 7:
             screen.blit(task_text, (x - player.x + 500, y - player.y + 200))
         if not player.key and pygame.sprite.collide_mask(player, chest):
@@ -855,7 +882,8 @@ if __name__ == '__main__':
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужен ключ!", True, (255, 255, 255))
             screen.blit(task_text, (300, 0))
-        if not player.pas and pygame.sprite.collide_mask(player, pas) and player.loc == 6:
+        if (not player.pas and pygame.sprite.collide_mask(player, pas) and
+                player.loc == 6):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужна монета!", True, (255, 255, 255))
@@ -885,7 +913,7 @@ if __name__ == '__main__':
                     while n == m:
                         n = random.randint(-1, 3) * 200
                     m = n
-                except:
+                except Exception:
                     m = random.randint(-1, 3) * 200
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
@@ -925,24 +953,30 @@ if __name__ == '__main__':
         if player.loc == 11:
             if loc11 <= 2000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-50, 200), -3, 0, random.randint(100, 300),
+                          y - player.y + random.randint(-50, 200), -3, 0,
+                          random.randint(100, 300),
                           10, True)
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(200, 450), -3, 0, random.randint(100, 300),
+                          y - player.y + random.randint(200, 450), -3, 0,
+                          random.randint(100, 300),
                           10, True)
             if 2300 <= loc11 <= 4000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + random.randint(-100, 300),
-                          y - player.y - 200, 0, 1, 20, random.randint(100, 300),
+                          y - player.y - 200, 0, 1, 20,
+                          random.randint(100, 300),
                           True)
                 Rectangle(x - player.x + random.randint(300, 800),
-                          y - player.y - 200, 0, 1, 20, random.randint(100, 300),
+                          y - player.y - 200, 0, 1, 20,
+                          random.randint(100, 300),
                           True)
             if 4300 <= loc11 <= 6000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-50, 200), -3, 0, random.randint(100, 300),
+                          y - player.y + random.randint(-50, 200), -3, 0,
+                          random.randint(100, 300),
                           10, True)
                 Rectangle(x - player.x - 300,
-                          y - player.y + random.randint(200, 450), 3, 0, random.randint(100, 300),
+                          y - player.y + random.randint(200, 450), 3, 0,
+                          random.randint(100, 300),
                           10, True)
             if loc11 == 6400:
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
