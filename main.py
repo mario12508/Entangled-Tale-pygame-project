@@ -268,10 +268,24 @@ def act2():
 
 
 def act3():
+    global all_sprites, player_group, player, background, door, door_group, \
+        i, x, y, time, defen
     fon = pygame.transform.scale(load_image('act3.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     clock.tick(1)
+
+    all_sprites = pygame.sprite.Group()
+    player_group = pygame.sprite.Group()
+    background = Background('a3_m1.jpg', (10000, 6000))
+    all_sprites.add(background)
+    player = Player(1650, 1200, 3)
+    player.loc = 13
+    defen = Defens(2400, 2300)
+
+    camera.update(player)
+    for sprite in all_sprites:
+        camera.apply(sprite)
 
 
 def menu():
@@ -321,6 +335,8 @@ class Player(pygame.sprite.Sprite):
             self.stena = [(2, 0, 0)]
         elif stena == 2:
             self.stena = [(34, 177, 76), (0, 162, 232)]
+        elif stena == 3:
+            self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232), (187, 122, 87)]
 
     def stop(self):
         image = self.image
@@ -514,6 +530,10 @@ class Player(pygame.sprite.Sprite):
                 pas = Pass(1300, 700)
                 player = Player(700, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
+            elif self.loc == 12:
+                door.rect.x = 20000
+                self.loc = 13
+                end_screen(3, True)
         if pygame.sprite.collide_mask(self, door3):
             if self.loc == 6 or self.loc == 9:
                 all_sprites = pygame.sprite.Group()
@@ -574,6 +594,9 @@ class Player(pygame.sprite.Sprite):
             player = Player(750, 1000, 1)
             player.loc = 10
             mathGame('a2_m5.jpg')
+
+        if player.loc == 13 and pygame.sprite.collide_mask(self, defen):
+            print('1')
 
         camera.update(player)
         for sprite in all_sprites:
@@ -656,7 +679,10 @@ class Rectangle(pygame.sprite.Sprite):
                     j.rect.x = 10000
 
                 rectangle_group = pygame.sprite.Group()
-                end_screen(1, False)
+                if player.loc == 4:
+                    end_screen(1, False)
+                elif player.loc == 11:
+                    end_screen(2, False)
                 return
 
 
@@ -706,6 +732,17 @@ class Chest(pygame.sprite.Sprite):
         super().__init__(all_sprites)
         self.image = Chest.image
         self.rect = self.image.get_rect().move(pos_x, pos_y)
+
+
+class Defens(pygame.sprite.Sprite):
+    image = load_image('defens.jpg')
+    image = pygame.transform.scale(image, (200, 200))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Defens.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.mask = pygame.mask.from_surface(self.image)
 
 
 class WizardRus(pygame.sprite.Sprite):
@@ -894,7 +931,7 @@ if __name__ == '__main__':
                           y - player.y + random.randint(200, 450), -3, 0, random.randint(100, 300),
                           10, True)
             if 2300 <= loc11 <= 4000 and loc11 % 100 == 0:
-                Rectangle(x - player.x + random.randint(-200, 300),
+                Rectangle(x - player.x + random.randint(-100, 300),
                           y - player.y - 200, 0, 1, 20, random.randint(100, 300),
                           True)
                 Rectangle(x - player.x + random.randint(300, 800),
@@ -908,7 +945,7 @@ if __name__ == '__main__':
                           y - player.y + random.randint(200, 450), 3, 0, random.randint(100, 300),
                           10, True)
             if loc11 == 6400:
-                door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
+                door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 12
             loc11 += 1
             rectangle_group.update()
