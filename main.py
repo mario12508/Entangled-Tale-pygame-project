@@ -31,7 +31,7 @@ def newDialog():
 
 def mathGame(m):
     global background, all_sprites, player_group, player, door, \
-        door_group, rectangle_group, loc5, loc11, x, y
+        door_group, rectangle_group, loc5, loc11, loc14, x, y
     fon = pygame.transform.scale(load_image(m), (800, 500))
     screen.blit(fon, (0, 0))
 
@@ -142,7 +142,7 @@ def mathGame(m):
                             rectangle_group = pygame.sprite.Group()
                             background = Background('a3_m3.jpg', (2210, 1300))
                             all_sprites.add(background)
-                            player = Player(1105, 650, 2)
+                            player = Player(1105, 650, 3)
                             player.loc = 15
                             door.rect.x = 20000
                             x = player.x
@@ -753,7 +753,10 @@ class Door(pygame.sprite.Sprite):
 class Rectangle(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamage):
         if canDamage:
-            image_path = load_image('redrect.jpg')
+            if player.loc == 15:
+                image_path = load_image('damage_platform.jpg')
+            else:
+                image_path = load_image('redrect.jpg')
         else:
             image_path = load_image('warning rect.png')
         image_path = pygame.transform.scale(image_path, (xx, yy))
@@ -767,10 +770,10 @@ class Rectangle(pygame.sprite.Sprite):
         self.canDamage = canDamage
 
     def update(self):
-        global rectangle_group
+        global rectangle_group, plat
         self.rect.x += 2 * self.vx
         self.rect.y += 2 * self.vy
-        if self.canDamage:
+        if self.canDamage and not (pygame.sprite.collide_mask(player, plat)):
             if pygame.sprite.collide_mask(self, player):
                 for j in rectangle_group:
                     j.rect.x = 10000
@@ -780,13 +783,18 @@ class Rectangle(pygame.sprite.Sprite):
                     end_screen(1, False)
                 elif player.loc == 11:
                     end_screen(2, False)
+                elif player.loc == 15:
+                    end_screen(3, False)
                 return
 
 
 class Button(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, tip):
         super().__init__(all_sprites)
-        image_path = load_image(f'button{tip}.jpg')
+        if player.loc == 15:
+            image_path = load_image(f'button{tip}_{tip}.jpg')
+        else:
+            image_path = load_image(f'button{tip}.jpg')
         self.image = pygame.transform.scale(image_path, (80, 80))
         self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
         self.mask = pygame.mask.from_surface(self.image)
@@ -794,22 +802,23 @@ class Button(pygame.sprite.Sprite):
         self.tm = 300
 
     def update(self):
-        if pygame.sprite.spritecollideany(self, player_group):
-            font_path = os.path.join("data/fonts", "comic.ttf")
-            font = pygame.font.Font(font_path, 50)
-            screen.blit(font.render(str(self.tm // 100 + 1), True, (0, 0, 0)),
-                        (350, 0))
-            if self.tm // 100 + 1 == 0:
-                if self.tip == ok_tip + 1:
-                    self.tm += 1
-                    player.key = True
-                else:
-                    for j in button_group:
-                        j.rect.x = 20000
-                    end_screen(2, False)
-            self.tm -= 1
-        else:
-            self.tm = 300
+        if player.loc != 15:
+            if pygame.sprite.spritecollideany(self, player_group):
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 50)
+                screen.blit(font.render(str(self.tm // 100 + 1), True, (0, 0, 0)),
+                            (350, 0))
+                if self.tm // 100 + 1 == 0:
+                    if self.tip == ok_tip + 1:
+                        self.tm += 1
+                        player.key = True
+                    else:
+                        for j in button_group:
+                            j.rect.x = 20000
+                        end_screen(2, False)
+                self.tm -= 1
+            else:
+                self.tm = 300
 
 
 class Pass(pygame.sprite.Sprite):
@@ -861,6 +870,17 @@ class Traveler(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
         self.image = Traveler.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.mask = pygame.mask.from_surface(self.image)
+
+
+class Platform(pygame.sprite.Sprite):
+    image = load_image('platform.jpg')
+    image = pygame.transform.scale(image, (100, 90))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Platform.image
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -926,6 +946,8 @@ img = pygame.transform.scale(img, (50, 50))
 
 loc5 = 0
 loc11 = 0
+loc14 = 0
+
 runi = -600
 camera = Camera()
 apples = []
@@ -933,6 +955,7 @@ apples = []
 door2 = Door(20000, 20000, 2, 1)
 door3 = Door(20000, 20000, 2, 1)
 chest = Chest(20000, 20000)
+plat = Platform(20000, 20000)
 pas = Pass(20000, 20000)
 traveler = Traveler(20000, 20000)
 
@@ -1103,6 +1126,109 @@ if __name__ == '__main__':
                 player.loc = 12
             loc11 += 1
             rectangle_group.update()
+
+        if player.loc == 15:
+            if loc14 == 200:
+                p = [random.randint(0, 600),
+                     random.randint(0, 300)]
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 400:
+                plat.rect.x = 20000
+                rect = Rectangle(-200, -200, 0, 0, 1000, 1000, True)
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 500:
+                plat.rect.x = 20000
+                rect.rect.x = 20000
+            elif loc14 == 600:
+                a = random.randint(0, 100)
+                difference = random.randint(1, 4)
+                b = difference - a
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 40)
+                if b < 0:
+                    question = f"{a}{b}"
+                else:
+                    question = f"{a} + {b}"
+                task_text = font.render(question, True, (0, 0, 0))
+                buttons = []
+                for j in range(1, 5):
+                    buttons.append(Button(x - player.x + j * 150, y - player.y + 200, j))
+            if 600 <= loc14 <= 800:
+                screen.blit(task_text, (300, 0))
+            if loc14 == 800:
+                for j in buttons:
+                    if pygame.sprite.collide_mask(player, j) and j.tip == difference:
+                        for k in buttons:
+                            k.rect.x = 20000
+                            buttons = []
+                        break
+                else:
+                    end_screen(3, False)
+
+            if loc14 == 1000:
+                p = [random.randint(0, 600),
+                     random.randint(0, 300)]
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 1200:
+                plat.rect.x = 20000
+                rect = Rectangle(-200, -200, 0, 0, 1000, 1000, True)
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 1300:
+                plat.rect.x = 20000
+                rect.rect.x = 20000
+            if 1400 <= loc14 <= 2000 and loc14 % 100 == 0:
+                Rectangle(x - player.x + 800,
+                          y - player.y + random.randint(-50, 200), -3, 0,
+                          random.randint(100, 300),
+                          10, True)
+                Rectangle(x - player.x - 300,
+                          y - player.y + random.randint(200, 450), 3, 0,
+                          random.randint(100, 300),
+                          10, True)
+
+            if loc14 == 2100:
+                p = [random.randint(0, 600),
+                     random.randint(0, 300)]
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 2300:
+                plat.rect.x = 20000
+                rect = Rectangle(-200, -200, 0, 0, 1000, 1000, True)
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 2400:
+                plat.rect.x = 20000
+                rect.rect.x = 20000
+            elif loc14 == 2500:
+                a = random.randint(0, 100)
+                difference = random.randint(1, 4)
+                b = difference - a
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 40)
+                if b < 0:
+                    question = f"{a}{b}"
+                else:
+                    question = f"{a} + {b}"
+                task_text = font.render(question, True, (0, 0, 0))
+                buttons = []
+                for j in range(1, 5):
+                    buttons.append(Button(x - player.x + j * 150, y - player.y + 200, j))
+            if 2500 <= loc14 <= 2700:
+                screen.blit(task_text, (300, 0))
+            if loc14 == 2700:
+                for j in buttons:
+                    if pygame.sprite.collide_mask(player, j) and j.tip == difference:
+                        for k in buttons:
+                            k.rect.x = 20000
+                            buttons = []
+                        break
+                else:
+                    end_screen(3, False)
+            if loc14 == 3000:
+                door = Door(x - player.x + 100, y - player.y + 150, 1, 1)
+                player.loc = 16
+
+            loc14 += 1
+            rectangle_group.update()
+
         button_group.update()
         door_group.draw(screen)
         pygame.display.flip()
