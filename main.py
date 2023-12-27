@@ -405,7 +405,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, move_up, move_down, move_left, move_right, passaa=None):
         global all_sprites, background, player, player_group, door_group, \
             door, word_group, x, y, task_text, ok_tip, door2, door3, \
-            chest, img, pas, rectangle_group, loc5, loc11
+            chest, img, pas, rectangle_group, loc5, loc11, text
         image = self.image
         current_time = pygame.time.get_ticks()
         text_window.rect.x = 999999
@@ -689,10 +689,11 @@ class Player(pygame.sprite.Sprite):
         if pygame.sprite.collide_mask(self, sign1):
             text_window.rect.x = 100
             font_path = os.path.join("data/fonts", "comic.ttf")
-            font = pygame.font.Font(font_path, 10)
+            font = pygame.font.Font(font_path, 20)
             text = font.render('в следующей комнате находится он', False,
                                (255, 255, 255))
-            screen.blit(text, (110, 10))
+        else:
+            text = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"), 20).render('', False, (255, 255, 255))
 
 
 class Sign(pygame.sprite.Sprite):
@@ -984,6 +985,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     start_screen()
 
+    text = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"), 20).render('', False, (255, 255, 255))
     i = 0
     running = True
     while running:
@@ -1013,8 +1015,6 @@ if __name__ == '__main__':
         camera.update(player)
         wizardRus.update()
         all_sprites.draw(screen)
-        if player.loc == 3:
-            sign_group.update()
         if player.loc == 7:
             screen.blit(task_text, (x - player.x + 500, y - player.y + 200))
         if not player.key and pygame.sprite.collide_mask(player, chest):
@@ -1256,6 +1256,9 @@ if __name__ == '__main__':
             loc14 += 1
             rectangle_group.update()
 
+        if player.loc == 3:
+            sign_group.update()
+            screen.blit(text, (110, 10))
         button_group.update()
         door_group.draw(screen)
         pygame.display.flip()
