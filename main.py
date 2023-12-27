@@ -118,8 +118,6 @@ def mathGame(m):
                             all_sprites.add(background)
                             sign1.rect.x = 120
                             sign1.rect.y = 1000
-                            text_group.add(text_window)
-                            all_sprites.add(text_window)
                             all_sprites.add(sign1)
                             sign_group.add(sign1)
                             player = Player(419, 1100, 1)
@@ -687,13 +685,16 @@ class Player(pygame.sprite.Sprite):
         for sprite in all_sprites:
             camera.apply(sprite)
         if pygame.sprite.collide_mask(self, sign1):
+            text_window.rect.y = 0
             text_window.rect.x = 100
+            text_group.add(text_window)
+            all_sprites.add(text_window)
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
             text = font.render('в следующей комнате находится он', False,
                                (255, 255, 255))
         else:
-            text = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"), 20).render('', False, (255, 255, 255))
+            text = pygame.font.Font(None, 2).render('', False, (255, 255, 255))
 
 
 class Sign(pygame.sprite.Sprite):
@@ -708,7 +709,7 @@ class Sign(pygame.sprite.Sprite):
 
 class TextWindow(pygame.sprite.Sprite):
     image = load_image('text_window.png')
-    image = pygame.transform.scale(image, (300, 150))
+    image = pygame.transform.scale(image, (600, 150))
 
     def __init__(self, x_pos, y_pos):
         super().__init__(player_group, text_group)
@@ -985,7 +986,8 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     start_screen()
 
-    text = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"), 20).render('', False, (255, 255, 255))
+    text = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+                            20).render('', False, (255, 255, 255))
     i = 0
     running = True
     while running:
