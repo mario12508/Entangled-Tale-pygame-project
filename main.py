@@ -91,7 +91,8 @@ def mathGame(m):
                             fraze_2 = 'на этот раз я тебя пропускаю,'
                             fraze_3 = 'но мы еще встретимся!'
                         elif m == 'a2_m5.jpg':
-                            fraze_1 = 'Я вижу, что ты до сих пор неплох в математике'
+                            fraze_1 = 'Я вижу, что ты до сих пор неплох в \
+                                       математике'
                             fraze_2 = 'в этот раз я тебя пропускаю,'
                             fraze_3 = 'но мы еще одна наша встреча не избежна!'
                         else:
@@ -115,7 +116,10 @@ def mathGame(m):
                             rectangle_group = pygame.sprite.Group()
                             background = Background('a1_m5.png', (839, 1300))
                             all_sprites.add(background)
-                            sign1 = Sign(110, 1000)
+                            sign1.rect.x = 120
+                            sign1.rect.y = 1000
+                            text_group.add(text_window)
+                            all_sprites.add(text_window)
                             all_sprites.add(sign1)
                             sign_group.add(sign1)
                             player = Player(419, 1100, 1)
@@ -159,7 +163,6 @@ def mathGame(m):
                             end_screen(2, False)
                         else:
                             end_screen(3, False)
-
                         return
 
         if i <= len(fraze_1):
@@ -405,6 +408,7 @@ class Player(pygame.sprite.Sprite):
             chest, img, pas, rectangle_group, loc5, loc11
         image = self.image
         current_time = pygame.time.get_ticks()
+        text_window.rect.x = 999999
 
         if move_left:
             self.direction = 'left'
@@ -645,7 +649,9 @@ class Player(pygame.sprite.Sprite):
                 img = pygame.transform.scale(img, (50, 50))
                 chest.image = pygame.transform.scale(
                     load_image('chest_open.jpg'), (60, 40))
-        if player.appls == 6 and background.get_rgb(self.x + self.run, self.y + self.run) == (0, 162, 232):
+        if player.appls == 6 and background.get_rgb(self.x + self.run,
+                                                    self.y + self.run) == \
+                (0, 162, 232):
             player.vis = False
             try:
                 del self.stena[self.stena.index((187, 122, 87))]
@@ -680,6 +686,13 @@ class Player(pygame.sprite.Sprite):
         camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
+        if pygame.sprite.collide_mask(self, sign1):
+            text_window.rect.x = 100
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 10)
+            text = font.render('в следующей комнате находится он', False,
+                               (255, 255, 255))
+            screen.blit(text, (110, 10))
 
 
 class Sign(pygame.sprite.Sprite):
@@ -700,9 +713,6 @@ class TextWindow(pygame.sprite.Sprite):
         super().__init__(player_group, text_group)
         self.image = TextWindow.image
         self.rect = self.image.get_rect().move(x_pos, y_pos)
-
-    # def update(self, *args, **kwargs):
-    #     if pygame.sprite.collide_mask(self, )
 
 
 class Letters(pygame.sprite.Sprite):
@@ -806,8 +816,9 @@ class Button(pygame.sprite.Sprite):
             if pygame.sprite.spritecollideany(self, player_group):
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
-                screen.blit(font.render(str(self.tm // 100 + 1), True, (0, 0, 0)),
-                            (350, 0))
+                screen.blit(
+                    font.render(str(self.tm // 100 + 1), True, (0, 0, 0)),
+                    (350, 0))
                 if self.tm // 100 + 1 == 0:
                     if self.tip == ok_tip + 1:
                         self.tm += 1
@@ -943,6 +954,13 @@ x, y = 0, 0
 rect = Rectangle(20000, 20000, 0, 0, 10, 500, False)
 img = load_image('key.jpg')
 img = pygame.transform.scale(img, (50, 50))
+sign1 = Sign(110, 20000)
+sign2 = Sign(110, 20000)
+sign3 = Sign(110, 20000)
+sign4 = Sign(110, 20000)
+sign5 = Sign(110, 20000)
+sign6 = Sign(110, 20000)
+text_window = TextWindow(999999, 0)
 
 loc5 = 0
 loc11 = 0
@@ -1009,9 +1027,12 @@ if __name__ == '__main__':
             font = pygame.font.Font(font_path, 25)
             if player.appls not in [5, 6]:
                 task_text = font.render("Принеси мне 5 яблок, "
-                                        "в обмен на информацию", True, (255, 255, 255))
+                                        "в обмен на информацию", True,
+                                        (255, 255, 255))
             else:
-                task_text = font.render("Выпей воды из озера и можешь идти спокойно", True, (255, 255, 255))
+                task_text = font.render(
+                    "Выпей воды из озера и можешь идти спокойно", True,
+                    (255, 255, 255))
                 player.appls = 6
 
             screen.blit(task_text, (100, 0))
@@ -1021,7 +1042,9 @@ if __name__ == '__main__':
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужна монета!", True, (255, 255, 255))
             screen.blit(task_text, (300, 0))
-        if player.loc == 13 and background.get_rgb(player.x + player.run, player.y + player.run) == (187, 122, 87) \
+        if player.loc == 13 and background.get_rgb(player.x + player.run,
+                                                   player.y + player.run) == (
+                187, 122, 87) \
                 and (187, 122, 87) in player.stena:
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
@@ -1152,12 +1175,14 @@ if __name__ == '__main__':
                 task_text = font.render(question, True, (0, 0, 0))
                 buttons = []
                 for j in range(1, 5):
-                    buttons.append(Button(x - player.x + j * 150, y - player.y + 200, j))
+                    buttons.append(
+                        Button(x - player.x + j * 150, y - player.y + 200, j))
             if 600 <= loc14 <= 800:
                 screen.blit(task_text, (300, 0))
             if loc14 == 800:
                 for j in buttons:
-                    if pygame.sprite.collide_mask(player, j) and j.tip == difference:
+                    if pygame.sprite.collide_mask(player,
+                                                  j) and j.tip == difference:
                         for k in buttons:
                             k.rect.x = 20000
                             buttons = []
@@ -1210,12 +1235,14 @@ if __name__ == '__main__':
                 task_text = font.render(question, True, (0, 0, 0))
                 buttons = []
                 for j in range(1, 5):
-                    buttons.append(Button(x - player.x + j * 150, y - player.y + 200, j))
+                    buttons.append(
+                        Button(x - player.x + j * 150, y - player.y + 200, j))
             if 2500 <= loc14 <= 2700:
                 screen.blit(task_text, (300, 0))
             if loc14 == 2700:
                 for j in buttons:
-                    if pygame.sprite.collide_mask(player, j) and j.tip == difference:
+                    if pygame.sprite.collide_mask(player,
+                                                  j) and j.tip == difference:
                         for k in buttons:
                             k.rect.x = 20000
                             buttons = []
