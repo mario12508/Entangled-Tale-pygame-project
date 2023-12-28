@@ -116,10 +116,16 @@ def mathGame(m):
                             rectangle_group = pygame.sprite.Group()
                             background = Background('a1_m5.png', (839, 1300))
                             all_sprites.add(background)
-                            sign1.rect.x = 120
                             sign1.rect.y = 1000
-                            all_sprites.add(sign1)
-                            sign_group.add(sign1)
+                            sign2.rect.y = 1000
+                            sign3.rect.y = 700
+                            sign4.rect.y = 700
+                            sign5.rect.y = 400
+                            sign6.rect.y = 400
+                            all_sprites.add(sign1, sign2, sign3, sign4, sign5,
+                                            sign6)
+                            sign_group.add(sign1, sign2, sign3, sign4, sign5,
+                                           sign6)
                             player = Player(419, 1100, 1)
                             door = Door(362, 30, 1, 2)
                             player.loc = 3
@@ -405,7 +411,8 @@ class Player(pygame.sprite.Sprite):
     def update(self, move_up, move_down, move_left, move_right, passaa=None):
         global all_sprites, background, player, player_group, door_group, \
             door, word_group, x, y, task_text, ok_tip, door2, door3, \
-            chest, img, pas, rectangle_group, loc5, loc11, text
+            chest, img, pas, rectangle_group, loc5, loc11, text1, text2, \
+            text3, text4
         image = self.image
         current_time = pygame.time.get_ticks()
         text_window.rect.x = 999999
@@ -694,10 +701,23 @@ class Player(pygame.sprite.Sprite):
             all_sprites.add(text_window)
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
-            text = font.render('в следующей комнате находится он', False,
-                               (255, 255, 255))
+            text1 = font.render('Лучше дальше не идти, это ОПАСНО!!!', False,
+                                (255, 255, 255))
+            text2 = font.render(
+                'Это один из лучших магов наук. Он знает ВСЕ науки!', False,
+                (255, 255, 255))
+            text3 = font.render(
+                'Он тоже не знает как сюда попал, но глупых детей он',
+                False, (255, 255, 255))
+            text4 = font.render('НИКОГДА не щадил!!!', False,
+                                (255, 255, 255))
         else:
-            text = pygame.font.Font(None, 2).render('', False, (255, 255, 255))
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 20)
+            text1 = font.render('', False, (255, 255, 255))
+            text2 = font.render('', False, (255, 255, 255))
+            text3 = font.render('', False, (255, 255, 255))
+            text4 = font.render('', False, (255, 255, 255))
 
         camera.update(player)
         for sprite in all_sprites:
@@ -978,12 +998,12 @@ x, y = 0, 0
 rect = Rectangle(20000, 20000, 0, 0, 10, 500, False, "redrect.jpg")
 img = load_image('key.jpg')
 img = pygame.transform.scale(img, (50, 50))
-sign1 = Sign(110, 20000)
-sign2 = Sign(110, 20000)
-sign3 = Sign(110, 20000)
-sign4 = Sign(110, 20000)
-sign5 = Sign(110, 20000)
-sign6 = Sign(110, 20000)
+sign1 = Sign(120, 20000)
+sign2 = Sign(658, 20000)
+sign3 = Sign(120, 20000)
+sign4 = Sign(658, 20000)
+sign5 = Sign(120, 20000)
+sign6 = Sign(658, 20000)
 text_window = TextWindow(999999, 0)
 
 loc5 = 0
@@ -1010,8 +1030,14 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     start_screen()
 
-    text = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
-                            20).render('', False, (255, 255, 255))
+    text1 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+                             20).render('', False, (255, 255, 255))
+    text2 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+                             20).render('', False, (255, 255, 255))
+    text3 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+                             20).render('', False, (255, 255, 255))
+    text4 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+                             20).render('', False, (255, 255, 255))
     i = 0
     running = True
     while running:
@@ -1183,7 +1209,8 @@ if __name__ == '__main__':
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 400:
                 plat.rect.x = 20000
-                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True, "damage_platform.jpg")
+                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
+                                 "damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 500:
                 plat.rect.x = 20000
@@ -1214,7 +1241,8 @@ if __name__ == '__main__':
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 1200:
                 plat.rect.x = 20000
-                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True, "damage_platform.jpg")
+                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
+                                 "damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 1300:
                 plat.rect.x = 20000
@@ -1235,7 +1263,8 @@ if __name__ == '__main__':
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 2300:
                 plat.rect.x = 20000
-                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True, "damage_platform.jpg")
+                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
+                                 "damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 2400:
                 plat.rect.x = 20000
@@ -1284,7 +1313,8 @@ if __name__ == '__main__':
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 4300:
                 plat.rect.x = 20000
-                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True, "damage_platform.jpg")
+                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
+                                 "damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 4400:
                 plat.rect.x = 20000
@@ -1335,7 +1365,10 @@ if __name__ == '__main__':
 
         if player.loc == 3:
             sign_group.update()
-            screen.blit(text, (110, 10))
+            screen.blit(text1, (110, 10))
+            screen.blit(text2, (110, 40))
+            screen.blit(text3, (110, 70))
+            screen.blit(text4, (110, 100))
         button_group.update()
         door_group.draw(screen)
         pygame.display.flip()
