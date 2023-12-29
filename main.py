@@ -66,7 +66,7 @@ def mathGame(m):
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_z and k == 0:
+                if (event.key == pygame.K_z or event.key == pygame.K_RETURN) and k == 0:
                     screen.fill((0, 0, 0))
                     screen.blit(fon, (0, 0))
                     if b < 0:
@@ -109,7 +109,7 @@ def mathGame(m):
                         fraze_3 = 'лишь когда будешь достоин'
                     i = 1
                     k = 2
-                elif event.key == pygame.K_z and k == 2:
+                elif (event.key == pygame.K_z or event.key == pygame.K_RETURN) and k == 2:
                     if win:
                         if m == 'a1_m4.png':
                             all_sprites = pygame.sprite.Group()
@@ -145,6 +145,9 @@ def mathGame(m):
                             x = player.x
                             y = player.y
                             loc11 = 0
+                            pygame.mixer.music.load("data/mus_undynetruetheme.ogg")
+                            pygame.mixer.music.set_volume(0.3)
+                            pygame.mixer.music.play(loops=-1)
                         else:
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
@@ -157,6 +160,9 @@ def mathGame(m):
                             x = player.x
                             y = player.y
                             loc14 = 0
+                            pygame.mixer.music.load("data/act3_boss.ogg")
+                            pygame.mixer.music.set_volume(0.3)
+                            pygame.mixer.music.play(loops=-1)
                         camera.update(player)
                         for sprite in all_sprites:
                             camera.apply(sprite)
@@ -253,7 +259,7 @@ def end_screen(n, winOrdie):
                     else:
                         sybtit_screen()
                         results()
-                        menu()
+                        act1()
                     return
 
         screen.blit(t, (300, 200))
@@ -267,6 +273,9 @@ def act1():
         i, word_group, x, y, loc5, time
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
+    pygame.mixer.music.load("data/start_sound.ogg")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     clock.tick(1)
@@ -278,6 +287,9 @@ def act1():
     door = Door(1180, 440, 1, 1)
     all_sprites.add(background)
     door_group.add(door)
+    pygame.mixer.music.load("data/act1_main.ogg")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     player = Player(290, 470, 1)
     word_group = pygame.sprite.Group()
     x, y = 0, 0
@@ -293,6 +305,9 @@ def act2():
         door_group, time, x, y, door2, door3, pas, loc11, img
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
+    pygame.mixer.music.load("data/start_sound.ogg")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     clock.tick(1)
@@ -311,6 +326,9 @@ def act2():
     pas = Pass(1300, 700)
     img = load_image('key.jpg')
     img = pygame.transform.scale(img, (50, 50))
+    pygame.mixer.music.load("data/a2_m1.mp3")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     x, y = 0, 0
     loc11 = 0
     player = Player(1090, 720, 2)
@@ -325,6 +343,9 @@ def act3():
         i, x, y, time, defen, traveler, apples
     fon = pygame.transform.scale(load_image('act3.png'), (800, 500))
     screen.blit(fon, (0, 0))
+    pygame.mixer.music.load("data/start_sound.ogg")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     pygame.display.flip()
     clock.tick(1)
 
@@ -333,6 +354,9 @@ def act3():
     door_group = pygame.sprite.Group()
     background = Background('a3_m1.jpg', (10000, 6000))
     all_sprites.add(background)
+    pygame.mixer.music.load("data/act3_main.ogg")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     door = Door(1950, 2750, 1, 1)
     door_group.add(door)
     player = Player(1650, 1200, 3)
@@ -376,8 +400,9 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
 
 
 def menu():
-    other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
-    colT = 1
+    other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
+    colT = 5
+    pygame.mixer.music.pause()
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -411,7 +436,7 @@ def menu():
                     if colT == 4:
                         other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0))
 
-                if event.key == pygame.K_SPACE or event.key == pygame.K_p:
+                if event.key == pygame.K_SPACE or event.key == pygame.K_p or event.key == pygame.K_RETURN:
                     if colT == 1:
                         act1()
                     if colT == 2:
@@ -420,6 +445,7 @@ def menu():
                         act3()
                     if colT == 4:
                         results()
+                    pygame.mixer.music.play(loops=-1)
                     return
 
         screen.blit(t1, (300, 50))
@@ -624,6 +650,9 @@ class Player(pygame.sprite.Sprite):
                 rectangle_group = pygame.sprite.Group()
                 background = Background('a1_m6.png', (900, 784))
                 all_sprites.add(background)
+                pygame.mixer.music.load("data/act1_boss.ogg")
+                pygame.mixer.music.set_volume(0.3)
+                pygame.mixer.music.play(loops=-1)
                 player = Player(450, 300, 1)
                 player.loc = 4
                 x = player.x
@@ -1079,6 +1108,9 @@ def results():
 def sybtit_screen():
     j = 0
     sybtit = load_image('sybtit.png')
+    pygame.mixer.music.load("data/final_melody.ogg")
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(loops=-1)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
