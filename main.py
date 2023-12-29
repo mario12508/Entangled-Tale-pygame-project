@@ -376,7 +376,6 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
 
 
 def menu():
-    fon = pygame.transform.scale(load_image('sybtit.png'), (0, 0))
     other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
     colT = 1
     while True:
@@ -423,7 +422,6 @@ def menu():
                         results()
                     return
 
-        screen.blit(fon, (0, 0))
         screen.blit(t1, (300, 50))
         screen.blit(t2, (300, 130))
         screen.blit(t3, (300, 210))
