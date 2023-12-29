@@ -4,6 +4,7 @@ import random
 import sys
 
 import pygame
+import sqlite3
 
 
 def load_image(name, colorkey=None):
@@ -220,13 +221,22 @@ def end_screen(n, winOrdie):
 
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 35)
-    if winOrdie:
-        t = font.render(f"Win", True, (0, 0, 0))
-    else:
-        t = font.render(f"Lose", True, (0, 0, 0))
     tm = (datetime.datetime.now() - time).total_seconds()
     t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec",
                      True, (0, 0, 0))
+
+    if winOrdie:
+        t = font.render(f"Win", True, (0, 0, 0))
+
+        con = sqlite3.connect("data/bd.sql")
+        cur = con.cursor()
+        cur.execute(
+            f"INSERT INTO player(act, time) VALUES({n - 1}, '{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec')")
+        con.commit()
+        con.close()
+    else:
+        t = font.render(f"Lose", True, (0, 0, 0))
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -241,6 +251,8 @@ def end_screen(n, winOrdie):
                     elif n == 3:
                         act3()
                     else:
+                        sybtit_screen()
+                        results()
                         menu()
                     return
 
@@ -340,27 +352,84 @@ def act3():
         camera.apply(sprite)
 
 
+t1 = None
+t2 = None
+t3 = None
+t4 = None
+t5 = None
+
+
+def other_color(cl1, cl2, cl3, cl4, cl5):
+    global t1, t2, t3, t4, t5
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    font = pygame.font.Font(font_path, 40)
+    t1 = font.render(f"1 Act",
+                     True, cl1)
+    t2 = font.render(f"2 Act",
+                     True, cl2)
+    t3 = font.render(f"3 Act",
+                     True, cl3)
+    t4 = font.render(f"Tab result",
+                     True, cl4)
+    t5 = font.render(f"Cancel",
+                     True, cl5)
+
+
 def menu():
-    fon = pygame.transform.scale(load_image('Menu.png'), (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
+    fon = pygame.transform.scale(load_image('sybtit.png'), (0, 0))
+    other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+    colT = 1
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
-                    act1()
-                    return
-                if event.key == pygame.K_2:
-                    act2()
-                    return
-                if event.key == pygame.K_3:
-                    act3()
-                    return
-                if event.key == pygame.K_p:
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
+                    colT -= 1
+                    if colT == 0:
+                        colT = 5
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
+                    if colT == 1:
+                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                    if colT == 2:
+                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                    if colT == 3:
+                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0))
+                    if colT == 4:
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0))
+
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                    colT += 1
+                    if colT == 6:
+                        colT = 1
+                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                    if colT == 5:
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
+                    if colT == 2:
+                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                    if colT == 3:
+                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0))
+                    if colT == 4:
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0))
+
+                if event.key == pygame.K_SPACE or event.key == pygame.K_p:
+                    if colT == 1:
+                        act1()
+                    if colT == 2:
+                        act2()
+                    if colT == 3:
+                        act3()
+                    if colT == 4:
+                        results()
                     return
 
+        screen.blit(fon, (0, 0))
+        screen.blit(t1, (300, 50))
+        screen.blit(t2, (300, 130))
+        screen.blit(t3, (300, 210))
+        screen.blit(t4, (300, 290))
+        screen.blit(t5, (300, 370))
+        pygame.display.flip()
         clock.tick(FPS)
 
 
@@ -965,6 +1034,68 @@ def act3_buttons():
                 (350, 0))
 
 
+def results():
+    con = sqlite3.connect("data/bd.sql")
+    cur = con.cursor()
+    result1 = cur.execute("""SELECT time FROM player
+            WHERE act == 1 ORDER BY time""").fetchall()[:10]
+    result2 = cur.execute("""SELECT time FROM player
+            WHERE act == 2 ORDER BY time""").fetchall()[:10]
+    result3 = cur.execute("""SELECT time FROM player
+            WHERE act == 3 ORDER BY time""").fetchall()[:10]
+    con.close()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif (event.type == pygame.KEYDOWN or event.type ==
+                  pygame.MOUSEBUTTONDOWN):
+                return
+        screen.blit(load_image("sybtit.png"), (0, 0))
+        font_path = os.path.join("data/fonts", "comic.ttf")
+        font = pygame.font.Font(font_path, 20)
+        y = 0
+        for res in result1:
+            screen.blit(font.render(res[0], True, (255, 255, 255)), (150, 100 + y))
+            y += 40
+        y = 0
+        for res in result2:
+            screen.blit(font.render(res[0], True, (255, 255, 255)), (350, 100 + y))
+            y += 40
+        y = 0
+        for res in result3:
+            screen.blit(font.render(res[0], True, (255, 255, 255)), (550, 100 + y))
+            y += 40
+        font = pygame.font.Font(font_path, 50)
+        text_1 = font.render("1 Act", True, (255, 255, 255))
+        text_2 = font.render("2 Act", True, (255, 255, 255))
+        text_3 = font.render("3 Act", True, (255, 255, 255))
+        screen.blit(text_1, (150, 0))
+        screen.blit(text_2, (350, 0))
+        screen.blit(text_3, (550, 0))
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+def sybtit_screen():
+    j = 0
+    sybtit = load_image('sybtit.png')
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+
+        screen.blit(sybtit, (0, -j))
+        pygame.display.flip()
+
+        j += 2
+        if j >= 1750:
+            return
+
+        clock.tick(FPS)
+
+
 class Camera:
     # зададим начальный сдвиг камеры
     def __init__(self):
@@ -1045,14 +1176,13 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_o:
+                if event.key == pygame.K_p:
                     menu()
                 if event.key == pygame.K_e and runi == -600:
                     player.run = 9
                     runi = 300
             if event.type == pygame.KEYUP:
                 player.stop()
-
         keys = pygame.key.get_pressed()
 
         screen.fill((2, 0, 0))
