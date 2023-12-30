@@ -1,1 +1,0 @@
-SQLite format 3@  .j��JJ��YtableplayerplayerCREATE TABLE player (Id INTEGER PRIMARY KEY NOT NULL UNIQUE, act INTEGER NOT NULL, time TEXT NOT NULL)+?indexsqlite_autoindex_player_1player���%5 min 58 sec	%1 min 35 sec���
