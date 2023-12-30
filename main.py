@@ -799,7 +799,7 @@ class Player(pygame.sprite.Sprite):
             player_group = pygame.sprite.Group()
             background = Background('a1_m4.png', (750, 400))
             all_sprites.add(background)
-            player = Player(335, 315, 1)
+            player = Player(335, 325, 1)
             player.loc = 10
             mathGame('a2_m5.jpg')
         if pygame.sprite.collide_mask(self, sign1):
@@ -1224,10 +1224,14 @@ if __name__ == '__main__':
                 if event.key == pygame.K_p:
                     menu()
                 if event.key == pygame.K_e and runi == -600:
-                    player.run = 9
                     runi = 300
             if event.type == pygame.KEYUP:
                 player.stop()
+
+        if runi != -600:
+            player.run = 9
+        if runi < 0:
+            player.run = 5
         screen.fill((2, 0, 0))
         keys = pygame.key.get_pressed()
 
@@ -1280,8 +1284,6 @@ if __name__ == '__main__':
         player_group.draw(screen)
         if runi > -600:
             runi -= 1
-        if runi <= 0:
-            player.run = 5
 
         if player.loc == 2:
             i += 1
