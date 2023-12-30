@@ -148,7 +148,7 @@ def mathGame(m):
                             y = player.y
                             loc11 = 0
                             pygame.mixer.music.load("data/"
-                                                    "us_undynetruetheme.ogg")
+                                                    "mus_undynetruetheme.ogg")
                             pygame.mixer.music.set_volume(0.3)
                             pygame.mixer.music.play(loops=-1)
                         else:
@@ -703,14 +703,13 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m1.png', (2060, 1500))
-                pas = Pass(1300, 700)
                 door = Door(350, 840, 2, 1)
                 door2 = Door(1528, 540, 2, 1)
                 door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door, door2, door3)
                 pas = Pass(870, 700)
-                player = Player(700, 840, 2, key=player.key, pas=player.pas)
+                player = Player(480, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
             elif self.loc == 12:
                 door.rect.x = 20000
@@ -759,7 +758,7 @@ class Player(pygame.sprite.Sprite):
                 all_sprites.add(background)
                 door_group.add(door, door2, door3)
                 pas = Pass(870, 700)
-                player = Player(700, 540, 2, key=player.key, pas=player.pas)
+                player = Player(480, 540, 2, key=player.key, pas=player.pas)
                 player.loc = 6
         if pygame.sprite.collide_mask(self, chest) and self.loc != 9:
             if player.key:
