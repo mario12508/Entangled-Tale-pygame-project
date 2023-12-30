@@ -270,7 +270,7 @@ def end_screen(n, winOrdie):
 
 def act1():
     global all_sprites, player_group, player, background, door, door_group, \
-        i, word_group, x, y, loc5, time
+        i, word_group, x, y, loc5, time, runi
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act1.png'), (800, 500))
     pygame.mixer.music.load("data/start_sound.ogg")
@@ -295,6 +295,7 @@ def act1():
     x, y = 0, 0
     loc5 = 0
     i = 0
+    runi = -600
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
@@ -302,7 +303,7 @@ def act1():
 
 def act2():
     global all_sprites, player_group, player, background, door, \
-        door_group, time, x, y, door2, door3, pas, loc11, img
+        door_group, time, x, y, door2, door3, pas, loc11, img, runi
     time = datetime.datetime.now()
     fon = pygame.transform.scale(load_image('act2.png'), (800, 500))
     pygame.mixer.music.load("data/start_sound.ogg")
@@ -331,6 +332,7 @@ def act2():
     pygame.mixer.music.play(loops=-1)
     x, y = 0, 0
     loc11 = 0
+    runi = -600
     player = Player(1090, 720, 2)
     player.loc = 6
     camera.update(player)
@@ -340,7 +342,7 @@ def act2():
 
 def act3():
     global all_sprites, player_group, player, background, door, door_group, \
-        i, x, y, time, defen, traveler, apples
+        i, x, y, time, defen, traveler, apples, runi
     fon = pygame.transform.scale(load_image('act3.png'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.mixer.music.load("data/start_sound.ogg")
@@ -362,6 +364,7 @@ def act3():
     player = Player(1650, 1200, 3)
     traveler = Traveler(5000, 3600)
     player.loc = 13
+    runi = -600
     defen = Defens(2350, 2450)
     apples = [
         Apple(6000, 3000),
@@ -787,7 +790,7 @@ class Player(pygame.sprite.Sprite):
             player_group = pygame.sprite.Group()
             background = Background('a1_m4.png', (750, 400))
             all_sprites.add(background)
-            player = Player(750, 1000, 1)
+            player = Player(335, 315, 1)
             player.loc = 10
             mathGame('a2_m5.jpg')
         if pygame.sprite.collide_mask(self, sign1):
@@ -1213,10 +1216,10 @@ if __name__ == '__main__':
                     runi = 300
             if event.type == pygame.KEYUP:
                 player.stop()
+        screen.fill((2, 0, 0))
         keys = pygame.key.get_pressed()
 
-        screen.fill((2, 0, 0))
-        # Обновление игровых объектов
+        # Обновление игровых объектовa
         player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
                       keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
         player.update(keys[pygame.K_w], keys[pygame.K_s],
@@ -1277,6 +1280,16 @@ if __name__ == '__main__':
                 word_group.add(letter)
             word_group.update()
             word_group.draw(screen)
+
+        screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)), (5, 5))
+        font_path = os.path.join("data/fonts", "comic.ttf")
+        if runi == -600:
+            txt = pygame.font.Font(font_path, 35).render(f"active", True, (255, 0, 0))
+            screen.blit(txt, (50, 0))
+        else:
+            txt = pygame.font.Font(font_path, 30).render(f"{(runi + 660) // 60}", True, (255, 0, 0))
+            screen.blit(txt, (50, 5))
+
         if player.key:
             screen.blit(img, (750, 0))
 
