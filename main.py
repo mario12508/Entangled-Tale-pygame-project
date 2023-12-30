@@ -66,7 +66,8 @@ def mathGame(m):
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN:
-                if (event.key == pygame.K_z or event.key == pygame.K_RETURN) and k == 0:
+                if ((event.key == pygame.K_z or event.key == pygame.K_RETURN)
+                        and k == 0):
                     screen.fill((0, 0, 0))
                     screen.blit(fon, (0, 0))
                     if b < 0:
@@ -95,7 +96,7 @@ def mathGame(m):
                             fraze_1 = 'Я вижу, что ты до сих пор неплох в \
                                        математике'
                             fraze_2 = 'в этот раз я тебя пропускаю,'
-                            fraze_3 = 'но мы еще одна наша встреча не избежна!'
+                            fraze_3 = 'но еще одна наша встреча неизбежна!'
                         else:
                             fraze_1 = 'Я вижу, что ты также силен в математике'
                             fraze_2 = 'на этот раз покажи себя в равном бою,'
@@ -109,7 +110,8 @@ def mathGame(m):
                         fraze_3 = 'лишь когда будешь достоин'
                     i = 1
                     k = 2
-                elif (event.key == pygame.K_z or event.key == pygame.K_RETURN) and k == 2:
+                elif ((event.key == pygame.K_z or event.key == pygame.K_RETURN)
+                      and k == 2):
                     if win:
                         if m == 'a1_m4.png':
                             all_sprites = pygame.sprite.Group()
@@ -145,7 +147,8 @@ def mathGame(m):
                             x = player.x
                             y = player.y
                             loc11 = 0
-                            pygame.mixer.music.load("data/mus_undynetruetheme.ogg")
+                            pygame.mixer.music.load("data/"
+                                                    "us_undynetruetheme.ogg")
                             pygame.mixer.music.set_volume(0.3)
                             pygame.mixer.music.play(loops=-1)
                         else:
@@ -237,7 +240,8 @@ def end_screen(n, winOrdie):
         con = sqlite3.connect("data/bd.sql")
         cur = con.cursor()
         cur.execute(
-            f"INSERT INTO player(act, time) VALUES({n - 1}, '{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec')")
+            f"INSERT INTO player(act, time) VALUES({n - 1}, '{int(tm // 60)} "
+            f"min {int(tm - (tm // 60) * 60)} sec')")
         con.commit()
         con.close()
     else:
@@ -316,15 +320,13 @@ def act2():
     all_sprites = pygame.sprite.Group()
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
-    background = Background('a2_m1.jpg', (3000, 1500))
-    door = Door(580, 840, 2, 1)
-    door2 = Door(1860, 540, 2, 1)
-    door3 = Door(580, 540, 2, 1)
+    background = Background('a2_m1.png', (2060, 1500))
+    door = Door(350, 840, 2, 1)
+    door2 = Door(1528, 540, 2, 1)
+    door3 = Door(350, 540, 2, 1)
     all_sprites.add(background)
-    door_group.add(door)
-    door_group.add(door2)
-    door_group.add(door3)
-    pas = Pass(1300, 700)
+    door_group.add(door, door2, door3)
+    pas = Pass(870, 700)
     img = load_image('key.jpg')
     img = pygame.transform.scale(img, (50, 50))
     pygame.mixer.music.load("data/a2_m1.mp3")
@@ -333,7 +335,7 @@ def act2():
     x, y = 0, 0
     loc11 = 0
     runi = -600
-    player = Player(1090, 720, 2)
+    player = Player(730, 730, 2)
     player.loc = 6
     camera.update(player)
     for sprite in all_sprites:
@@ -415,31 +417,42 @@ def menu():
                     colT -= 1
                     if colT == 0:
                         colT = 5
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0))
                     if colT == 1:
-                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 2:
-                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 3:
-                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0))
+                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 4:
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0))
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0), (0, 0, 0))
 
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     colT += 1
                     if colT == 6:
                         colT = 1
-                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 5:
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0))
                     if colT == 2:
-                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0))
+                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 3:
-                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0))
+                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 4:
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0), (0, 0, 0))
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0), (0, 0, 0))
 
-                if event.key == pygame.K_SPACE or event.key == pygame.K_p or event.key == pygame.K_RETURN:
+                if (event.key == pygame.K_SPACE or event.key == pygame.K_p or
+                        event.key == pygame.K_RETURN):
                     if colT == 1:
                         act1()
                     if colT == 2:
@@ -484,7 +497,7 @@ class Player(pygame.sprite.Sprite):
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
-            self.stena = [(34, 177, 76), (0, 162, 232)]
+            self.stena = [(34, 177, 76), (0, 162, 232), (54, 19, 11)]
         elif stena == 3:
             self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232),
                           (187, 122, 87)]
@@ -689,16 +702,14 @@ class Player(pygame.sprite.Sprite):
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a2_m1.jpg', (3000, 1500))
+                background = Background('a2_m1.png', (2060, 1500))
                 pas = Pass(1300, 700)
-                door = Door(580, 840, 2, 1)
-                door2 = Door(1860, 540, 2, 1)
-                door3 = Door(580, 540, 2, 1)
+                door = Door(350, 840, 2, 1)
+                door2 = Door(1528, 540, 2, 1)
+                door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
-                door_group.add(door)
-                door_group.add(door2)
-                door_group.add(door3)
-                pas = Pass(1300, 700)
+                door_group.add(door, door2, door3)
+                pas = Pass(870, 700)
                 player = Player(700, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
             elif self.loc == 12:
@@ -741,15 +752,13 @@ class Player(pygame.sprite.Sprite):
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a2_m1.jpg', (3000, 1500))
-                door = Door(580, 840, 2, 1)
-                door2 = Door(1860, 540, 2, 1)
-                door3 = Door(580, 540, 2, 1)
+                background = Background('a2_m1.png', (2060, 1500))
+                door = Door(350, 840, 2, 1)
+                door2 = Door(1528, 540, 2, 1)
+                door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
-                door_group.add(door)
-                door_group.add(door2)
-                door_group.add(door3)
-                pas = Pass(1300, 700)
+                door_group.add(door, door2, door3)
+                pas = Pass(870, 700)
                 player = Player(700, 540, 2, key=player.key, pas=player.pas)
                 player.loc = 6
         if pygame.sprite.collide_mask(self, chest) and self.loc != 9:
@@ -765,7 +774,7 @@ class Player(pygame.sprite.Sprite):
             player.vis = False
             try:
                 del self.stena[self.stena.index((187, 122, 87))]
-            except:
+            except Exception:
                 pass
 
         if pygame.sprite.collide_mask(self, pas) and self.loc != 9:
@@ -773,16 +782,16 @@ class Player(pygame.sprite.Sprite):
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a2_m4.jpg', (3000, 1500))
-                pas = Pass(1300, 700)
-                door = Door(580, 840, 2, 1)
-                door2 = Door(1860, 540, 2, 1)
-                door3 = Door(580, 540, 2, 1)
+                background = Background('a2_m4.png', (2060, 1500))
+                pas = Pass(870, 600)
+                door = Door(350, 840, 2, 1)
+                door2 = Door(1528, 540, 2, 1)
+                door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door)
                 door_group.add(door2)
                 door_group.add(door3)
-                pas = Pass(1300, 700)
+                pas = Pass(860, 650)
                 player = Player(player.x, player.y, 2)
                 player.loc = 9
         if pygame.sprite.collide_mask(self, door2):
@@ -891,7 +900,7 @@ class Door(pygame.sprite.Sprite):
 class Rectangle(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamage, image):
         image_path = load_image(image)
-        image_path = pygame.transform.scale(image_path, (xx, yy))
+        image_path = pygame.transform.scale(image_path, (xx + 50, yy))
         sprite_image = image_path
         super().__init__(rectangle_group, all_sprites)
         self.image = sprite_image
@@ -1087,15 +1096,18 @@ def results():
         font = pygame.font.Font(font_path, 20)
         y = 0
         for res in result1:
-            screen.blit(font.render(res[0], True, (255, 255, 255)), (150, 100 + y))
+            screen.blit(font.render(res[0], True, (255, 255, 255)),
+                        (150, 100 + y))
             y += 40
         y = 0
         for res in result2:
-            screen.blit(font.render(res[0], True, (255, 255, 255)), (350, 100 + y))
+            screen.blit(font.render(res[0], True, (255, 255, 255)),
+                        (350, 100 + y))
             y += 40
         y = 0
         for res in result3:
-            screen.blit(font.render(res[0], True, (255, 255, 255)), (550, 100 + y))
+            screen.blit(font.render(res[0], True, (255, 255, 255)),
+                        (550, 100 + y))
             y += 40
         font = pygame.font.Font(font_path, 50)
         text_1 = font.render("1 Act", True, (255, 255, 255))
@@ -1219,7 +1231,7 @@ if __name__ == '__main__':
         screen.fill((2, 0, 0))
         keys = pygame.key.get_pressed()
 
-        # Обновление игровых объектовa
+        # Обновление игровых объектов
         player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
                       keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
         player.update(keys[pygame.K_w], keys[pygame.K_s],
@@ -1281,13 +1293,16 @@ if __name__ == '__main__':
             word_group.update()
             word_group.draw(screen)
 
-        screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)), (5, 5))
+        screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)),
+                    (5, 5))
         font_path = os.path.join("data/fonts", "comic.ttf")
         if runi == -600:
-            txt = pygame.font.Font(font_path, 35).render(f"active", True, (255, 0, 0))
+            txt = pygame.font.Font(font_path, 35).render(f"active", True,
+                                                         (255, 0, 0))
             screen.blit(txt, (50, 0))
         else:
-            txt = pygame.font.Font(font_path, 30).render(f"{(runi + 660) // 60}", True, (255, 0, 0))
+            txt = pygame.font.Font(font_path, 30).render(
+                f"{(runi + 660) // 60}", True, (255, 0, 0))
             screen.blit(txt, (50, 5))
 
         if player.key:

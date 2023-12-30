@@ -5,31 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="processing">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023_15_31_[Changes]/a1_m5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023_15_31_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023_15_31__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_12_2023_23_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_12_2023_23_09__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023_18_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023_18_47__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Pass.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/Pass.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/cash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/cash.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/chest.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/chest.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/chest_open.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/chest_open.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/defens.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/defens.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/exit-enter_a2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/exit-enter_a2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/greenrect1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/greenrect1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/greenrect2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/greenrect2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/key.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/key.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/platform.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/platform.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/sl1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/sl2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/sl3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/sl4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/sl5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/textur_cave.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/traveler.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/traveler.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/wizardRus(1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/wizardRus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bd.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/redrect.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/data/redrect.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
