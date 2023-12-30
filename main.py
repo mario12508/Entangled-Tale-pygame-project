@@ -237,7 +237,7 @@ def end_screen(n, winOrdie):
     if winOrdie:
         t = font.render(f"Win", True, (0, 0, 0))
 
-        con = sqlite3.connect("data/bd.sql")
+        con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(
             f"INSERT INTO player(act, time) VALUES({n - 1}, '{int(tm // 60)} "
@@ -1074,7 +1074,7 @@ def act3_buttons():
 
 
 def results():
-    con = sqlite3.connect("data/bd.sql")
+    con = sqlite3.connect("data/bd.sqlite")
     cur = con.cursor()
     result1 = cur.execute("""SELECT time FROM player
             WHERE act == 1 ORDER BY time""").fetchall()[:10]
