@@ -818,7 +818,24 @@ class Player(pygame.sprite.Sprite):
                 False, (255, 255, 255))
             text4 = font.render('НИКОГДА не щадил!!!', False,
                                 (255, 255, 255))
-        else:
+        elif pygame.sprite.collide_mask(self, sign2):
+            text_window.rect.y = 0
+            text_window.rect.x = 100
+            text_group.add(text_window)
+            all_sprites.add(text_window)
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 20)
+            text1 = font.render('Эти ворота скрывают ТЕБЯ от НЕГО!', False,
+                                (255, 255, 255))
+            text2 = font.render(
+                'Он никогда не проигрывал в научных битвах до этого.', False,
+                (255, 255, 255))
+            text3 = font.render(
+                'Он мог бы сбежать отсюда, но власть, которую он получил',
+                False, (255, 255, 255))
+            text4 = font.render('здесь очень манит его.', False,
+                                (255, 255, 255))
+        elif self.loc == 3:
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render('', False, (255, 255, 255))
