@@ -497,7 +497,8 @@ class Player(pygame.sprite.Sprite):
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
-            self.stena = [(34, 177, 76), (0, 162, 232), (54, 19, 11)]
+            self.stena = [(34, 177, 76), (0, 162, 232), (54, 19, 11),
+                          (0, 8, 4), (4, 28, 16), (15, 69, 10)]
         elif stena == 3:
             self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232),
                           (187, 122, 87)]
@@ -686,12 +687,12 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 word_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a2_m2.jpg', (2000, 1500))
+                background = Background('a2_m2.png', (2380, 1500))
                 all_sprites.add(background)
-                door = Door(1330, 750, 2, 1)
+                door = Door(1670, 750, 2, 1)
                 for j in range(1, 5):
-                    button_group.add(Button(575 + j * 150, 800, j))
-                player = Player(1270, 750, 2, key=player.key, pas=player.pas)
+                    button_group.add(Button(775 + j * 150, 800, j))
+                player = Player(1600, 750, 2, key=player.key, pas=player.pas)
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 ok_tip = random.randint(0, 3)
@@ -1263,7 +1264,7 @@ if __name__ == '__main__':
         wizardRus.update()
         all_sprites.draw(screen)
         if player.loc == 7:
-            screen.blit(task_text, (x - player.x + 500, y - player.y + 200))
+            screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
         if not player.key and pygame.sprite.collide_mask(player, chest):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
