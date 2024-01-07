@@ -498,7 +498,7 @@ class Player(pygame.sprite.Sprite):
             self.stena = [(2, 0, 0)]
         elif stena == 2:
             self.stena = [(34, 177, 76), (0, 162, 232), (54, 19, 11),
-                          (0, 8, 4), (4, 28, 16), (15, 69, 10)]
+                          (0, 8, 4), (4, 28, 16), (15, 69, 10), (18, 89, 22)]
         elif stena == 3:
             self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232),
                           (187, 122, 87)]
@@ -741,11 +741,11 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 word_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('a2_m3.jpg', (2000, 5500))
+                background = Background('a2_m3.png', (4000, 4000))
                 all_sprites.add(background)
-                chest = Chest(1000, 1100)
-                door3 = Door(1390, 3350, 2, 1)
-                player = Player(1340, 3350, 2, key=player.key, pas=player.pas)
+                chest = Chest(777, 742)
+                door3 = Door(3400, 810, 2, 1)
+                player = Player(3360, 800, 2, key=player.key, pas=player.pas)
                 x, y = 700, 640
                 player.loc = 8
             elif self.loc == 8:
