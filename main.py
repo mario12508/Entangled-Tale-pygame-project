@@ -326,7 +326,7 @@ def act2():
     door3 = Door(350, 540, 2, 1)
     all_sprites.add(background)
     door_group.add(door, door2, door3)
-    pas = Pass(870, 700)
+    pas = Pass(850, 700)
     img = load_image('key.jpg')
     img = pygame.transform.scale(img, (50, 50))
     pygame.mixer.music.load("data/a2_m1.mp3")
@@ -474,7 +474,7 @@ def menu():
 
 
 class Player(pygame.sprite.Sprite):
-    image = load_image('m.c.front_stop.jpg')
+    image = load_image('m.c.front_stop.png')
     image = pygame.transform.scale(image, (40, 60))
 
     def __init__(self, pos_x, pos_y, stena, key=False, pas=False):
@@ -507,13 +507,13 @@ class Player(pygame.sprite.Sprite):
         image = self.image
         if self.vis:
             if self.direction == 'left':
-                image = load_image(f'm.c.left_stop.jpg')
+                image = load_image(f'm.c.left_stop.png')
             elif self.direction == 'right':
-                image = load_image(f'm.c.right_stop.jpg')
+                image = load_image(f'm.c.right_stop.png')
             elif self.direction == 'down':
-                image = load_image(f'm.c.front_stop.jpg')
+                image = load_image(f'm.c.front_stop.png')
             elif self.direction == 'up':
-                image = load_image(f'm.c.back_stop.jpg')
+                image = load_image(f'm.c.back_stop.png')
         else:
             image = load_image(f'm.v.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
@@ -549,7 +549,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.left_walk_{self.step}.jpg')
+                image = load_image(f'm.c.left_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         if move_right:
@@ -574,7 +574,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.right_walk_{self.step}.jpg')
+                image = load_image(f'm.c.right_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         if move_up:
@@ -599,7 +599,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.back_walk_{self.step}.jpg')
+                image = load_image(f'm.c.back_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         if move_down:
@@ -624,7 +624,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.front_walk_{self.step}.jpg')
+                image = load_image(f'm.c.front_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
@@ -709,7 +709,7 @@ class Player(pygame.sprite.Sprite):
                 door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door, door2, door3)
-                pas = Pass(870, 700)
+                pas = Pass(850, 700)
                 player = Player(480, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
             elif self.loc == 12:
@@ -758,7 +758,7 @@ class Player(pygame.sprite.Sprite):
                 door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door, door2, door3)
-                pas = Pass(870, 700)
+                pas = Pass(850, 700)
                 player = Player(480, 540, 2, key=player.key, pas=player.pas)
                 player.loc = 6
         if pygame.sprite.collide_mask(self, chest) and self.loc != 9:
@@ -783,7 +783,7 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m4.png', (2060, 1500))
-                pas = Pass(870, 600)
+                pas = Pass(850, 600)
                 door = Door(350, 840, 2, 1)
                 door2 = Door(1528, 540, 2, 1)
                 door3 = Door(350, 540, 2, 1)
@@ -791,7 +791,7 @@ class Player(pygame.sprite.Sprite):
                 door_group.add(door)
                 door_group.add(door2)
                 door_group.add(door3)
-                pas = Pass(860, 650)
+                pas = Pass(840, 650)
                 player = Player(player.x, player.y, 2)
                 player.loc = 9
         if pygame.sprite.collide_mask(self, door2):
@@ -981,8 +981,8 @@ class Button(pygame.sprite.Sprite):
 
 
 class Pass(pygame.sprite.Sprite):
-    image = load_image('pass.jpg')
-    image = pygame.transform.scale(image, (40, 60))
+    image = load_image('pass.png')
+    image = pygame.transform.scale(image, (79, 90))
 
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
