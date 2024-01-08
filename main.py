@@ -33,7 +33,10 @@ def newDialog():
 def mathGame(m):
     global background, all_sprites, player_group, player, door, \
         door_group, rectangle_group, loc5, loc11, loc14, x, y
-    fon = pygame.transform.scale(load_image(m), (800, 500))
+    if player.loc == 10:
+        fon = pygame.transform.scale(load_image(m), (1000, 1088))
+    else:
+        fon = pygame.transform.scale(load_image(m), (800, 500))
     screen.blit(fon, (0, 0))
 
     a = random.randint(0, 100)
@@ -43,7 +46,7 @@ def mathGame(m):
         fraze_1 = 'Я великий маг этого подземелья,'
         fraze_2 = 'и я никому не дам ходить по нему'
         fraze_3 = 'без моего разрешения!'
-    elif m == 'a2_m5.jpg':
+    elif m == 'a2_m5.png':
         fraze_1 = 'Вот мы снова встретились,'
         fraze_2 = 'и в этот раз ты в моем лесу'
         fraze_3 = 'дальше я тебя не пропущу!'
@@ -52,7 +55,12 @@ def mathGame(m):
         fraze_2 = 'и в этот раз ты далеко прошел'
         fraze_3 = 'дальше я тебя не уйдешь!'
 
-    screen.fill((0, 0, 0))
+    if player.loc <= 5:
+        screen.fill((2, 0, 0))
+    elif 5 < player.loc <= 12:
+        screen.fill((34, 177, 76))
+    else:
+        screen.fill((153, 217, 234))
     screen.blit(fon, (0, 0))
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 20)
@@ -68,7 +76,12 @@ def mathGame(m):
             elif event.type == pygame.KEYDOWN:
                 if ((event.key == pygame.K_z or event.key == pygame.K_RETURN)
                         and k == 0):
-                    screen.fill((0, 0, 0))
+                    if player.loc <= 5:
+                        screen.fill((2, 0, 0))
+                    elif 5 < player.loc <= 12:
+                        screen.fill((34, 177, 76))
+                    else:
+                        screen.fill((153, 217, 234))
                     screen.blit(fon, (0, 0))
                     if b < 0:
                         question = f"{a}{b}"
@@ -86,13 +99,18 @@ def mathGame(m):
                     render_fraze_1, render_fraze_2, render_fraze_3 = (
                         newDialog())
                     if fraze_1 == difference:
-                        screen.fill((0, 0, 0))
+                        if player.loc <= 5:
+                            screen.fill((2, 0, 0))
+                        elif 5 < player.loc <= 12:
+                            screen.fill((34, 177, 76))
+                        else:
+                            screen.fill((153, 217, 234))
                         screen.blit(fon, (0, 0))
                         if m == 'a1_m4.png':
                             fraze_1 = 'Я вижу, что ты неплох в математике'
                             fraze_2 = 'на этот раз я тебя пропускаю,'
                             fraze_3 = 'но мы еще встретимся!'
-                        elif m == 'a2_m5.jpg':
+                        elif m == 'a2_m5.png':
                             fraze_1 = 'Я вижу, что ты до сих пор неплох в \
                                        математике'
                             fraze_2 = 'в этот раз я тебя пропускаю,'
@@ -103,7 +121,12 @@ def mathGame(m):
                             fraze_3 = 'с истенным магом!'
                         win = True
                     else:
-                        screen.fill((0, 0, 0))
+                        if player.loc <= 5:
+                            screen.fill((2, 0, 0))
+                        elif 5 < player.loc <= 12:
+                            screen.fill((34, 177, 76))
+                        else:
+                            screen.fill((153, 217, 234))
                         screen.blit(fon, (0, 0))
                         fraze_1 = 'Я вижу, что ты слаб,'
                         fraze_2 = 'возвращайся,'
@@ -133,7 +156,7 @@ def mathGame(m):
                             door = Door(362, 30, 1, 2)
                             player.loc = 3
                             loc5 = 0
-                        elif m == 'a2_m5.jpg':
+                        elif m == 'a2_m5.png':
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
@@ -173,7 +196,7 @@ def mathGame(m):
                     else:
                         if m == 'a1_m4.png':
                             end_screen(1, False)
-                        elif m == 'a2_m5.jpg':
+                        elif m == 'a2_m5.png':
                             end_screen(2, False)
                         else:
                             end_screen(3, False)
@@ -801,7 +824,7 @@ class Player(pygame.sprite.Sprite):
             all_sprites.add(background)
             player = Player(335, 325, 1)
             player.loc = 10
-            mathGame('a2_m5.jpg')
+            mathGame('a2_m5.png')
         if pygame.sprite.collide_mask(self, sign1):
             text_window.rect.y = 0
             text_window.rect.x = 100
@@ -1249,7 +1272,12 @@ if __name__ == '__main__':
             player.run = 9
         if runi < 0:
             player.run = 5
-        screen.fill((2, 0, 0))
+        if player.loc <= 5:
+            screen.fill((2, 0, 0))
+        elif 5 < player.loc <= 12:
+            screen.fill((34, 177, 76))
+        else:
+            screen.fill((153, 217, 234))
         keys = pygame.key.get_pressed()
 
         # Обновление игровых объектов
