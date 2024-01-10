@@ -160,9 +160,9 @@ def mathGame(m):
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('a2_m6.jpg', (1667, 1000))
+                            background = Background('a2_m6.png', (1667, 1000))
                             all_sprites.add(background)
-                            player = Player(850, 556, 2)
+                            player = Player(850, 506, 2)
                             player.loc = 11
                             door.rect.x = 20000
                             door2.rect.x = 20000
@@ -462,7 +462,10 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
 
 
 def menu():
-    other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
+    COLOR1 = (32, 32, 32)
+    COLOR2 = (255, 0, 0)
+
+    other_color(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
     colT = 5
     pygame.mixer.music.pause()
     while True:
@@ -474,39 +477,39 @@ def menu():
                     colT -= 1
                     if colT == 0:
                         colT = 5
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
-                                    (255, 0, 0))
+                        other_color(COLOR1, COLOR1, COLOR1, COLOR1,
+                                    COLOR2)
                     if colT == 1:
-                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0),
-                                    (0, 0, 0), (0, 0, 0))
+                        other_color(COLOR2, COLOR1, COLOR1,
+                                    COLOR1, COLOR1)
                     if colT == 2:
-                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0),
-                                    (0, 0, 0), (0, 0, 0))
+                        other_color(COLOR1, COLOR2, COLOR1,
+                                    COLOR1, COLOR1)
                     if colT == 3:
-                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0),
-                                    (0, 0, 0), (0, 0, 0))
+                        other_color(COLOR1, COLOR1, COLOR2,
+                                    COLOR1, COLOR1)
                     if colT == 4:
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0),
-                                    (255, 0, 0), (0, 0, 0))
+                        other_color(COLOR1, COLOR1, COLOR1,
+                                    COLOR2, COLOR1)
 
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     colT += 1
                     if colT == 6:
                         colT = 1
-                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0),
-                                    (0, 0, 0), (0, 0, 0))
+                        other_color(COLOR2, COLOR1, COLOR1,
+                                    COLOR1, COLOR1)
                     if colT == 5:
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
-                                    (255, 0, 0))
+                        other_color(COLOR1, COLOR1, COLOR1, COLOR1,
+                                    COLOR2)
                     if colT == 2:
-                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0),
-                                    (0, 0, 0), (0, 0, 0))
+                        other_color(COLOR1, COLOR2, COLOR1,
+                                    COLOR1, COLOR1)
                     if colT == 3:
-                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0),
-                                    (0, 0, 0), (0, 0, 0))
+                        other_color(COLOR1, COLOR1, COLOR2,
+                                    COLOR1, COLOR1)
                     if colT == 4:
-                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0),
-                                    (255, 0, 0), (0, 0, 0))
+                        other_color(COLOR1, COLOR1, COLOR1,
+                                    COLOR2, COLOR1)
 
                 if (event.key == pygame.K_SPACE or event.key == pygame.K_p or
                         event.key == pygame.K_RETURN):
@@ -1440,7 +1443,7 @@ if __name__ == '__main__':
         if player.loc == 11:
             if loc11 <= 2000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-50, 200), -3, 0,
+                          y - player.y + random.randint(-100, 200), -3, 0,
                           random.randint(100, 300),
                           10, True, "greenrect2.jpg")
                 Rectangle(x - player.x + 800,
@@ -1458,7 +1461,7 @@ if __name__ == '__main__':
                           True, "greenrect1.jpg")
             if 4300 <= loc11 <= 6000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-50, 200), -3, 0,
+                          y - player.y + random.randint(-100, 200), -3, 0,
                           random.randint(100, 300),
                           10, True, "greenrect2.jpg")
                 Rectangle(x - player.x - 300,
