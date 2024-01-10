@@ -33,7 +33,10 @@ def newDialog():
 def mathGame(m):
     global background, all_sprites, player_group, player, door, \
         door_group, rectangle_group, loc5, loc11, loc14, x, y
-    fon = pygame.transform.scale(load_image(m), (800, 500))
+    if player.loc == 10:
+        fon = pygame.transform.scale(load_image(m), (800, 505))
+    else:
+        fon = pygame.transform.scale(load_image(m), (800, 505))
     screen.blit(fon, (0, 0))
 
     a = random.randint(0, 100)
@@ -43,7 +46,7 @@ def mathGame(m):
         fraze_1 = 'Я великий маг этого подземелья,'
         fraze_2 = 'и я никому не дам ходить по нему'
         fraze_3 = 'без моего разрешения!'
-    elif m == 'a2_m5.jpg':
+    elif m == 'a2_m5.png':
         fraze_1 = 'Вот мы снова встретились,'
         fraze_2 = 'и в этот раз ты в моем лесу'
         fraze_3 = 'дальше я тебя не пропущу!'
@@ -52,7 +55,12 @@ def mathGame(m):
         fraze_2 = 'и в этот раз ты далеко прошел'
         fraze_3 = 'дальше я тебя не уйдешь!'
 
-    screen.fill((0, 0, 0))
+    if player.loc <= 5:
+        screen.fill((2, 0, 0))
+    elif 5 < player.loc <= 12:
+        screen.fill((34, 177, 76))
+    else:
+        screen.fill((153, 217, 234))
     screen.blit(fon, (0, 0))
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 20)
@@ -68,7 +76,12 @@ def mathGame(m):
             elif event.type == pygame.KEYDOWN:
                 if ((event.key == pygame.K_z or event.key == pygame.K_RETURN)
                         and k == 0):
-                    screen.fill((0, 0, 0))
+                    if player.loc <= 5:
+                        screen.fill((2, 0, 0))
+                    elif 5 < player.loc <= 12:
+                        screen.fill((34, 177, 76))
+                    else:
+                        screen.fill((153, 217, 234))
                     screen.blit(fon, (0, 0))
                     if b < 0:
                         question = f"{a}{b}"
@@ -86,13 +99,18 @@ def mathGame(m):
                     render_fraze_1, render_fraze_2, render_fraze_3 = (
                         newDialog())
                     if fraze_1 == difference:
-                        screen.fill((0, 0, 0))
+                        if player.loc <= 5:
+                            screen.fill((2, 0, 0))
+                        elif 5 < player.loc <= 12:
+                            screen.fill((34, 177, 76))
+                        else:
+                            screen.fill((153, 217, 234))
                         screen.blit(fon, (0, 0))
                         if m == 'a1_m4.png':
                             fraze_1 = 'Я вижу, что ты неплох в математике'
                             fraze_2 = 'на этот раз я тебя пропускаю,'
                             fraze_3 = 'но мы еще встретимся!'
-                        elif m == 'a2_m5.jpg':
+                        elif m == 'a2_m5.png':
                             fraze_1 = 'Я вижу, что ты до сих пор неплох в \
                                        математике'
                             fraze_2 = 'в этот раз я тебя пропускаю,'
@@ -100,10 +118,15 @@ def mathGame(m):
                         else:
                             fraze_1 = 'Я вижу, что ты также силен в математике'
                             fraze_2 = 'на этот раз покажи себя в равном бою,'
-                            fraze_3 = 'с истенным магом!'
+                            fraze_3 = 'с истинным магом!'
                         win = True
                     else:
-                        screen.fill((0, 0, 0))
+                        if player.loc <= 5:
+                            screen.fill((2, 0, 0))
+                        elif 5 < player.loc <= 12:
+                            screen.fill((34, 177, 76))
+                        else:
+                            screen.fill((153, 217, 234))
                         screen.blit(fon, (0, 0))
                         fraze_1 = 'Я вижу, что ты слаб,'
                         fraze_2 = 'возвращайся,'
@@ -133,7 +156,7 @@ def mathGame(m):
                             door = Door(362, 30, 1, 2)
                             player.loc = 3
                             loc5 = 0
-                        elif m == 'a2_m5.jpg':
+                        elif m == 'a2_m5.png':
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
@@ -173,7 +196,7 @@ def mathGame(m):
                     else:
                         if m == 'a1_m4.png':
                             end_screen(1, False)
-                        elif m == 'a2_m5.jpg':
+                        elif m == 'a2_m5.png':
                             end_screen(2, False)
                         else:
                             end_screen(3, False)
@@ -189,9 +212,18 @@ def mathGame(m):
                 fraze_3[:i - len(fraze_1) - len(fraze_2)], True,
                 (255, 255, 255))
         i += 1
-        screen.blit(render_fraze_1, (230, 85))
-        screen.blit(render_fraze_2, (230, 115))
-        screen.blit(render_fraze_3, (230, 145))
+        if m == 'a1_m4.png':
+            screen.blit(render_fraze_1, (230, 85))
+            screen.blit(render_fraze_2, (230, 115))
+            screen.blit(render_fraze_3, (230, 145))
+        elif m == 'a2_m5.png':
+            screen.blit(render_fraze_1, (250, 33))
+            screen.blit(render_fraze_2, (250, 51))
+            screen.blit(render_fraze_3, (250, 69))
+        else:
+            screen.blit(render_fraze_1, (230, 85))
+            screen.blit(render_fraze_2, (230, 115))
+            screen.blit(render_fraze_3, (230, 145))
         player_group.draw(screen)
         pygame.display.flip()
         clock.tick(20)
@@ -304,6 +336,14 @@ def act1():
     for sprite in all_sprites:
         camera.apply(sprite)
 
+    screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)),
+                (5, 5))
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    txt = pygame.font.Font(font_path, 35).render(f"active", True,
+                                                 (255, 0, 0))
+    screen.blit(txt, (50, 0))
+    all_sprites.draw(screen)
+
 
 def act2():
     global all_sprites, player_group, player, background, door, \
@@ -326,7 +366,7 @@ def act2():
     door3 = Door(350, 540, 2, 1)
     all_sprites.add(background)
     door_group.add(door, door2, door3)
-    pas = Pass(870, 700)
+    pas = Pass(850, 700)
     img = load_image('key.jpg')
     img = pygame.transform.scale(img, (50, 50))
     pygame.mixer.music.load("data/a2_m1.mp3")
@@ -340,6 +380,15 @@ def act2():
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
+
+    screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)),
+                (5, 5))
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    txt = pygame.font.Font(font_path, 35).render(f"active", True,
+                                                 (255, 0, 0))
+    screen.blit(txt, (50, 0))
+    all_sprites.draw(screen)
+    door_group.draw(screen)
 
 
 def act3():
@@ -379,6 +428,14 @@ def act3():
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
+
+    screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)),
+                (5, 5))
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    txt = pygame.font.Font(font_path, 35).render(f"active", True,
+                                                 (255, 0, 0))
+    screen.blit(txt, (50, 0))
+    all_sprites.draw(screen)
 
 
 t1 = None
@@ -474,7 +531,7 @@ def menu():
 
 
 class Player(pygame.sprite.Sprite):
-    image = load_image('m.c.front_stop.jpg')
+    image = load_image('m.c.front_stop.png')
     image = pygame.transform.scale(image, (40, 60))
 
     def __init__(self, pos_x, pos_y, stena, key=False, pas=False):
@@ -507,13 +564,13 @@ class Player(pygame.sprite.Sprite):
         image = self.image
         if self.vis:
             if self.direction == 'left':
-                image = load_image(f'm.c.left_stop.jpg')
+                image = load_image(f'm.c.left_stop.png')
             elif self.direction == 'right':
-                image = load_image(f'm.c.right_stop.jpg')
+                image = load_image(f'm.c.right_stop.png')
             elif self.direction == 'down':
-                image = load_image(f'm.c.front_stop.jpg')
+                image = load_image(f'm.c.front_stop.png')
             elif self.direction == 'up':
-                image = load_image(f'm.c.back_stop.jpg')
+                image = load_image(f'm.c.back_stop.png')
         else:
             image = load_image(f'm.v.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
@@ -549,7 +606,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.left_walk_{self.step}.jpg')
+                image = load_image(f'm.c.left_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         if move_right:
@@ -574,7 +631,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.right_walk_{self.step}.jpg')
+                image = load_image(f'm.c.right_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         if move_up:
@@ -599,7 +656,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.back_walk_{self.step}.jpg')
+                image = load_image(f'm.c.back_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         if move_down:
@@ -624,7 +681,7 @@ class Player(pygame.sprite.Sprite):
                         self.step -= 1
                         self.back = True
 
-                image = load_image(f'm.c.front_walk_{self.step}.jpg')
+                image = load_image(f'm.c.front_walk_{self.step}.png')
             else:
                 image = load_image(f'm.v.jpg')
         self.image = pygame.transform.scale(image, (40, 60))
@@ -709,7 +766,7 @@ class Player(pygame.sprite.Sprite):
                 door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door, door2, door3)
-                pas = Pass(870, 700)
+                pas = Pass(850, 700)
                 player = Player(480, 840, 2, key=player.key, pas=player.pas)
                 player.loc = 6
             elif self.loc == 12:
@@ -744,7 +801,7 @@ class Player(pygame.sprite.Sprite):
                 background = Background('a2_m3.png', (4000, 4000))
                 all_sprites.add(background)
                 chest = Chest(777, 742)
-                door3 = Door(3400, 810, 2, 1)
+                door3 = Door(3450, 810, 2, 1)
                 player = Player(3360, 800, 2, key=player.key, pas=player.pas)
                 x, y = 700, 640
                 player.loc = 8
@@ -758,7 +815,7 @@ class Player(pygame.sprite.Sprite):
                 door3 = Door(350, 540, 2, 1)
                 all_sprites.add(background)
                 door_group.add(door, door2, door3)
-                pas = Pass(870, 700)
+                pas = Pass(850, 700)
                 player = Player(480, 540, 2, key=player.key, pas=player.pas)
                 player.loc = 6
         if pygame.sprite.collide_mask(self, chest) and self.loc != 9:
@@ -783,7 +840,7 @@ class Player(pygame.sprite.Sprite):
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('a2_m4.png', (2060, 1500))
-                pas = Pass(870, 600)
+                pas = Pass(850, 600)
                 door = Door(350, 840, 2, 1)
                 door2 = Door(1528, 540, 2, 1)
                 door3 = Door(350, 540, 2, 1)
@@ -791,7 +848,7 @@ class Player(pygame.sprite.Sprite):
                 door_group.add(door)
                 door_group.add(door2)
                 door_group.add(door3)
-                pas = Pass(860, 650)
+                pas = Pass(840, 650)
                 player = Player(player.x, player.y, 2)
                 player.loc = 9
         if pygame.sprite.collide_mask(self, door2):
@@ -801,7 +858,7 @@ class Player(pygame.sprite.Sprite):
             all_sprites.add(background)
             player = Player(335, 325, 1)
             player.loc = 10
-            mathGame('a2_m5.jpg')
+            mathGame('a2_m5.png')
         if pygame.sprite.collide_mask(self, sign1):
             text_window.rect.y = 0
             text_window.rect.x = 100
@@ -981,8 +1038,8 @@ class Button(pygame.sprite.Sprite):
 
 
 class Pass(pygame.sprite.Sprite):
-    image = load_image('pass.jpg')
-    image = pygame.transform.scale(image, (40, 60))
+    image = load_image('pass.png')
+    image = pygame.transform.scale(image, (79, 90))
 
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
@@ -1249,7 +1306,12 @@ if __name__ == '__main__':
             player.run = 9
         if runi < 0:
             player.run = 5
-        screen.fill((2, 0, 0))
+        if player.loc <= 5:
+            screen.fill((2, 0, 0))
+        elif 5 < player.loc <= 12:
+            screen.fill((34, 177, 76))
+        else:
+            screen.fill((153, 217, 234))
         keys = pygame.key.get_pressed()
 
         # Обновление игровых объектов
