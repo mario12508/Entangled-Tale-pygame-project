@@ -4,29 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="maze done">
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="math game 2 act's processing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Pass.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/act1_boss.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/data/act1_boss.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/exit-enter_a2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/exit-enter_a2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.back_stop.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.back_walk_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.back_walk_2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.back_walk_3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.front_stop.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.front_walk_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.front_walk_2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.front_walk_3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.left_stop.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.left_walk_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.left_walk_2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.left_walk_3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.right_stop.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.right_walk_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/m.c.right_walk_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a2_m5.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/a2_m5.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +29,20 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mario12508&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="94ac7607-9d72-4b25-a7a3-c40e081cfed5" />
+        <option name="url" value="https://github.com/mario12508/Entangled-Tale-game" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -57,21 +52,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Python.main (2).executor": "Run",
-    "Python.main (4).executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Mar1o/PycharmProjects/Entangled Tale/data/fonts",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main (4).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Mar1o/PycharmProjects/Entangled Tale/data/fonts&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mar1o\PycharmProjects\Entangled Tale\data\fonts" />
@@ -314,7 +309,31 @@
       <option name="project" value="LOCAL" />
       <updated>1704663345533</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="some pictures">
+      <option name="closed" value="true" />
+      <created>1704735930288</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1704735930288</updated>
+    </task>
+    <task id="LOCAL-00026" summary="some pictures">
+      <option name="closed" value="true" />
+      <created>1704735954576</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1704735954576</updated>
+    </task>
+    <task id="LOCAL-00027" summary="math game 2 act's processing">
+      <option name="closed" value="true" />
+      <created>1704745006855</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1704745006855</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -347,6 +366,8 @@
     <MESSAGE value="processing" />
     <MESSAGE value="a2_m2 done?" />
     <MESSAGE value="maze done" />
-    <option name="LAST_COMMIT_MESSAGE" value="maze done" />
+    <MESSAGE value="some pictures" />
+    <MESSAGE value="math game 2 act's processing" />
+    <option name="LAST_COMMIT_MESSAGE" value="math game 2 act's processing" />
   </component>
 </project>

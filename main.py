@@ -34,9 +34,9 @@ def mathGame(m):
     global background, all_sprites, player_group, player, door, \
         door_group, rectangle_group, loc5, loc11, loc14, x, y
     if player.loc == 10:
-        fon = pygame.transform.scale(load_image(m), (1000, 1088))
+        fon = pygame.transform.scale(load_image(m), (800, 505))
     else:
-        fon = pygame.transform.scale(load_image(m), (800, 500))
+        fon = pygame.transform.scale(load_image(m), (800, 505))
     screen.blit(fon, (0, 0))
 
     a = random.randint(0, 100)
@@ -118,7 +118,7 @@ def mathGame(m):
                         else:
                             fraze_1 = 'Я вижу, что ты также силен в математике'
                             fraze_2 = 'на этот раз покажи себя в равном бою,'
-                            fraze_3 = 'с истенным магом!'
+                            fraze_3 = 'с истинным магом!'
                         win = True
                     else:
                         if player.loc <= 5:
@@ -212,9 +212,18 @@ def mathGame(m):
                 fraze_3[:i - len(fraze_1) - len(fraze_2)], True,
                 (255, 255, 255))
         i += 1
-        screen.blit(render_fraze_1, (230, 85))
-        screen.blit(render_fraze_2, (230, 115))
-        screen.blit(render_fraze_3, (230, 145))
+        if m == 'a1_m4.png':
+            screen.blit(render_fraze_1, (230, 85))
+            screen.blit(render_fraze_2, (230, 115))
+            screen.blit(render_fraze_3, (230, 145))
+        elif m == 'a2_m5.png':
+            screen.blit(render_fraze_1, (250, 33))
+            screen.blit(render_fraze_2, (250, 51))
+            screen.blit(render_fraze_3, (250, 69))
+        else:
+            screen.blit(render_fraze_1, (230, 85))
+            screen.blit(render_fraze_2, (230, 115))
+            screen.blit(render_fraze_3, (230, 145))
         player_group.draw(screen)
         pygame.display.flip()
         clock.tick(20)
