@@ -160,9 +160,9 @@ def mathGame(m):
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('a2_m6.png', (1667, 1000))
+                            background = Background('a2_m6.jpg', (1667, 1000))
                             all_sprites.add(background)
-                            player = Player(850, 506, 2)
+                            player = Player(850, 556, 2)
                             player.loc = 11
                             door.rect.x = 20000
                             door2.rect.x = 20000
@@ -462,10 +462,7 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
 
 
 def menu():
-    COLOR1 = (32, 32, 32)
-    COLOR2 = (255, 0, 0)
-
-    other_color(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
+    other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 0))
     colT = 5
     pygame.mixer.music.pause()
     while True:
@@ -477,39 +474,39 @@ def menu():
                     colT -= 1
                     if colT == 0:
                         colT = 5
-                        other_color(COLOR1, COLOR1, COLOR1, COLOR1,
-                                    COLOR2)
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0))
                     if colT == 1:
-                        other_color(COLOR2, COLOR1, COLOR1,
-                                    COLOR1, COLOR1)
+                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 2:
-                        other_color(COLOR1, COLOR2, COLOR1,
-                                    COLOR1, COLOR1)
+                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 3:
-                        other_color(COLOR1, COLOR1, COLOR2,
-                                    COLOR1, COLOR1)
+                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 4:
-                        other_color(COLOR1, COLOR1, COLOR1,
-                                    COLOR2, COLOR1)
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0), (0, 0, 0))
 
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     colT += 1
                     if colT == 6:
                         colT = 1
-                        other_color(COLOR2, COLOR1, COLOR1,
-                                    COLOR1, COLOR1)
+                        other_color((255, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 5:
-                        other_color(COLOR1, COLOR1, COLOR1, COLOR1,
-                                    COLOR2)
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0))
                     if colT == 2:
-                        other_color(COLOR1, COLOR2, COLOR1,
-                                    COLOR1, COLOR1)
+                        other_color((0, 0, 0), (255, 0, 0), (0, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 3:
-                        other_color(COLOR1, COLOR1, COLOR2,
-                                    COLOR1, COLOR1)
+                        other_color((0, 0, 0), (0, 0, 0), (255, 0, 0),
+                                    (0, 0, 0), (0, 0, 0))
                     if colT == 4:
-                        other_color(COLOR1, COLOR1, COLOR1,
-                                    COLOR2, COLOR1)
+                        other_color((0, 0, 0), (0, 0, 0), (0, 0, 0),
+                                    (255, 0, 0), (0, 0, 0))
 
                 if (event.key == pygame.K_SPACE or event.key == pygame.K_p or
                         event.key == pygame.K_RETURN):
