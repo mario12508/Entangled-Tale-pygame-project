@@ -268,6 +268,8 @@ def end_screen(n, winOrdie):
 
     if winOrdie:
         t = font.render(f"Win", True, (0, 0, 0))
+        font = pygame.font.Font(font_path, 50)
+        t0 = font.render(f"{n} Act", True, (0, 0, 0))
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
@@ -278,6 +280,8 @@ def end_screen(n, winOrdie):
         con.close()
     else:
         t = font.render(f"Lose", True, (0, 0, 0))
+        font = pygame.font.Font(font_path, 50)
+        t0 = font.render(f"{n} Act", True, (0, 0, 0))
 
     while True:
         for event in pygame.event.get():
@@ -298,6 +302,7 @@ def end_screen(n, winOrdie):
                         act1()
                     return
 
+        screen.blit(t0, (300, 100))
         screen.blit(t, (300, 200))
         screen.blit(t2, (300, 300))
         pygame.display.flip()
@@ -464,14 +469,14 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
 def menu():
     con = sqlite3.connect("data/bd.sqlite")
     cur = con.cursor()
-    result1 = cur.execute("""SELECT time FROM player
-            WHERE act == 2 ORDER BY time""").fetchall()
-    result2 = cur.execute("""SELECT time FROM player
-            WHERE act == 3 ORDER BY time""").fetchall()
+    result1 = cur.execute("""SELECT id FROM player
+            WHERE act == 1""").fetchall()
+    result2 = cur.execute("""SELECT id FROM player
+            WHERE act == 2""").fetchall()
     con.close()
-    COLOR1 = (32, 32, 32)
+    COLOR1 = (64, 64, 64)
     COLOR2 = (255, 0, 0)
-    COLOR3 = (32, 32, 32)
+    COLOR3 = (0, 0, 0)
 
     other_color(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
     colT = 5
