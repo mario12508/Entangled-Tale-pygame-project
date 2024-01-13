@@ -410,18 +410,18 @@ def act3():
     all_sprites = pygame.sprite.Group()
     player_group = pygame.sprite.Group()
     door_group = pygame.sprite.Group()
-    background = Background('a3_m1.jpg', (10000, 6000))
+    background = Background('a3_m1.png', (4000, 2480))
     all_sprites.add(background)
     pygame.mixer.music.load("data/act3_main.ogg")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
     door = Door(1950, 2750, 1, 1)
     door_group.add(door)
-    player = Player(1650, 1200, 3)
+    player = Player(530, 200, 3)
     traveler = Traveler(5000, 3600)
     player.loc = 13
     runi = -600
-    defen = Defens(2350, 2450)
+    defen = Defens(850, 2050)
     apples = [
         Apple(6000, 3000),
         Apple(6400, 2500),
@@ -545,11 +545,11 @@ def menu():
                     if colT == 1:
                         act1()
                     if colT == 2:
-                        if result1:
-                            act2()
+                        # if result1:
+                        act2()
                     if colT == 3:
-                        if result2:
-                            act3()
+                        # if result2:
+                        act3()
                     if colT == 4:
                         results()
                     pygame.mixer.music.play(loops=-1)
@@ -592,7 +592,7 @@ class Player(pygame.sprite.Sprite):
                           (0, 8, 4), (4, 28, 16), (15, 69, 10), (18, 89, 22)]
         elif stena == 3:
             self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232),
-                          (187, 122, 87)]
+                          (187, 122, 87), (0, 187, 255)]
 
     def stop(self):
         image = self.image
@@ -1650,8 +1650,10 @@ if __name__ == '__main__':
             sign_group.update()
             for i in sign_group:
                 if pygame.sprite.collide_mask(player, i):
-                    screen.blit(pygame.transform.scale(load_image("text_window.png"), (600, 150)),
-                                (100, 0))
+                    screen.blit(
+                        pygame.transform.scale(load_image("text_window.png"),
+                                               (600, 150)),
+                        (100, 0))
             screen.blit(text1, (110, 10))
             screen.blit(text2, (110, 40))
             screen.blit(text3, (110, 70))

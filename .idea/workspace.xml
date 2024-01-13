@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="math game 2 act's processing">
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="test">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_01_2024_21_01_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_01_2024_21_01__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a3_m1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/a3_m1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/failsOfObject.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +62,7 @@
     &quot;Python.main (2).executor&quot;: &quot;Run&quot;,
     &quot;Python.main (4).executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -72,6 +76,7 @@
       <recent name="C:\Users\Mar1o\PycharmProjects\Entangled Tale" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Mar1o\PycharmProjects\Entangled Tale" />
       <recent name="C:\Users\Mar1o\PycharmProjects\Entangled Tale\data" />
     </key>
   </component>
@@ -340,7 +345,31 @@
       <option name="project" value="LOCAL" />
       <updated>1704897684849</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="boss 2'nd act processing">
+      <option name="closed" value="true" />
+      <created>1704912439309</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1704912439309</updated>
+    </task>
+    <task id="LOCAL-00030" summary="boss 2'nd act processing">
+      <option name="closed" value="true" />
+      <created>1704912447942</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1704912447942</updated>
+    </task>
+    <task id="LOCAL-00031" summary="test">
+      <option name="closed" value="true" />
+      <created>1705171777463</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1705171777464</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -375,6 +404,8 @@
     <MESSAGE value="maze done" />
     <MESSAGE value="some pictures" />
     <MESSAGE value="math game 2 act's processing" />
-    <option name="LAST_COMMIT_MESSAGE" value="math game 2 act's processing" />
+    <MESSAGE value="boss 2'nd act processing" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
 </project>
