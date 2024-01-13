@@ -616,7 +616,6 @@ class Player(pygame.sprite.Sprite):
             text3, text4
         image = self.image
         current_time = pygame.time.get_ticks()
-        text_window.rect.x = 999999
 
         if move_left:
             self.direction = 'left'
@@ -894,10 +893,6 @@ class Player(pygame.sprite.Sprite):
             player.loc = 10
             mathGame('a2_m5.png')
         if pygame.sprite.collide_mask(self, sign1):
-            text_window.rect.y = 0
-            text_window.rect.x = 100
-            text_group.add(text_window)
-            all_sprites.add(text_window)
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render('Лучше дальше не идти, это ОПАСНО!!!', False,
@@ -911,10 +906,6 @@ class Player(pygame.sprite.Sprite):
             text4 = font.render('НИКОГДА не щадил!!!', False,
                                 (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign2):
-            text_window.rect.y = 0
-            text_window.rect.x = 100
-            text_group.add(text_window)
-            all_sprites.add(text_window)
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render('Эти ворота скрывают ТЕБЯ от НЕГО!', False,
@@ -945,18 +936,8 @@ class Sign(pygame.sprite.Sprite):
     image = pygame.transform.scale(image, (51, 54))
 
     def __init__(self, x_pos, y_pos):
-        super().__init__(player_group, sign_group)
+        super().__init__(all_sprites, sign_group)
         self.image = Sign.image
-        self.rect = self.image.get_rect().move(x_pos, y_pos)
-
-
-class TextWindow(pygame.sprite.Sprite):
-    image = load_image('text_window.png')
-    image = pygame.transform.scale(image, (600, 150))
-
-    def __init__(self, x_pos, y_pos):
-        super().__init__(player_group, text_group)
-        self.image = TextWindow.image
         self.rect = self.image.get_rect().move(x_pos, y_pos)
 
 
@@ -1149,9 +1130,9 @@ class WizardRus(pygame.sprite.Sprite):
 
     def update(self):
         if self.canRun:
-            self.rect.y -= 10
-            self.y -= 10
-            if self.y <= 300:
+            self.rect.y -= 15
+            self.y -= 15
+            if self.y <= -100:
                 self.rect.y = -1000
         if player.y <= 800:
             self.canRun = True
@@ -1288,7 +1269,6 @@ sign3 = Sign(120, 20000)
 sign4 = Sign(658, 20000)
 sign5 = Sign(120, 20000)
 sign6 = Sign(658, 20000)
-text_window = TextWindow(999999, 0)
 
 loc5 = 0
 loc11 = 0
@@ -1481,7 +1461,7 @@ if __name__ == '__main__':
                           y - player.y + random.randint(200, 450), -3, 0,
                           random.randint(100, 300),
                           10, True, "greenrect2.jpg")
-            if 2300 <= loc11 <= 4000 and loc11 % 100 == 0:
+            if 2300 <= loc11 <= 3400 and loc11 % 100 == 0:
                 Rectangle(x - player.x + random.randint(-100, 300),
                           y - player.y - 200, 0, 1, 20,
                           random.randint(100, 300),
@@ -1490,7 +1470,7 @@ if __name__ == '__main__':
                           y - player.y - 200, 0, 1, 20,
                           random.randint(100, 300),
                           True, "greenrect1.jpg")
-            if 4300 <= loc11 <= 6000 and loc11 % 100 == 0:
+            if 3400 <= loc11 <= 5000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
                           random.randint(100, 300),
@@ -1499,7 +1479,7 @@ if __name__ == '__main__':
                           y - player.y + random.randint(200, 450), 3, 0,
                           random.randint(100, 300),
                           10, True, "greenrect2.jpg")
-            if loc11 == 6400:
+            if loc11 == 5400:
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 12
             loc11 += 1
@@ -1668,10 +1648,15 @@ if __name__ == '__main__':
 
         if player.loc == 3:
             sign_group.update()
+            for i in sign_group:
+                if pygame.sprite.collide_mask(player, i):
+                    screen.blit(pygame.transform.scale(load_image("text_window.png"), (600, 150)),
+                                (100, 0))
             screen.blit(text1, (110, 10))
             screen.blit(text2, (110, 40))
             screen.blit(text3, (110, 70))
             screen.blit(text4, (110, 100))
+
         button_group.update()
         door_group.draw(screen)
         pygame.display.flip()
