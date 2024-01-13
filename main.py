@@ -462,8 +462,16 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
 
 
 def menu():
+    con = sqlite3.connect("data/bd.sqlite")
+    cur = con.cursor()
+    result1 = cur.execute("""SELECT time FROM player
+            WHERE act == 2 ORDER BY time""").fetchall()
+    result2 = cur.execute("""SELECT time FROM player
+            WHERE act == 3 ORDER BY time""").fetchall()
+    con.close()
     COLOR1 = (32, 32, 32)
     COLOR2 = (255, 0, 0)
+    COLOR3 = (32, 32, 32)
 
     other_color(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
     colT = 5
@@ -483,11 +491,19 @@ def menu():
                         other_color(COLOR2, COLOR1, COLOR1,
                                     COLOR1, COLOR1)
                     if colT == 2:
-                        other_color(COLOR1, COLOR2, COLOR1,
-                                    COLOR1, COLOR1)
+                        if result1:
+                            other_color(COLOR1, COLOR2, COLOR1,
+                                        COLOR1, COLOR1)
+                        else:
+                            other_color(COLOR1, COLOR3, COLOR1,
+                                        COLOR1, COLOR1)
                     if colT == 3:
-                        other_color(COLOR1, COLOR1, COLOR2,
-                                    COLOR1, COLOR1)
+                        if result2:
+                            other_color(COLOR1, COLOR1, COLOR2,
+                                        COLOR1, COLOR1)
+                        else:
+                            other_color(COLOR1, COLOR1, COLOR3,
+                                        COLOR1, COLOR1)
                     if colT == 4:
                         other_color(COLOR1, COLOR1, COLOR1,
                                     COLOR2, COLOR1)
@@ -502,11 +518,19 @@ def menu():
                         other_color(COLOR1, COLOR1, COLOR1, COLOR1,
                                     COLOR2)
                     if colT == 2:
-                        other_color(COLOR1, COLOR2, COLOR1,
-                                    COLOR1, COLOR1)
+                        if result1:
+                            other_color(COLOR1, COLOR2, COLOR1,
+                                        COLOR1, COLOR1)
+                        else:
+                            other_color(COLOR1, COLOR3, COLOR1,
+                                        COLOR1, COLOR1)
                     if colT == 3:
-                        other_color(COLOR1, COLOR1, COLOR2,
-                                    COLOR1, COLOR1)
+                        if result2:
+                            other_color(COLOR1, COLOR1, COLOR2,
+                                        COLOR1, COLOR1)
+                        else:
+                            other_color(COLOR1, COLOR1, COLOR3,
+                                        COLOR1, COLOR1)
                     if colT == 4:
                         other_color(COLOR1, COLOR1, COLOR1,
                                     COLOR2, COLOR1)
@@ -516,9 +540,11 @@ def menu():
                     if colT == 1:
                         act1()
                     if colT == 2:
-                        act2()
+                        if result1:
+                            act2()
                     if colT == 3:
-                        act3()
+                        if result2:
+                            act3()
                     if colT == 4:
                         results()
                     pygame.mixer.music.play(loops=-1)
