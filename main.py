@@ -21,7 +21,7 @@ def load_image(name, colorkey=None):  # Загрузка картинки из d
     return image
 
 
-def newDialog():  # Обновление диолога
+def newDialog():  # Обновление диалога
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 20)
     render_fraze_1 = font.render('', False, (255, 255, 255))
@@ -140,7 +140,8 @@ def mathGame(m):  # Комната с магом математики
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('maps/a1_m5.png', (839, 1300))
+                            background = Background('maps/a1_m5.png',
+                                                    (839, 1300))
                             all_sprites.add(background)
                             sign1.rect.y = 1000
                             sign2.rect.y = 1000
@@ -160,7 +161,8 @@ def mathGame(m):  # Комната с магом математики
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('maps/a2_m6.png', (1667, 1000))
+                            background = Background('maps/a2_m6.png',
+                                                    (1667, 1000))
                             all_sprites.add(background)
                             player = Player(850, 506, 2)
                             player.loc = 11
@@ -170,14 +172,16 @@ def mathGame(m):  # Комната с магом математики
                             x = player.x
                             y = player.y
                             loc11 = 0
-                            pygame.mixer.music.load("data/music/mus_undynetruetheme.ogg")
+                            pygame.mixer.music.load(
+                                "data/music/act2_boss.ogg")
                             pygame.mixer.music.set_volume(0.3)
                             pygame.mixer.music.play(loops=-1)
                         else:
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('maps/a3_m3.jpg', (2210, 1300))
+                            background = Background('maps/a3_m3.jpg',
+                                                    (2210, 1300))
                             all_sprites.add(background)
                             player = Player(1105, 650, 3)
                             player.loc = 15
@@ -235,11 +239,13 @@ def terminate():
 
 
 def start_screen():  # Начальное окно
-    fon = pygame.transform.scale(load_image('camera-player/fon.jpg'), (800, 500))
+    fon = pygame.transform.scale(load_image('camera-player/fon.jpg'),
+                                 (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     clock.tick(0.7)
-    fon = pygame.transform.scale(load_image('camera-player/blackfon.png'), (800, 500))
+    fon = pygame.transform.scale(load_image('camera-player/blackfon.png'),
+                                 (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
     while True:
@@ -255,8 +261,9 @@ def start_screen():  # Начальное окно
 
 
 def end_screen(n, winOrdie):  # Окно при прохождении акта, либо при проигрыше
-    fon = pygame.transform.scale(load_image('camera-player/gameover.jpg'), (800, 500))
-    fon = pygame.transform.scale(load_image('gameover.jpg'), (800, 500))
+    fon = pygame.transform.scale(load_image('camera-player/gameover.jpg'),
+                                 (800, 500))
+    fon = pygame.transform.scale(fon, (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
 
@@ -313,7 +320,8 @@ def act1():  # Создание 1 акта
     global all_sprites, player_group, player, background, door, door_group, \
         i, word_group, x, y, loc5, time, runi
     time = datetime.datetime.now()
-    fon = pygame.transform.scale(load_image('camera-player/act1.png'), (800, 500))
+    fon = pygame.transform.scale(load_image('camera-player/act1.png'),
+                                 (800, 500))
     pygame.mixer.music.load("data/music/start_sound.ogg")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
@@ -341,8 +349,9 @@ def act1():  # Создание 1 акта
     for sprite in all_sprites:
         camera.apply(sprite)
 
-    screen.blit(pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
-                (5, 5))
+    screen.blit(
+        pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
+        (5, 5))
     font_path = os.path.join("data/fonts", "comic.ttf")
     txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                  (255, 0, 0))
@@ -354,7 +363,8 @@ def act2():  # Создание 2 акта
     global all_sprites, player_group, player, background, door, \
         door_group, time, x, y, door2, door3, pas, loc11, img, runi
     time = datetime.datetime.now()
-    fon = pygame.transform.scale(load_image('camera-player/act2.png'), (800, 500))
+    fon = pygame.transform.scale(load_image('camera-player/act2.png'),
+                                 (800, 500))
     pygame.mixer.music.load("data/music/start_sound.ogg")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
@@ -374,7 +384,7 @@ def act2():  # Создание 2 акта
     pas = Pass(850, 700)
     img = load_image('objects/key.jpg')
     img = pygame.transform.scale(img, (50, 50))
-    pygame.mixer.music.load("data/music/a2_m1.mp3")
+    pygame.mixer.music.load("data/music/act2_main.mp3")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
     x, y = 0, 0
@@ -386,8 +396,9 @@ def act2():  # Создание 2 акта
     for sprite in all_sprites:
         camera.apply(sprite)
 
-    screen.blit(pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
-                (5, 5))
+    screen.blit(
+        pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
+        (5, 5))
     font_path = os.path.join("data/fonts", "comic.ttf")
     txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                  (255, 0, 0))
@@ -399,7 +410,8 @@ def act2():  # Создание 2 акта
 def act3():  # Создание 3 акта
     global all_sprites, player_group, player, background, door, door_group, \
         i, x, y, time, defen, traveler, apples, runi
-    fon = pygame.transform.scale(load_image('camera-player/act3.png'), (800, 500))
+    fon = pygame.transform.scale(load_image('camera-player/act3.png'),
+                                 (800, 500))
     screen.blit(fon, (0, 0))
     pygame.mixer.music.load("data/music/start_sound.ogg")
     pygame.mixer.music.set_volume(0.3)
@@ -439,8 +451,9 @@ def act3():  # Создание 3 акта
     for sprite in all_sprites:
         camera.apply(sprite)
 
-    screen.blit(pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
-                (5, 5))
+    screen.blit(
+        pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
+        (5, 5))
     font_path = os.path.join("data/fonts", "comic.ttf")
     txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                  (255, 0, 0))
@@ -909,19 +922,21 @@ class Player(pygame.sprite.Sprite):  # Игрок
             player = Player(335, 325, 1)
             player.loc = 10
             mathGame('maps/a2_m5.png')
-        if pygame.sprite.collide_mask(self, sign1):
+        elif pygame.sprite.collide_mask(self, sign1):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
-            text1 = font.render('Лучше дальше не идти, это ОПАСНО!!!', False,
-                                (255, 255, 255))
+            text1 = font.render(
+                'Беги, пока не поздно! Это Маг Физик! Он владеет', False,
+                (255, 255, 255))
             text2 = font.render(
-                'Это один из лучших магов наук. Он знает ВСЕ науки!', False,
+                'силами природы и науки. Ни один закон физики не может', False,
                 (255, 255, 255))
             text3 = font.render(
-                'Он тоже не знает как сюда попал, но глупых детей он',
+                'ему противостоять. Ты на пути его научных исследований,',
                 False, (255, 255, 255))
-            text4 = font.render('НИКОГДА не щадил!!!', False,
-                                (255, 255, 255))
+            text4 = font.render(
+                'и это будет последнее, что ты увидишь!',
+                False, (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign2):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 20)
@@ -934,6 +949,62 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 'Он мог бы сбежать отсюда, но власть, которую он получил',
                 False, (255, 255, 255))
             text4 = font.render('здесь очень манит его.', False,
+                                (255, 255, 255))
+        elif pygame.sprite.collide_mask(self, sign3):
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 20)
+            text1 = font.render(
+                'Он умеет изменять структуру времени. ', False,
+                (255, 255, 255))
+            text2 = font.render(
+                'Твое будущее уже записано, и оно в его руках.', False,
+                (255, 255, 255))
+            text3 = font.render(
+                'Никто не смог выйти из его лабиринта времени.',
+                False, (255, 255, 255))
+            text4 = font.render('', False,
+                                (255, 255, 255))
+        elif pygame.sprite.collide_mask(self, sign4):
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 20)
+            text1 = font.render(
+                'Когда он разгневан, его силы становятся неописуемыми.', False,
+                (255, 255, 255))
+            text2 = font.render(
+                'Попадись на его пути, и ты станешь частью его', False,
+                (255, 255, 255))
+            text3 = font.render(
+                'физического эксперимента!',
+                False, (255, 255, 255))
+            text4 = font.render('', False,
+                                (255, 255, 255))
+        elif pygame.sprite.collide_mask(self, sign5):
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 20)
+            text1 = font.render(
+                'Его ум остр, как лучи света. Ни одна тайна не может', False,
+                (255, 255, 255))
+            text2 = font.render(
+                'ускользнуть от его внимания.', False,
+                (255, 255, 255))
+            text3 = font.render(
+                'Твои мысли уже известны ему.',
+                False, (255, 255, 255))
+            text4 = font.render('', False,
+                                (255, 255, 255))
+        elif pygame.sprite.collide_mask(self, sign6):
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 20)
+            text1 = font.render(
+                'Он проник в самые глубины квантовой реальности.', False,
+                (255, 255, 255))
+            text2 = font.render(
+                'Вселенная - это его лаборатория.', False,
+                (255, 255, 255))
+            text3 = font.render(
+                'Попытайся не потеряться в его',
+                False, (255, 255, 255))
+            text4 = font.render('многомерных исследованиях.', False,
                                 (255, 255, 255))
         elif self.loc == 3:
             font_path = os.path.join("data/fonts", "comic.ttf")
@@ -1004,7 +1075,8 @@ class Sign(pygame.sprite.Sprite):  # Табличка
 class Letters(pygame.sprite.Sprite):  # Слова
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
-        a = random.choice(['objects/letter_a.png', 'objects/letter_b.png', 'objects/letter_v.png',
+        a = random.choice(['objects/letter_a.png', 'objects/letter_b.png',
+                           'objects/letter_v.png',
                            'objects/letter_g.png', 'objects/letter_d.png'])
         image_path = load_image(a)
         self.image = pygame.transform.scale(image_path, (40, 60))
@@ -1407,12 +1479,14 @@ if __name__ == '__main__':  # Запуск программы
         all_sprites.draw(screen)
         if player.loc == 7:
             screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
-        if not player.key and pygame.sprite.collide_mask(player, chest):  # Взаимодействие с сундуком
+        if not player.key and pygame.sprite.collide_mask(player,
+                                                         chest):  # Взаимодействие с сундуком
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужен ключ!", False, (255, 255, 255))
             screen.blit(task_text, (300, 0))
-        if pygame.sprite.collide_mask(player, traveler):  # Взаимодействие с нпс
+        if pygame.sprite.collide_mask(player,
+                                      traveler):  # Взаимодействие с нпс
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 25)
             if player.apples not in [5, 6]:
@@ -1450,7 +1524,8 @@ if __name__ == '__main__':  # Запуск программы
             word_group.update()
             word_group.draw(screen)
 
-        screen.blit(pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
+        screen.blit(pygame.transform.scale(load_image("camera-player/run.png"),
+                                           (40, 40)),
                     (5, 5))
         font_path = os.path.join("data/fonts", "comic.ttf")
         if runi == -600:  # Активация ускорения
@@ -1713,8 +1788,9 @@ if __name__ == '__main__':  # Запуск программы
             for i in sign_group:
                 if pygame.sprite.collide_mask(player, i):
                     screen.blit(
-                        pygame.transform.scale(load_image("objects/text_window.png"),
-                                               (600, 150)),
+                        pygame.transform.scale(
+                            load_image("objects/text_window.png"),
+                            (600, 150)),
                         (100, 0))
             screen.blit(text1, (110, 10))
             screen.blit(text2, (110, 40))
