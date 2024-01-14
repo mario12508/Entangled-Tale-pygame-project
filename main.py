@@ -7,7 +7,7 @@ import pygame
 import sqlite3
 
 
-def load_image(name, colorkey=None):
+def load_image(name, colorkey=None):  # Загрузка картинки из data
     fullname = os.path.join('data', name)
     # если файл не существует, то выходим
     if not os.path.isfile(fullname):
@@ -21,7 +21,7 @@ def load_image(name, colorkey=None):
     return image
 
 
-def newDialog():
+def newDialog():  # Обновление диолога
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 20)
     render_fraze_1 = font.render('', False, (255, 255, 255))
@@ -30,7 +30,7 @@ def newDialog():
     return render_fraze_1, render_fraze_2, render_fraze_3
 
 
-def mathGame(m):
+def mathGame(m):  # Комната с магом математики
     global background, all_sprites, player_group, player, door, \
         door_group, rectangle_group, loc5, loc11, loc14, x, y
     if player.loc == 10:
@@ -235,7 +235,7 @@ def terminate():
     sys.exit()
 
 
-def start_screen():
+def start_screen():  # Начальное окно
     fon = pygame.transform.scale(load_image('fon.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -255,7 +255,7 @@ def start_screen():
         clock.tick(FPS)
 
 
-def end_screen(n, winOrdie):
+def end_screen(n, winOrdie):  # Окно при прохождении акта, либо при проигрыше
     fon = pygame.transform.scale(load_image('gameover.jpg'), (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -309,7 +309,7 @@ def end_screen(n, winOrdie):
         clock.tick(FPS)
 
 
-def act1():
+def act1():  # Создание 1 акта
     global all_sprites, player_group, player, background, door, door_group, \
         i, word_group, x, y, loc5, time, runi
     time = datetime.datetime.now()
@@ -350,7 +350,7 @@ def act1():
     all_sprites.draw(screen)
 
 
-def act2():
+def act2():  # Создание 2 акта
     global all_sprites, player_group, player, background, door, \
         door_group, time, x, y, door2, door3, pas, loc11, img, runi
     time = datetime.datetime.now()
@@ -396,7 +396,7 @@ def act2():
     door_group.draw(screen)
 
 
-def act3():
+def act3():  # Создание 3 акта
     global all_sprites, player_group, player, background, door, door_group, \
         i, x, y, time, defen, traveler, apples, runi
     fon = pygame.transform.scale(load_image('act3.png'), (800, 500))
@@ -455,7 +455,7 @@ t4 = None
 t5 = None
 
 
-def other_color(cl1, cl2, cl3, cl4, cl5):
+def other_color(cl1, cl2, cl3, cl4, cl5):  # Смена цвета кнопки в меню
     global t1, t2, t3, t4, t5
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 40)
@@ -471,7 +471,7 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
                      False, cl5)
 
 
-def menu():
+def menu():  # Меню
     con = sqlite3.connect("data/bd.sqlite")
     cur = con.cursor()
     result1 = cur.execute("""SELECT id FROM player
@@ -569,7 +569,7 @@ def menu():
         clock.tick(FPS)
 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):  # Игрок
     image = load_image('players_image/m.c.front_stop.png')
     image = pygame.transform.scale(image, (40, 60))
 
@@ -600,7 +600,7 @@ class Player(pygame.sprite.Sprite):
                           (187, 122, 87), (0, 187, 255), (55, 71, 79),
                           (38, 52, 58), (71, 92, 102)]
 
-    def stop(self):
+    def stop(self):  # Анимация игрока при остановке
         image = self.image
         if self.vis:
             if self.direction == 'left':
@@ -630,7 +630,7 @@ class Player(pygame.sprite.Sprite):
         image = self.image
         current_time = pygame.time.get_ticks()
 
-        if move_left:
+        if move_left:  # Анимация игрока, когда он идет налево
             self.direction = 'left'
             self.rect.x -= self.run
             self.x -= self.run
@@ -656,7 +656,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 image = load_image(
                     f'players_image/m.c.left_walk_{self.step}_trans.png')
-        if move_right:
+        if move_right:  # Анимация игрока, когда он идет направо
             self.direction = 'right'
             self.rect.x += self.run
             self.x += self.run
@@ -682,7 +682,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 image = load_image(
                     f'players_image/m.c.right_walk_{self.step}_trans.png')
-        if move_up:
+        if move_up:  # Анимация игрока, когда он идет вверх
             self.direction = 'up'
             self.rect.y -= self.run
             self.y -= self.run
@@ -708,7 +708,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 image = load_image(
                     f'players_image/m.c.back_walk_{self.step}_trans.png')
-        if move_down:
+        if move_down:  # Анимация игрока, когда он идет вниз
             self.direction = 'down'
             self.rect.y += self.run
             self.y += self.run
@@ -735,7 +735,7 @@ class Player(pygame.sprite.Sprite):
                 image = load_image(
                     f'players_image/m.c.front_walk_{self.step}_trans.png')
         self.image = pygame.transform.scale(image, (40, 60))
-        if pygame.sprite.collide_mask(self, door):
+        if pygame.sprite.collide_mask(self, door):  # Соприкосновение со дверью
             if self.loc == 0:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
@@ -982,7 +982,7 @@ class Player(pygame.sprite.Sprite):
             camera.apply(sprite)
 
 
-class AppleTree(pygame.sprite.Sprite):
+class AppleTree(pygame.sprite.Sprite):  # Дерево
     def __init__(self, x_pos, y_pos):
         super().__init__(all_sprites, apple_trees_group)
         image = load_image('apple_tree.png')
@@ -991,7 +991,7 @@ class AppleTree(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(x_pos, y_pos)
 
 
-class Sign(pygame.sprite.Sprite):
+class Sign(pygame.sprite.Sprite):  # Табличка
     image = load_image('sign.png')
     image = pygame.transform.scale(image, (51, 54))
 
@@ -1001,7 +1001,7 @@ class Sign(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(x_pos, y_pos)
 
 
-class Letters(pygame.sprite.Sprite):
+class Letters(pygame.sprite.Sprite):  # Слова
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
         a = random.choice(['letter_a.png', 'letter_b.png', 'letter_v.png',
@@ -1017,7 +1017,7 @@ class Letters(pygame.sprite.Sprite):
             return
 
 
-class Background(pygame.sprite.Sprite):
+class Background(pygame.sprite.Sprite):  # Задний фон
     def __init__(self, image_path, size):
         super().__init__()
         self.image = load_image(image_path)
@@ -1026,12 +1026,12 @@ class Background(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_threshold(self.image, (237, 28, 36),
                                                (1, 1, 1, 255))
 
-    def get_rgb(self, x, y):
+    def get_rgb(self, x, y):  # Возвращение цвета о пикселе фона
         pixel = pygame.PixelArray(self.image)
         return self.image.unmap_rgb(pixel[x][y])
 
 
-class Door(pygame.sprite.Sprite):
+class Door(pygame.sprite.Sprite):  # Дверь
     def __init__(self, pos_x, pos_y, act, tip):
         super().__init__(all_sprites)
         if act == 1:
@@ -1050,7 +1050,7 @@ class Door(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class Rectangle(pygame.sprite.Sprite):
+class Rectangle(pygame.sprite.Sprite):  # Атакующие объекты из комнат боссов
     def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamage, image):
         image_path = load_image(image)
         image_path = pygame.transform.scale(image_path, (xx + 50, yy))
@@ -1063,7 +1063,7 @@ class Rectangle(pygame.sprite.Sprite):
         self.vy = vy
         self.canDamage = canDamage
 
-    def update(self):
+    def update(self):  # Обновление движения
         global rectangle_group, plat
         self.rect.x += 2 * self.vx
         self.rect.y += 2 * self.vy
@@ -1082,7 +1082,7 @@ class Rectangle(pygame.sprite.Sprite):
                 return
 
 
-class Button(pygame.sprite.Sprite):
+class Button(pygame.sprite.Sprite):  # Кнопки выбора
     def __init__(self, pos_x, pos_y, tip):
         super().__init__(all_sprites)
         if player.loc == 15:
@@ -1116,7 +1116,7 @@ class Button(pygame.sprite.Sprite):
                 self.tm = 300
 
 
-class Pass(pygame.sprite.Sprite):
+class Pass(pygame.sprite.Sprite):  # Автомат у речки
     image = load_image('pass.png')
     image = pygame.transform.scale(image, (79, 90))
 
@@ -1126,7 +1126,7 @@ class Pass(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
 
-class Chest(pygame.sprite.Sprite):
+class Chest(pygame.sprite.Sprite):  # Сундук
     image = load_image('chest.jpg')
     image = pygame.transform.scale(image, (60, 40))
 
@@ -1136,7 +1136,7 @@ class Chest(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
 
-class Defense(pygame.sprite.Sprite):
+class Defense(pygame.sprite.Sprite):  # Защитник
     image = load_image('defens.jpg')
     image = pygame.transform.scale(image, (283, 260))
 
@@ -1147,7 +1147,7 @@ class Defense(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class Apple(pygame.sprite.Sprite):
+class Apple(pygame.sprite.Sprite):  # Яблоко
     image = load_image('apple.jpg')
     image = pygame.transform.scale(image, (20, 20))
 
@@ -1158,7 +1158,7 @@ class Apple(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class Traveler(pygame.sprite.Sprite):
+class Traveler(pygame.sprite.Sprite):  # НПС, путник у реки
     image = load_image('traveler.jpg')
     image = pygame.transform.scale(image, (70, 90))
 
@@ -1169,7 +1169,7 @@ class Traveler(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class Platform(pygame.sprite.Sprite):
+class Platform(pygame.sprite.Sprite):  # Платформа 3 акта босса
     image = load_image('platform.jpg')
     image = pygame.transform.scale(image, (100, 90))
 
@@ -1180,7 +1180,7 @@ class Platform(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-class WizardRus(pygame.sprite.Sprite):
+class WizardRus(pygame.sprite.Sprite):  # Маг 1 акта
     image = load_image('wizardRus.png')
     image = pygame.transform.scale(image, (80, 90))
 
@@ -1205,7 +1205,7 @@ class WizardRus(pygame.sprite.Sprite):
 wizardRus = WizardRus(2000, 2000)
 
 
-def act3_buttons():
+def act3_buttons():  # Создание кнопок для выбора ответа
     global task_text, difference, question, buttons, a, b, tm
     a = random.randint(0, 100)
     difference = random.randint(1, 4)
@@ -1226,7 +1226,7 @@ def act3_buttons():
                 (350, 0))
 
 
-def results():
+def results():  # Таблица результатов
     con = sqlite3.connect("data/bd.sqlite")
     cur = con.cursor()
     result1 = cur.execute("""SELECT time FROM player
@@ -1273,7 +1273,7 @@ def results():
         clock.tick(FPS)
 
 
-def credits_screen():
+def credits_screen():  # Субтитры
     j = 0
     sybtit = load_image('sybtit.png')
     pygame.mixer.music.load("data/final_melody.ogg")
@@ -1294,8 +1294,7 @@ def credits_screen():
         clock.tick(FPS)
 
 
-class Camera:
-    # зададим начальный сдвиг камеры
+class Camera:  # Камера, движение за игроком
     def __init__(self):
         self.dx = 0
         self.dy = 0
@@ -1304,12 +1303,12 @@ class Camera:
         obj.rect.x += self.dx
         obj.rect.y += self.dy
 
-    # позиционировать камеру на объекте target
-    def update(self, target):
+    def update(self, target):  # камера на объекте target
         self.dx = -(target.rect.x + target.rect.w // 2 - width // 2)
         self.dy = -(target.rect.y + target.rect.h // 2 - height // 2)
 
 
+# Создание объектов всей игры
 clock = pygame.time.Clock()
 FPS = 60
 # группы спрайтов
@@ -1354,7 +1353,7 @@ plat = Platform(20000, 20000)
 pas = Pass(20000, 20000)
 traveler = Traveler(20000, 20000)
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # Запуск программы
     pygame.init()
     pygame.display.set_caption('Entangled Tale')
     size = width, height = 800, 500
@@ -1371,7 +1370,7 @@ if __name__ == '__main__':
                              20).render('', False, (255, 255, 255))
     i = 0
     running = True
-    while running:
+    while running:  # Основной цикл
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -1408,12 +1407,12 @@ if __name__ == '__main__':
         all_sprites.draw(screen)
         if player.loc == 7:
             screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
-        if not player.key and pygame.sprite.collide_mask(player, chest):
+        if not player.key and pygame.sprite.collide_mask(player, chest):  # Взаимодействие с сундуком
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужен ключ!", False, (255, 255, 255))
             screen.blit(task_text, (300, 0))
-        if pygame.sprite.collide_mask(player, traveler):
+        if pygame.sprite.collide_mask(player, traveler):  # Взаимодействие с нпс
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 25)
             if player.apples not in [5, 6]:
@@ -1432,7 +1431,7 @@ if __name__ == '__main__':
             screen.blit(task_text, (100, 0))
             screen.blit(task_text2, (100, 40))
         if (not player.pas and pygame.sprite.collide_mask(player, pas) and
-                player.loc == 6):
+                player.loc == 6):  # Взаимодействие с автоматом
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужна монета!", False, (255, 255, 255))
@@ -1454,7 +1453,7 @@ if __name__ == '__main__':
         screen.blit(pygame.transform.scale(load_image("run.png"), (40, 40)),
                     (5, 5))
         font_path = os.path.join("data/fonts", "comic.ttf")
-        if runi == -600:
+        if runi == -600:  # Активация ускорения
             txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                          (255, 0, 0))
             screen.blit(txt, (50, 0))
@@ -1470,7 +1469,7 @@ if __name__ == '__main__':
             for i in range(player.apples):
                 screen.blit(img, (770 - i * 30, 0))
 
-        if player.loc == 4:
+        if player.loc == 4:  # Босс 1 акта
             if 200 <= loc5 <= 1000 and loc5 % 200 == 0:
                 try:
                     n = random.randint(-1, 3) * 200
@@ -1514,7 +1513,7 @@ if __name__ == '__main__':
                 player.loc = 5
             loc5 += 1
             rectangle_group.update()
-        if player.loc == 11:
+        if player.loc == 11:  # Босс 2 акта
             if loc11 <= 2000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
@@ -1548,7 +1547,7 @@ if __name__ == '__main__':
             loc11 += 1
             rectangle_group.update()
 
-        if player.loc == 15:
+        if player.loc == 15:  # Босс 3 акта
             if loc14 == 200:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
@@ -1709,7 +1708,7 @@ if __name__ == '__main__':
             loc14 += 1
             rectangle_group.update()
 
-        if player.loc == 3:
+        if player.loc == 3:  # Таблички 1 акта
             sign_group.update()
             for i in sign_group:
                 if pygame.sprite.collide_mask(player, i):
