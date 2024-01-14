@@ -4,12 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="test">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_01_2024_21_01_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_01_2024_21_01__Changes_.xml" beforeDir="false" />
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="a3_m1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a2_m2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a2_m3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a2_m5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a2_m6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a3_m1.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/data/a3_m1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/a3_m1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/failsOfObject.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/act4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/door_a1_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/door_a1_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/exit-enter_a2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.back_stop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.back_walk_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.back_walk_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.back_walk_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.front_stop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.front_walk_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.front_walk_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.front_walk_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.left_stop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.left_walk_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.left_walk_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.left_walk_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.right_stop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.right_walk_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.right_walk_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.right_walk_3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.c.right_walk_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/m.v.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -369,7 +393,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705171777464</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="a3_m1">
+      <option name="closed" value="true" />
+      <created>1705178740209</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1705178740209</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -406,6 +438,7 @@
     <MESSAGE value="math game 2 act's processing" />
     <MESSAGE value="boss 2'nd act processing" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="a3_m1" />
+    <option name="LAST_COMMIT_MESSAGE" value="a3_m1" />
   </component>
 </project>

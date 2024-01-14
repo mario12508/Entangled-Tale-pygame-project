@@ -24,9 +24,9 @@ def load_image(name, colorkey=None):
 def newDialog():
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 20)
-    render_fraze_1 = font.render('', True, (255, 255, 255))
-    render_fraze_2 = font.render('', True, (255, 255, 255))
-    render_fraze_3 = font.render('', True, (255, 255, 255))
+    render_fraze_1 = font.render('', False, (255, 255, 255))
+    render_fraze_2 = font.render('', False, (255, 255, 255))
+    render_fraze_3 = font.render('', False, (255, 255, 255))
     return render_fraze_1, render_fraze_2, render_fraze_3
 
 
@@ -203,13 +203,13 @@ def mathGame(m):
                         return
 
         if i <= len(fraze_1):
-            render_fraze_1 = font.render(fraze_1[:i], True, (255, 255, 255))
+            render_fraze_1 = font.render(fraze_1[:i], False, (255, 255, 255))
         elif i <= len(fraze_1) + len(fraze_2):
-            render_fraze_2 = font.render(fraze_2[:i - len(fraze_1)], True,
+            render_fraze_2 = font.render(fraze_2[:i - len(fraze_1)], False,
                                          (255, 255, 255))
         elif i <= len(fraze_1) + len(fraze_2) + len(fraze_3):
             render_fraze_3 = font.render(
-                fraze_3[:i - len(fraze_1) - len(fraze_2)], True,
+                fraze_3[:i - len(fraze_1) - len(fraze_2)], False,
                 (255, 255, 255))
         i += 1
         if m == 'a1_m4.png':
@@ -264,12 +264,12 @@ def end_screen(n, winOrdie):
     font = pygame.font.Font(font_path, 35)
     tm = (datetime.datetime.now() - time).total_seconds()
     t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec",
-                     True, (0, 0, 0))
+                     False, (0, 0, 0))
 
     if winOrdie:
-        t = font.render(f"Win", True, (0, 0, 0))
+        t = font.render(f"Win", False, (0, 0, 0))
         font = pygame.font.Font(font_path, 50)
-        t0 = font.render(f"{n} Act", True, (0, 0, 0))
+        t0 = font.render(f"{n} Act", False, (0, 0, 0))
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
@@ -279,9 +279,9 @@ def end_screen(n, winOrdie):
         con.commit()
         con.close()
     else:
-        t = font.render(f"Lose", True, (0, 0, 0))
+        t = font.render(f"Lose", False, (0, 0, 0))
         font = pygame.font.Font(font_path, 50)
-        t0 = font.render(f"{n} Act", True, (0, 0, 0))
+        t0 = font.render(f"{n} Act", False, (0, 0, 0))
 
     while True:
         for event in pygame.event.get():
@@ -297,7 +297,7 @@ def end_screen(n, winOrdie):
                     elif n == 3:
                         act3()
                     else:
-                        sybtit_screen()
+                        credits_screen()
                         results()
                         act1()
                     return
@@ -415,19 +415,24 @@ def act3():
     pygame.mixer.music.load("data/act3_main.ogg")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
-    door = Door(1950, 2750, 1, 1)
+    door = Door(550, 1720, 3, 3)
     door_group.add(door)
     player = Player(530, 200, 3)
-    traveler = Traveler(5000, 3600)
+    traveler = Traveler(3400, 1320)
     player.loc = 13
     runi = -600
-    defen = Defens(850, 2050)
+    defen = Defense(770, 1200)
     apples = [
-        Apple(6000, 3000),
-        Apple(6400, 2500),
-        Apple(4800, 3000),
-        Apple(6100, 1900),
-        Apple(8000, 2800)
+        Apple(1800, 2090),
+        Apple(1810, 2110),
+        Apple(2100, 2260),
+        Apple(3600, 540),
+        Apple(3570, 450)
+    ]
+    apple_trees = [
+        AppleTree(1828, 1930),
+        AppleTree(2100, 2100),
+        AppleTree(3670, 360)
     ]
 
     camera.update(player)
@@ -455,15 +460,15 @@ def other_color(cl1, cl2, cl3, cl4, cl5):
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 40)
     t1 = font.render(f"1 Act",
-                     True, cl1)
+                     False, cl1)
     t2 = font.render(f"2 Act",
-                     True, cl2)
+                     False, cl2)
     t3 = font.render(f"3 Act",
-                     True, cl3)
+                     False, cl3)
     t4 = font.render(f"Tab result",
-                     True, cl4)
+                     False, cl4)
     t5 = font.render(f"Cancel",
-                     True, cl5)
+                     False, cl5)
 
 
 def menu():
@@ -565,7 +570,7 @@ def menu():
 
 
 class Player(pygame.sprite.Sprite):
-    image = load_image('m.c.front_stop.png')
+    image = load_image('players_image/m.c.front_stop.png')
     image = pygame.transform.scale(image, (40, 60))
 
     def __init__(self, pos_x, pos_y, stena, key=False, pas=False):
@@ -584,7 +589,7 @@ class Player(pygame.sprite.Sprite):
         self.pas = pas
         self.run = 5
         self.vis = True
-        self.appls = 0
+        self.apples = 0
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
@@ -592,28 +597,36 @@ class Player(pygame.sprite.Sprite):
                           (0, 8, 4), (4, 28, 16), (15, 69, 10), (18, 89, 22)]
         elif stena == 3:
             self.stena = [(153, 217, 234), (185, 122, 87), (0, 162, 232),
-                          (187, 122, 87), (0, 187, 255)]
+                          (187, 122, 87), (0, 187, 255), (55, 71, 79),
+                          (38, 52, 58), (71, 92, 102)]
 
     def stop(self):
         image = self.image
         if self.vis:
             if self.direction == 'left':
-                image = load_image(f'm.c.left_stop.png')
+                image = load_image('players_image/m.c.left_stop.png')
             elif self.direction == 'right':
-                image = load_image(f'm.c.right_stop.png')
+                image = load_image('players_image/m.c.right_stop.png')
             elif self.direction == 'down':
-                image = load_image(f'm.c.front_stop.png')
+                image = load_image('players_image/m.c.front_stop.png')
             elif self.direction == 'up':
-                image = load_image(f'm.c.back_stop.png')
+                image = load_image('players_image/m.c.back_stop.png')
         else:
-            image = load_image(f'm.v.jpg')
+            if self.direction == 'left':
+                image = load_image('players_image/m.c.left_stop_trans.png')
+            elif self.direction == 'right':
+                image = load_image('players_image/m.c.right_stop_trans.png')
+            elif self.direction == 'down':
+                image = load_image('players_image/m.c.front_stop_trans.png')
+            elif self.direction == 'up':
+                image = load_image('players_image/m.c.back_stop_trans.png')
         self.image = pygame.transform.scale(image, (40, 60))
 
     def update(self, move_up, move_down, move_left, move_right, passaa=None):
         global all_sprites, background, player, player_group, door_group, \
             door, word_group, x, y, task_text, ok_tip, door2, door3, \
             chest, img, pas, rectangle_group, loc5, loc11, text1, text2, \
-            text3, text4
+            text3, text4, defense_group
         image = self.image
         current_time = pygame.time.get_ticks()
 
@@ -624,24 +637,25 @@ class Player(pygame.sprite.Sprite):
             if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.x += self.run
                 self.x += self.run
-            if self.vis:
-                if current_time - self.last_skin_change_time > 150:
-                    self.last_skin_change_time = current_time
-                    if self.step == 1:
-                        self.step += 1
-                        self.back = False
-                    elif self.step == 2:
-                        if self.back:
-                            self.step -= 1
-                        else:
-                            self.step += 1
-                    elif self.step == 3:
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
                         self.step -= 1
-                        self.back = True
-
-                image = load_image(f'm.c.left_walk_{self.step}.png')
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+            if self.vis:
+                image = load_image(
+                    f'players_image/m.c.left_walk_{self.step}.png')
             else:
-                image = load_image(f'm.v.jpg')
+                image = load_image(
+                    f'players_image/m.c.left_walk_{self.step}_trans.png')
         if move_right:
             self.direction = 'right'
             self.rect.x += self.run
@@ -649,24 +663,25 @@ class Player(pygame.sprite.Sprite):
             if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.x -= self.run
                 self.x -= self.run
-            if self.vis:
-                if current_time - self.last_skin_change_time > 150:
-                    self.last_skin_change_time = current_time
-                    if self.step == 1:
-                        self.step += 1
-                        self.back = False
-                    elif self.step == 2:
-                        if self.back:
-                            self.step -= 1
-                        else:
-                            self.step += 1
-                    elif self.step == 3:
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
                         self.step -= 1
-                        self.back = True
-
-                image = load_image(f'm.c.right_walk_{self.step}.png')
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+            if self.vis:
+                image = load_image(
+                    f'players_image/m.c.right_walk_{self.step}.png')
             else:
-                image = load_image(f'm.v.jpg')
+                image = load_image(
+                    f'players_image/m.c.right_walk_{self.step}_trans.png')
         if move_up:
             self.direction = 'up'
             self.rect.y -= self.run
@@ -674,24 +689,25 @@ class Player(pygame.sprite.Sprite):
             if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.y += self.run
                 self.y += self.run
-            if self.vis:
-                if current_time - self.last_skin_change_time > 150:
-                    self.last_skin_change_time = current_time
-                    if self.step == 1:
-                        self.step += 1
-                        self.back = False
-                    elif self.step == 2:
-                        if self.back:
-                            self.step -= 1
-                        else:
-                            self.step += 1
-                    elif self.step == 3:
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
                         self.step -= 1
-                        self.back = True
-
-                image = load_image(f'm.c.back_walk_{self.step}.png')
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+            if self.vis:
+                image = load_image(
+                    f'players_image/m.c.back_walk_{self.step}.png')
             else:
-                image = load_image(f'm.v.jpg')
+                image = load_image(
+                    f'players_image/m.c.back_walk_{self.step}_trans.png')
         if move_down:
             self.direction = 'down'
             self.rect.y += self.run
@@ -699,24 +715,25 @@ class Player(pygame.sprite.Sprite):
             if background.get_rgb(self.x, self.y) in self.stena:
                 self.rect.y -= self.run
                 self.y -= self.run
-            if self.vis:
-                if current_time - self.last_skin_change_time > 150:
-                    self.last_skin_change_time = current_time
-                    if self.step == 1:
-                        self.step += 1
-                        self.back = False
-                    elif self.step == 2:
-                        if self.back:
-                            self.step -= 1
-                        else:
-                            self.step += 1
-                    elif self.step == 3:
+            if current_time - self.last_skin_change_time > 150:
+                self.last_skin_change_time = current_time
+                if self.step == 1:
+                    self.step += 1
+                    self.back = False
+                elif self.step == 2:
+                    if self.back:
                         self.step -= 1
-                        self.back = True
-
-                image = load_image(f'm.c.front_walk_{self.step}.png')
+                    else:
+                        self.step += 1
+                elif self.step == 3:
+                    self.step -= 1
+                    self.back = True
+            if self.vis:
+                image = load_image(
+                    f'players_image/m.c.front_walk_{self.step}.png')
             else:
-                image = load_image(f'm.v.jpg')
+                image = load_image(
+                    f'players_image/m.c.front_walk_{self.step}_trans.png')
         self.image = pygame.transform.scale(image, (40, 60))
         if pygame.sprite.collide_mask(self, door):
             if self.loc == 0:
@@ -786,7 +803,7 @@ class Player(pygame.sprite.Sprite):
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 ok_tip = random.randint(0, 3)
-                task_text = font.render(a[ok_tip], True, (255, 255, 255))
+                task_text = font.render(a[ok_tip], False, (255, 255, 255))
                 x, y = 700, 640
                 player.loc = 7
             elif self.loc == 7:
@@ -821,7 +838,7 @@ class Player(pygame.sprite.Sprite):
         for j in apples:
             if pygame.sprite.collide_mask(self, j):
                 j.rect.x = 20000
-                player.appls += 1
+                player.apples += 1
                 img = load_image('apple.jpg')
                 img = pygame.transform.scale(img, (30, 30))
 
@@ -858,9 +875,9 @@ class Player(pygame.sprite.Sprite):
                 img = pygame.transform.scale(img, (50, 50))
                 chest.image = pygame.transform.scale(
                     load_image('chest_open.jpg'), (60, 40))
-        if player.appls == 6 and background.get_rgb(self.x + self.run,
-                                                    self.y + self.run) == \
-                (0, 162, 232):
+        if player.apples == 6 and background.get_rgb(self.x + self.run,
+                                                     self.y + self.run) == \
+                (0, 187, 255):
             player.vis = False
             try:
                 del self.stena[self.stena.index((187, 122, 87))]
@@ -925,10 +942,53 @@ class Player(pygame.sprite.Sprite):
             text2 = font.render('', False, (255, 255, 255))
             text3 = font.render('', False, (255, 255, 255))
             text4 = font.render('', False, (255, 255, 255))
+        for defen in defense_group:
+            if pygame.sprite.collide_mask(self, defen) and self.vis:
+                # Откидываем игрока назад при коллизии
+                if move_left:
+                    self.rect.x += self.run
+                    self.x += self.run
+                if move_right:
+                    self.rect.x -= self.run
+                    self.x -= self.run
+                if move_up:
+                    self.rect.y += self.run
+                    self.y += self.run
+                if move_down:
+                    self.rect.y -= self.run
+                    self.y -= self.run
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 40)
+                task_text = font.render("Дальше нельзя", False, (0, 0, 0))
+                screen.blit(task_text, (300, 0))
+        for apple_tree in apple_trees_group:
+            if pygame.sprite.collide_mask(self, apple_tree):
+                # Откидываем игрока назад при коллизии
+                if move_left:
+                    self.rect.x += self.run
+                    self.x += self.run
+                if move_right:
+                    self.rect.x -= self.run
+                    self.x -= self.run
+                if move_up:
+                    self.rect.y += self.run
+                    self.y += self.run
+                if move_down:
+                    self.rect.y -= self.run
+                    self.y -= self.run
 
         camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
+
+
+class AppleTree(pygame.sprite.Sprite):
+    def __init__(self, x_pos, y_pos):
+        super().__init__(all_sprites, apple_trees_group)
+        image = load_image('apple_tree.png')
+        image = pygame.transform.scale(image, (120, 200))
+        self.image = image
+        self.rect = self.image.get_rect().move(x_pos, y_pos)
 
 
 class Sign(pygame.sprite.Sprite):
@@ -975,13 +1035,17 @@ class Door(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, act, tip):
         super().__init__(all_sprites)
         if act == 1:
-            image_path = load_image(f'door_a1_{tip}.png')
+            image_path = load_image(f'door_act1_{tip}.png')
         elif act == 2:
-            image_path = load_image('exit-enter_a2.png')
+            image_path = load_image('door_act2.png')
+        if act == 3:
+            image_path = load_image('door_act3.png')
         if tip == 1:
             self.image = pygame.transform.scale(image_path, (120, 96))
         elif tip == 2:
             self.image = pygame.transform.scale(image_path, (112, 67))
+        elif tip == 3:
+            self.image = pygame.transform.scale(image_path, (120, 120))
         self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -1037,7 +1101,7 @@ class Button(pygame.sprite.Sprite):
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(
-                    font.render(str(self.tm // 100 + 1), True, (0, 0, 0)),
+                    font.render(str(self.tm // 100 + 1), False, (0, 0, 0)),
                     (350, 0))
                 if self.tm // 100 + 1 == 0:
                     if self.tip == ok_tip + 1:
@@ -1072,13 +1136,13 @@ class Chest(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
 
-class Defens(pygame.sprite.Sprite):
+class Defense(pygame.sprite.Sprite):
     image = load_image('defens.jpg')
-    image = pygame.transform.scale(image, (200, 200))
+    image = pygame.transform.scale(image, (283, 260))
 
     def __init__(self, pos_x, pos_y):
-        super().__init__(all_sprites)
-        self.image = Defens.image
+        super().__init__(all_sprites, defense_group)
+        self.image = Defense.image
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -1088,7 +1152,7 @@ class Apple(pygame.sprite.Sprite):
     image = pygame.transform.scale(image, (20, 20))
 
     def __init__(self, pos_x, pos_y):
-        super().__init__(all_sprites)
+        super().__init__(all_sprites, apple_group)
         self.image = Apple.image
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.mask = pygame.mask.from_surface(self.image)
@@ -1152,13 +1216,13 @@ def act3_buttons():
         question = f"{a} + {b}"
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 50)
-    task_text = font.render(question, True, (0, 0, 0))
+    task_text = font.render(question, False, (0, 0, 0))
     buttons = []
     for j in range(1, 5):
         buttons.append(
             Button(x - player.x + j * 150, y - player.y + 200, j))
     tm = 300
-    screen.blit(font.render(str(tm // 100 + 1), True, (0, 0, 0)),
+    screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
                 (350, 0))
 
 
@@ -1185,23 +1249,23 @@ def results():
         font = pygame.font.Font(font_path, 20)
         y = 0
         for res in result1:
-            screen.blit(font.render(res[0], True, (255, 255, 255)),
+            screen.blit(font.render(res[0], False, (255, 255, 255)),
                         (150, 100 + y))
             y += 40
         y = 0
         for res in result2:
-            screen.blit(font.render(res[0], True, (255, 255, 255)),
+            screen.blit(font.render(res[0], False, (255, 255, 255)),
                         (350, 100 + y))
             y += 40
         y = 0
         for res in result3:
-            screen.blit(font.render(res[0], True, (255, 255, 255)),
+            screen.blit(font.render(res[0], False, (255, 255, 255)),
                         (550, 100 + y))
             y += 40
         font = pygame.font.Font(font_path, 50)
-        text_1 = font.render("1 Act", True, (255, 255, 255))
-        text_2 = font.render("2 Act", True, (255, 255, 255))
-        text_3 = font.render("3 Act", True, (255, 255, 255))
+        text_1 = font.render("1 Act", False, (255, 255, 255))
+        text_2 = font.render("2 Act", False, (255, 255, 255))
+        text_3 = font.render("3 Act", False, (255, 255, 255))
         screen.blit(text_1, (150, 0))
         screen.blit(text_2, (350, 0))
         screen.blit(text_3, (550, 0))
@@ -1209,7 +1273,7 @@ def results():
         clock.tick(FPS)
 
 
-def sybtit_screen():
+def credits_screen():
     j = 0
     sybtit = load_image('sybtit.png')
     pygame.mixer.music.load("data/final_melody.ogg")
@@ -1257,6 +1321,9 @@ button_group = pygame.sprite.Group()
 word_group = pygame.sprite.Group()
 sign_group = pygame.sprite.Group()
 text_group = pygame.sprite.Group()
+defense_group = pygame.sprite.Group()
+apple_trees_group = pygame.sprite.Group()
+apple_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
@@ -1344,35 +1411,31 @@ if __name__ == '__main__':
         if not player.key and pygame.sprite.collide_mask(player, chest):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
-            task_text = font.render("Нужен ключ!", True, (255, 255, 255))
+            task_text = font.render("Нужен ключ!", False, (255, 255, 255))
             screen.blit(task_text, (300, 0))
         if pygame.sprite.collide_mask(player, traveler):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 25)
-            if player.appls not in [5, 6]:
-                task_text = font.render("Принеси мне 5 яблок, "
-                                        "в обмен на информацию", True,
-                                        (255, 255, 255))
+            if player.apples not in [5, 6]:
+                task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
+                                        "мацию.", False, (255, 255, 255))
+                task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
+                                         False, (255, 255, 255))
             else:
                 task_text = font.render(
-                    "Выпей воды из озера и можешь идти спокойно", True,
+                    "Выпей воды из речки, и ты станешь невидимым.", False,
                     (255, 255, 255))
-                player.appls = 6
-
+                task_text2 = font.render(
+                    'Это поможет тебе скрыться от стражника', False,
+                    (255, 255, 255))
+                player.apples = 6
             screen.blit(task_text, (100, 0))
+            screen.blit(task_text2, (100, 40))
         if (not player.pas and pygame.sprite.collide_mask(player, pas) and
                 player.loc == 6):
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
-            task_text = font.render("Нужна монета!", True, (255, 255, 255))
-            screen.blit(task_text, (300, 0))
-        if player.loc == 13 and background.get_rgb(player.x + player.run,
-                                                   player.y + player.run) == (
-                187, 122, 87) \
-                and (187, 122, 87) in player.stena:
-            font_path = os.path.join("data/fonts", "comic.ttf")
-            font = pygame.font.Font(font_path, 40)
-            task_text = font.render("Дальше нельзя", True, (0, 0, 0))
+            task_text = font.render("Нужна монета!", False, (255, 255, 255))
             screen.blit(task_text, (300, 0))
         player_group.draw(screen)
         if runi > -600:
@@ -1403,8 +1466,8 @@ if __name__ == '__main__':
         if player.key:
             screen.blit(img, (750, 0))
 
-        if player.appls != 6:
-            for i in range(player.appls):
+        if player.apples != 6:
+            for i in range(player.apples):
                 screen.blit(img, (770 - i * 30, 0))
 
         if player.loc == 4:
@@ -1505,7 +1568,7 @@ if __name__ == '__main__':
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 100 + 1), True, (0, 0, 0)),
+                screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
                             (650, 0))
             if loc14 == 900:
                 for j in buttons:
@@ -1559,7 +1622,7 @@ if __name__ == '__main__':
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 100 + 1), True, (0, 0, 0)),
+                screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
                             (650, 0))
             if loc14 == 2800:
                 for j in buttons:
@@ -1609,7 +1672,7 @@ if __name__ == '__main__':
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 100 + 1), True, (0, 0, 0)),
+                screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
                             (650, 0))
             if loc14 == 4800:
                 for j in buttons:
@@ -1661,5 +1724,8 @@ if __name__ == '__main__':
 
         button_group.update()
         door_group.draw(screen)
+        defense_group.draw(screen)
+        apple_trees_group.draw(screen)
+        apple_group.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
