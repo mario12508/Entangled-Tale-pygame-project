@@ -789,7 +789,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 self.loc = 6
                 end_screen(2, True)
             elif self.loc == 6 or self.loc == 9:
-                a = ['Птица', "Медведь", "Заяц", "Человек"]
+                a = ['Сердце', "Почки", "Мозг", "Лёгкие"]
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 word_group = pygame.sprite.Group()
@@ -1088,7 +1088,7 @@ class Button(pygame.sprite.Sprite):  # Кнопки выбора
         if player.loc == 15:
             image_path = load_image(f'buttons/button{tip}_{tip}.jpg')
         else:
-            image_path = load_image(f'buttons/button{tip}.jpg')
+            image_path = load_image(f'buttons/button{tip}.png')
         self.image = pygame.transform.scale(image_path, (80, 80))
         self.rect = self.image.get_rect().move(pos_x, pos_y + 20)
         self.mask = pygame.mask.from_surface(self.image)
