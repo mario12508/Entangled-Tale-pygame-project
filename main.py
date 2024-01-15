@@ -242,7 +242,7 @@ def terminate():
 
 
 def start_screen():  # Начальное окно
-    fon = pygame.transform.scale(load_image('camera-player/fon.jpg'),
+    fon = pygame.transform.scale(load_image('camera-player/fon.зтп'),
                                  (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
