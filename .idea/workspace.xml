@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="buttons reborn">
-      <change beforePath="$PROJECT_DIR$/data/music/a2_m1.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/data/music/act2_main.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/music/mus_undynetruetheme.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/data/music/act2_boss.ogg" afterDir="false" />
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="processing">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/objects/greenrect2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/objects/greenrect2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,21 +53,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Python.main (2).executor": "Run",
-    "Python.main (4).executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Mar1o/PycharmProjects/Entangled Tale",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main (4).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Mar1o/PycharmProjects/Entangled Tale&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mar1o\PycharmProjects\Entangled Tale" />
@@ -406,7 +407,63 @@
       <option name="project" value="LOCAL" />
       <updated>1705263409525</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="sign done">
+      <option name="closed" value="true" />
+      <created>1705265760103</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1705265760103</updated>
+    </task>
+    <task id="LOCAL-00038" summary="processing">
+      <option name="closed" value="true" />
+      <created>1705324364716</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1705324364716</updated>
+    </task>
+    <task id="LOCAL-00039" summary="processing">
+      <option name="closed" value="true" />
+      <created>1705343299332</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1705343299332</updated>
+    </task>
+    <task id="LOCAL-00040" summary="processing">
+      <option name="closed" value="true" />
+      <created>1705343308908</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1705343308908</updated>
+    </task>
+    <task id="LOCAL-00041" summary="processing">
+      <option name="closed" value="true" />
+      <created>1705343982822</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1705343982822</updated>
+    </task>
+    <task id="LOCAL-00042" summary="processing">
+      <option name="closed" value="true" />
+      <created>1705344011669</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1705344011669</updated>
+    </task>
+    <task id="LOCAL-00043" summary="processing">
+      <option name="closed" value="true" />
+      <created>1705344020859</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1705344020859</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -421,7 +478,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="описание Entangled Tale.txt" />
     <MESSAGE value="сюжет акта 1" />
     <MESSAGE value="animations main character" />
     <MESSAGE value="exit-enter_a1" />
@@ -435,7 +491,6 @@
     <MESSAGE value="5 location" />
     <MESSAGE value="5 location sign" />
     <MESSAGE value="Add files via upload" />
-    <MESSAGE value="processing" />
     <MESSAGE value="a2_m2 done?" />
     <MESSAGE value="maze done" />
     <MESSAGE value="some pictures" />
@@ -446,6 +501,8 @@
     <MESSAGE value="a3_m1 almost done" />
     <MESSAGE value="clearing data" />
     <MESSAGE value="buttons reborn" />
-    <option name="LAST_COMMIT_MESSAGE" value="buttons reborn" />
+    <MESSAGE value="sign done" />
+    <MESSAGE value="processing" />
+    <option name="LAST_COMMIT_MESSAGE" value="processing" />
   </component>
 </project>

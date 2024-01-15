@@ -904,7 +904,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
                 background = Background('maps/a2_m4.png', (2060, 1500))
-                pas = Pass(850, 600)
+                pas = Pass(850, 550)
                 door = Door(350, 840, 2, 1)
                 door2 = Door(1528, 540, 2, 1)
                 door3 = Door(350, 540, 2, 1)
@@ -912,8 +912,8 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 door_group.add(door)
                 door_group.add(door2)
                 door_group.add(door3)
-                pas = Pass(840, 650)
-                player = Player(player.x, player.y, 2)
+                pas = Pass(840, 600)
+                player = Player(player.x, player.y - 60, 2)
                 player.loc = 9
         if pygame.sprite.collide_mask(self, door2):
             all_sprites = pygame.sprite.Group()
