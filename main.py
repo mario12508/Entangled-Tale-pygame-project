@@ -279,7 +279,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
     if winOrdie:
         t = font.render(f"Win", False, (0, 0, 0))
         font = pygame.font.Font(font_path, 50)
-        t0 = font.render(f"{n} Act", False, (0, 0, 0))
+        t0 = font.render(f"{n - 1} Act", False, (0, 0, 0))
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
@@ -444,11 +444,9 @@ def act3():  # Создание 3 акта
         Apple(3600, 540),
         Apple(3570, 450)
     ]
-    apple_trees = [
-        AppleTree(1828, 1930),
-        AppleTree(2100, 2100),
-        AppleTree(3670, 360)
-    ]
+    AppleTree(1828, 1930),
+    AppleTree(2100, 2100),
+    AppleTree(3670, 360)
 
     camera.update(player)
     for sprite in all_sprites:
@@ -566,11 +564,11 @@ def menu():  # Меню
                     if colT == 1:
                         act1()
                     if colT == 2:
-                        # if result1:
-                        act2()
+                        if result1:
+                            act2()
                     if colT == 3:
-                        # if result2:
-                        act3()
+                        if result2:
+                            act3()
                     if colT == 4:
                         results()
                     pygame.mixer.music.play(loops=-1)
