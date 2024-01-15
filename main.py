@@ -802,7 +802,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 self.loc = 6
                 end_screen(2, True)
             elif self.loc == 6 or self.loc == 9:
-                a = ['Сердце', "Почки", "Мозг", "Лёгкие"]
+                button_question = ['Сердце', "Почки", "Мозг", "Лёгкие"]
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 word_group = pygame.sprite.Group()
@@ -816,7 +816,8 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 ok_tip = random.randint(0, 3)
-                task_text = font.render(a[ok_tip], False, (255, 255, 255))
+                task_text = font.render(button_question[ok_tip], False,
+                                        (255, 255, 255))
                 x, y = 700, 640
                 player.loc = 7
             elif self.loc == 7:
@@ -1072,13 +1073,15 @@ class Sign(pygame.sprite.Sprite):  # Табличка
         self.rect = self.image.get_rect().move(x_pos, y_pos)
 
 
-class Letters(pygame.sprite.Sprite):  # Слова
+class Letters(pygame.sprite.Sprite):  # Буквы для атаки
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
-        a = random.choice(['objects/letter_a.png', 'objects/letter_b.png',
-                           'objects/letter_v.png',
-                           'objects/letter_g.png', 'objects/letter_d.png'])
-        image_path = load_image(a)
+        random_letters = random.choice(['objects/letter_a.png',
+                                        'objects/letter_b.png',
+                                        'objects/letter_v.png',
+                                        'objects/letter_g.png',
+                                        'objects/letter_d.png'])
+        image_path = load_image(random_letters)
         self.image = pygame.transform.scale(image_path, (40, 60))
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
@@ -1479,8 +1482,8 @@ if __name__ == '__main__':  # Запуск программы
         all_sprites.draw(screen)
         if player.loc == 7:
             screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
-        if not player.key and pygame.sprite.collide_mask(player,
-                                                         chest):  # Взаимодействие с сундуком
+        if not player.key and pygame.sprite.collide_mask(player, chest):
+            # Взаимодействие с сундуком
             font_path = os.path.join("data/fonts", "comic.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужен ключ!", False, (255, 255, 255))
@@ -1521,6 +1524,7 @@ if __name__ == '__main__':  # Запуск программы
                                  random.randint(y - player.y + 450,
                                                 y - player.y + 660))
                 word_group.add(letter)
+                wizardRus.rect.y = letter.rect.y
             word_group.update()
             word_group.draw(screen)
 

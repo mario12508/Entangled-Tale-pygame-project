@@ -16,7 +16,7 @@ pygame.display.set_caption('Volume Control')
 
 # Загрузка звукового файла
 pygame.mixer.init()
-pygame.mixer.music.load('data/mus_town.ogg')  # Замените 'your_music_file.mp3' на свой файл
+pygame.mixer.music.load('data/music/mus_town.ogg')  # Замените 'your_music_file.mp3' на свой файл
 
 # Создание ползунка
 font = pygame.font.Font(None, 36)
