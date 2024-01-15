@@ -38,7 +38,6 @@ def mathGame(m):  # Комната с магом математики
     else:
         fon = pygame.transform.scale(load_image(m), (800, 505))
     screen.blit(fon, (0, 0))
-
     a = random.randint(0, 100)
     difference = random.randint(0, 9)
     b = difference - a
@@ -48,12 +47,16 @@ def mathGame(m):  # Комната с магом математики
         fraze_3 = 'без моего разрешения!'
     elif m == 'maps/a2_m5.png':
         fraze_1 = 'Вот мы снова встретились,'
-        fraze_2 = 'и в этот раз ты в моем лесу'
-        fraze_3 = 'дальше я тебя не пропущу!'
+        fraze_2 = 'и в этот раз ты не уйдёшь так легко.'
+        fraze_3 = 'Дальше я тебя не пропущу!'
     else:
         fraze_1 = 'Вот мы снова встретились,'
         fraze_2 = 'и в этот раз ты далеко прошел'
-        fraze_3 = 'дальше я тебя не уйдешь!'
+        fraze_3 = 'дальше ты не уйдешь!'
+    if m != 'maps/a3_m2.png':
+        color = (255, 255, 255)
+    else:
+        color = (0, 0, 0)
 
     if player.loc <= 5:
         screen.fill((2, 0, 0))
@@ -87,7 +90,7 @@ def mathGame(m):  # Комната с магом математики
                         question = f"{a}{b}"
                     else:
                         question = f"{a} + {b}"
-                    fraze_1 = 'Но ты можешь попытать удачу,'
+                    fraze_1 = 'Но ты можешь понадеется на себя,'
                     fraze_2 = 'и решить мою задачу'
                     fraze_3 = 'сколько будет: ' + question
                     render_fraze_1, render_fraze_2, render_fraze_3 = (
@@ -107,17 +110,18 @@ def mathGame(m):  # Комната с магом математики
                             screen.fill((153, 217, 234))
                         screen.blit(fon, (0, 0))
                         if m == 'maps/a1_m4.png':
-                            fraze_1 = 'Я вижу, что ты неплох в математике'
-                            fraze_2 = 'на этот раз я тебя пропускаю,'
+                            fraze_1 = 'Я вижу, что ты неплох в математике!'
+                            fraze_2 = 'На этот раз я тебя пропускаю,'
                             fraze_3 = 'но мы еще встретимся!'
                         elif m == 'maps/a2_m5.png':
                             fraze_1 = 'Я вижу, что ты до сих пор неплох в \
-                                       математике'
-                            fraze_2 = 'в этот раз я тебя пропускаю,'
+                                       математике!'
+                            fraze_2 = 'В этот раз я тебя пропускаю,'
                             fraze_3 = 'но еще одна наша встреча неизбежна!'
                         else:
-                            fraze_1 = 'Я вижу, что ты также силен в математике'
-                            fraze_2 = 'на этот раз покажи себя в равном бою,'
+                            fraze_1 = ('Я вижу, что ты также силен в '
+                                       'математике!')
+                            fraze_2 = 'на этот раз покажи себя в равном бою'
                             fraze_3 = 'с истинным магом!'
                         win = True
                     else:
@@ -172,15 +176,14 @@ def mathGame(m):  # Комната с магом математики
                             x = player.x
                             y = player.y
                             loc11 = 0
-                            pygame.mixer.music.load(
-                                "data/music/act2_boss.ogg")
+                            pygame.mixer.music.load("data/music/act2_boss.ogg")
                             pygame.mixer.music.set_volume(0.3)
                             pygame.mixer.music.play(loops=-1)
                         else:
                             all_sprites = pygame.sprite.Group()
                             player_group = pygame.sprite.Group()
                             rectangle_group = pygame.sprite.Group()
-                            background = Background('maps/a3_m3.jpg',
+                            background = Background('maps/a3_m3.png',
                                                     (2210, 1300))
                             all_sprites.add(background)
                             player = Player(1105, 650, 3)
@@ -206,14 +209,14 @@ def mathGame(m):  # Комната с магом математики
                         return
 
         if i <= len(fraze_1):
-            render_fraze_1 = font.render(fraze_1[:i], False, (255, 255, 255))
+            render_fraze_1 = font.render(fraze_1[:i], False, color)
         elif i <= len(fraze_1) + len(fraze_2):
             render_fraze_2 = font.render(fraze_2[:i - len(fraze_1)], False,
-                                         (255, 255, 255))
+                                         color)
         elif i <= len(fraze_1) + len(fraze_2) + len(fraze_3):
             render_fraze_3 = font.render(
                 fraze_3[:i - len(fraze_1) - len(fraze_2)], False,
-                (255, 255, 255))
+                color)
         i += 1
         if m == 'maps/a1_m4.png':
             screen.blit(render_fraze_1, (230, 85))
@@ -840,11 +843,11 @@ class Player(pygame.sprite.Sprite):  # Игрок
             elif self.loc == 13:
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
-                background = Background('maps/a3_m2.jpg', (750, 400))
+                background = Background('maps/a3_m2.png', (750, 400))
                 all_sprites.add(background)
                 player = Player(385, 300, 1)
                 player.loc = 14
-                mathGame('maps/a3_m2.jpg')
+                mathGame('maps/a3_m2.png')
             elif self.loc == 16:
                 door.rect.x = 20000
                 self.loc = 17
@@ -903,7 +906,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 all_sprites = pygame.sprite.Group()
                 player_group = pygame.sprite.Group()
                 door_group = pygame.sprite.Group()
-                background = Background('maps/m4.png', (2060, 1500))
+                background = Background('maps/a2_m4.png', (2060, 1500))
                 pas = Pass(850, 600)
                 door = Door(350, 840, 2, 1)
                 door2 = Door(1528, 540, 2, 1)
@@ -1494,16 +1497,16 @@ if __name__ == '__main__':  # Запуск программы
             font = pygame.font.Font(font_path, 25)
             if player.apples not in [5, 6]:
                 task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
-                                        "мацию.", False, (255, 255, 255))
+                                        "мацию.", False, (0, 0, 0))
                 task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
-                                         False, (255, 255, 255))
+                                         False, (0, 0, 0))
             else:
                 task_text = font.render(
                     "Выпей воды из речки, и ты станешь невидимым.", False,
-                    (255, 255, 255))
+                    (0, 0, 0))
                 task_text2 = font.render(
                     'Это поможет тебе скрыться от стражника', False,
-                    (255, 255, 255))
+                    (0, 0, 0))
                 player.apples = 6
             screen.blit(task_text, (100, 0))
             screen.blit(task_text2, (100, 40))
@@ -1533,7 +1536,7 @@ if __name__ == '__main__':  # Запуск программы
                     (5, 5))
         font_path = os.path.join("data/fonts", "comic.ttf")
         if runi == -600:  # Активация ускорения
-            txt = pygame.font.Font(font_path, 35).render(f"active", True,
+            txt = pygame.font.Font(font_path, 35).render("active", True,
                                                          (255, 0, 0))
             screen.blit(txt, (50, 0))
         else:
@@ -1565,7 +1568,7 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
-                                 519, True, "objects/grayrect.jpg")
+                                 519, True, "objects/grayrect.png")
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
@@ -1584,7 +1587,7 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
-                                 519, True, "objects/grayrect.jpg")
+                                 519, True, "objects/grayrect.png")
             if loc5 == 4200:
                 rect.rect.x = 20000
             if loc5 == 4400:
@@ -1597,29 +1600,29 @@ if __name__ == '__main__':  # Запуск программы
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
                           random.randint(100, 300),
-                          10, True, "objects/greenrect2.jpg")
+                          10, True, "objects/greenrect2.png")
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(200, 450), -3, 0,
                           random.randint(100, 300),
-                          10, True, "objects/greenrect2.jpg")
+                          10, True, "objects/greenrect2.png")
             if 2300 <= loc11 <= 3400 and loc11 % 100 == 0:
                 Rectangle(x - player.x + random.randint(-100, 300),
                           y - player.y - 200, 0, 1, 20,
                           random.randint(100, 300),
-                          True, "objects/greenrect1.jpg")
+                          True, "objects/greenrect1.png")
                 Rectangle(x - player.x + random.randint(300, 800),
                           y - player.y - 200, 0, 1, 20,
                           random.randint(100, 300),
-                          True, "objects/greenrect1.jpg")
+                          True, "objects/greenrect1.png")
             if 3400 <= loc11 <= 5000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
                           random.randint(100, 300),
-                          10, True, "objects/greenrect2.jpg")
+                          10, True, "objects/greenrect2.png")
                 Rectangle(x - player.x - 300,
                           y - player.y + random.randint(200, 450), 3, 0,
                           random.randint(100, 300),
-                          10, True, "objects/greenrect2.jpg")
+                          10, True, "objects/greenrect2.png")
             if loc11 == 5400:
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 12
