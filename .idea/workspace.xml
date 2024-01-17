@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="processing">
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="exe">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/objects/greenrect2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/objects/greenrect2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Презентация.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/Презентация.pptx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -463,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705344020859</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="exe">
+      <option name="closed" value="true" />
+      <created>1705350763015</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1705350763015</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -478,7 +485,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="сюжет акта 1" />
     <MESSAGE value="animations main character" />
     <MESSAGE value="exit-enter_a1" />
     <MESSAGE value="letters and doors fix" />
@@ -503,6 +509,7 @@
     <MESSAGE value="buttons reborn" />
     <MESSAGE value="sign done" />
     <MESSAGE value="processing" />
-    <option name="LAST_COMMIT_MESSAGE" value="processing" />
+    <MESSAGE value="exe" />
+    <option name="LAST_COMMIT_MESSAGE" value="exe" />
   </component>
 </project>
