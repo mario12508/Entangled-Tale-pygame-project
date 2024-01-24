@@ -161,50 +161,20 @@ def mathGame(m):  # Комната с магом математики
                             player.loc = 3
                             loc5 = 0
                         elif m == 'maps/a2_m5.png':
-                            all_sprites = pygame.sprite.Group()
-                            player_group = pygame.sprite.Group()
-                            rectangle_group = pygame.sprite.Group()
-                            background = Background('maps/a2_m6.png',
-                                                    (1667, 1000))
-                            all_sprites.add(background)
-                            player = Player(850, 506, 2)
-                            player.loc = 11
-                            door.rect.x = 20000
-                            door2.rect.x = 20000
-                            door3.rect.x = 20000
-                            x = player.x
-                            y = player.y
-                            loc11 = 0
-                            pygame.mixer.music.load("data/music/act2_boss.ogg")
-                            pygame.mixer.music.set_volume(0.3)
-                            pygame.mixer.music.play(loops=-1)
+                            a2_location('m2')
                         else:
-                            all_sprites = pygame.sprite.Group()
-                            player_group = pygame.sprite.Group()
-                            rectangle_group = pygame.sprite.Group()
-                            background = Background('maps/a3_m3.png',
-                                                    (2210, 1300))
-                            all_sprites.add(background)
-                            player = Player(1105, 650, 3)
-                            player.loc = 15
-                            door.rect.x = 20000
-                            x = player.x
-                            y = player.y
-                            loc14 = 0
-                            pygame.mixer.music.load("data/music/act3_boss.ogg")
-                            pygame.mixer.music.set_volume(0.3)
-                            pygame.mixer.music.play(loops=-1)
+                            a3_location('m2')
                         camera.update(player)
                         for sprite in all_sprites:
                             camera.apply(sprite)
                         return
                     else:
                         if m == 'maps/a1_m4.png':
-                            end_screen(1, False)
+                            end_screen(12, False)
                         elif m == 'maps/a2_m5.png':
-                            end_screen(2, False)
+                            end_screen(21, False)
                         else:
-                            end_screen(3, False)
+                            end_screen(31, False)
                         return
 
         if i <= len(fraze_1):
@@ -252,6 +222,8 @@ def learnScreen():
             elif (event.type == pygame.KEYDOWN or event.type ==
                   pygame.MOUSEBUTTONDOWN):
                 return
+            elif event.key == pygame.K_ESCAPE:
+                return
         clock.tick(FPS)
 
 
@@ -280,19 +252,15 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
 
     if winOrdie:
         t = font.render(f"Win", False, (0, 0, 0))
-        font = pygame.font.Font(font_path, 50)
-        t0 = font.render(f"{n - 1} Act", False, (0, 0, 0))
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {n - 1}, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {(n - 1) * 10}, '{tm}')")
         con.commit()
         con.close()
     else:
         t = font.render(f"Lose", False, (0, 0, 0))
-        font = pygame.font.Font(font_path, 50)
-        t0 = font.render(f"{n} Act", False, (0, 0, 0))
 
     while True:
         for event in pygame.event.get():
@@ -300,19 +268,40 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
                 terminate()
             elif (event.type == pygame.KEYDOWN or event.type ==
                   pygame.MOUSEBUTTONDOWN):
-                if n == 1:
-                    act1()
-                elif n == 2:
-                    act2()
-                elif n == 3:
-                    act3()
-                else:
+                if n == 4:
                     credits_screen()
                     results()
                     act1()
+                else:
+                    if n == 2:
+                        act3()
+                    elif n == 31:
+                        act3()
+                        a3_location('m1')
+                    elif n == 32:
+                        act3()
+                        a3_location('m2')
+                    elif n == 1:
+                        act2()
+                    elif n == 21:
+                        act2()
+                        a2_location('m1')
+                    elif n == 21:
+                        act2()
+                        a2_location('m2')
+                    elif n == 11:
+                        act1()
+                        a1_location('m1')
+                    elif n == 12:
+                        act1()
+                        a1_location('m2')
+                    elif n == 13:
+                        act1()
+                        a1_location('m3')
+                    else:
+                        act1()
                 return
 
-        screen.blit(t0, (300, 100))
         screen.blit(t, (300, 200))
         screen.blit(t2, (300, 300))
         pygame.display.flip()
@@ -483,6 +472,182 @@ def other_color(cl1, cl2, cl3, cl4):  # Смена цвета кнопки в м
                      False, cl4)
 
 
+def a1_location(m):
+    global all_sprites, player_group, word_group, door_group, background, door, player, rectangle_group, x, y, loc5, time
+    tm = (datetime.datetime.now() - time).total_seconds()
+    time = datetime.datetime.now()
+    if m == 'm1':
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        word_group = pygame.sprite.Group()
+        door_group = pygame.sprite.Group()
+        background = Background('maps/a1_m3.png', (2100, 500))
+        all_sprites.add(background)
+        pygame.mixer.music.load("data/music/act1_main.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+        door = Door(1800, 200, 1, 1)
+        player = Player(200, 330, 1)
+        player.loc = 2
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 11""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 11, '{tm}')")
+        con.commit()
+        con.close()
+    elif m == 'm2':
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        background = Background('maps/a1_m4.png', (700, 500))
+        all_sprites.add(background)
+        pygame.mixer.music.load("data/music/act1_main.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+        player = Player(385, 300, 1)
+        player.loc = 3
+        mathGame('maps/a1_m4.png')
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 12""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 12, '{tm}')")
+        con.commit()
+        con.close()
+    elif m == 'm3':
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        rectangle_group = pygame.sprite.Group()
+        background = Background('maps/a1_m6.png', (900, 784))
+        all_sprites.add(background)
+        pygame.mixer.music.load("data/music/act1_boss.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+        player = Player(450, 300, 1)
+        player.loc = 4
+        x = player.x
+        y = player.y
+
+        loc5 = 0
+        door = Door(20000, 20000, 1, 1)
+
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 13""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 13, '{tm}')")
+        con.commit()
+        con.close()
+
+
+def a2_location(m):
+    global all_sprites, player_group, door_group, background, pas, door, door2, door3, pas, player, rectangle_group, x, y, loc11, time
+    tm = (datetime.datetime.now() - time).total_seconds()
+    time = datetime.datetime.now()
+    if m == 'm1':
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        door_group = pygame.sprite.Group()
+        background = Background('maps/a2_m4.png', (2060, 1500))
+        pas = Pass(850, 550)
+        door = Door(350, 840, 2, 1)
+        door2 = Door(1528, 540, 2, 1)
+        door3 = Door(350, 540, 2, 1)
+        all_sprites.add(background)
+        door_group.add(door)
+        door_group.add(door2)
+        door_group.add(door3)
+        pas = Pass(840, 600)
+        player = Player(player.x, player.y - 60, 2)
+        player.loc = 9
+        pygame.mixer.music.load("data/music/act2_main.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 21""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 21, '{tm}')")
+        con.commit()
+        con.close()
+    else:
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        rectangle_group = pygame.sprite.Group()
+        background = Background('maps/a2_m6.png',
+                                (1667, 1000))
+        all_sprites.add(background)
+        player = Player(850, 506, 2)
+        player.loc = 11
+        door.rect.x = 20000
+        door2.rect.x = 20000
+        door3.rect.x = 20000
+        x = player.x
+        y = player.y
+        loc11 = 0
+        pygame.mixer.music.load("data/music/act2_boss.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 22""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 22, '{tm}')")
+        con.commit()
+        con.close()
+
+
+def a3_location(m):
+    global all_sprites, player_group, background, player, rectangle_group, x, y, loc14, time
+    tm = (datetime.datetime.now() - time).total_seconds()
+    time = datetime.datetime.now()
+    if m == 'm1':
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        background = Background('maps/a3_m2.png', (750, 400))
+        all_sprites.add(background)
+        player = Player(385, 300, 1)
+        player.loc = 14
+        mathGame('maps/a3_m2.png')
+
+        pygame.mixer.music.load("data/music/act3_main.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 31""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 31, '{tm}')")
+        con.commit()
+        con.close()
+    else:
+        all_sprites = pygame.sprite.Group()
+        player_group = pygame.sprite.Group()
+        rectangle_group = pygame.sprite.Group()
+        background = Background('maps/a3_m3.png',
+                                (2210, 1300))
+        all_sprites.add(background)
+        player = Player(1105, 650, 3)
+        player.loc = 15
+        door.rect.x = 20000
+        x = player.x
+        y = player.y
+        loc14 = 0
+        pygame.mixer.music.load("data/music/act3_boss.ogg")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(loops=-1)
+
+        con = sqlite3.connect("data/bd.sqlite")
+        cur = con.cursor()
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 32""")
+        cur.execute(
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 32, '{tm}')")
+        con.commit()
+        con.close()
+
+
 def music():
     global running, valueMusic
     # Цвета
@@ -501,7 +666,7 @@ def music():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p:
+                if event.key == pygame.K_p or event.key == pygame.K_ESCAPE:
                     return
 
         # Обработка ползунка
@@ -652,6 +817,9 @@ def menu():  # Меню
                         learnScreen()
                     if colT == 3:
                         start_screen()
+                        pygame.mixer.music.stop()
+                    return
+                if event.key == pygame.K_ESCAPE:
                     return
 
         screen.blit(t1, (300, 80))
@@ -844,43 +1012,15 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 all_sprites.add(wizardRus)
                 door = Door(363, 48, 1, 2)
             elif self.loc == 1:
-                all_sprites = pygame.sprite.Group()
-                player_group = pygame.sprite.Group()
-                word_group = pygame.sprite.Group()
-                door_group = pygame.sprite.Group()
-                background = Background('maps/a1_m3.png', (2100, 500))
-                all_sprites.add(background)
-                door = Door(1800, 200, 1, 1)
-                player = Player(200, 330, 1)
-                player.loc = 2
+                a1_location('m1')
             elif self.loc == 2:
-                all_sprites = pygame.sprite.Group()
-                player_group = pygame.sprite.Group()
-                background = Background('maps/a1_m4.png', (700, 500))
-                all_sprites.add(background)
-                player = Player(385, 300, 1)
-                player.loc = 3
-                mathGame('maps/a1_m4.png')
+                a1_location('m2')
             elif self.loc == 3:
-                all_sprites = pygame.sprite.Group()
-                player_group = pygame.sprite.Group()
-                rectangle_group = pygame.sprite.Group()
-                background = Background('maps/a1_m6.png', (900, 784))
-                all_sprites.add(background)
-                pygame.mixer.music.load("data/music/act1_boss.ogg")
-                pygame.mixer.music.set_volume(0.3)
-                pygame.mixer.music.play(loops=-1)
-                player = Player(450, 300, 1)
-                player.loc = 4
-                x = player.x
-                y = player.y
-
-                loc5 = 0
-                door = Door(20000, 20000, 1, 1)
+                a1_location('m3')
             elif self.loc == 5:
                 door.rect.x = 20000
                 self.loc = 6
-                end_screen(2, True)
+                end_screen(1, True)
             elif self.loc == 6 or self.loc == 9:
                 button_question = ['Сердце', "Почки", "Мозг", "Лёгкие"]
                 all_sprites = pygame.sprite.Group()
@@ -916,15 +1056,9 @@ class Player(pygame.sprite.Sprite):  # Игрок
             elif self.loc == 12:
                 door.rect.x = 20000
                 self.loc = 13
-                end_screen(3, True)
+                end_screen(2, True)
             elif self.loc == 13:
-                all_sprites = pygame.sprite.Group()
-                player_group = pygame.sprite.Group()
-                background = Background('maps/a3_m2.png', (750, 400))
-                all_sprites.add(background)
-                player = Player(385, 300, 1)
-                player.loc = 14
-                mathGame('maps/a3_m2.png')
+                a3_location('m1')
             elif self.loc == 16:
                 door.rect.x = 20000
                 self.loc = 17
@@ -980,21 +1114,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
 
         if pygame.sprite.collide_mask(self, pas) and self.loc != 9:
             if player.pas:
-                all_sprites = pygame.sprite.Group()
-                player_group = pygame.sprite.Group()
-                door_group = pygame.sprite.Group()
-                background = Background('maps/a2_m4.png', (2060, 1500))
-                pas = Pass(850, 550)
-                door = Door(350, 840, 2, 1)
-                door2 = Door(1528, 540, 2, 1)
-                door3 = Door(350, 540, 2, 1)
-                all_sprites.add(background)
-                door_group.add(door)
-                door_group.add(door2)
-                door_group.add(door3)
-                pas = Pass(840, 600)
-                player = Player(player.x, player.y - 60, 2)
-                player.loc = 9
+                a2_location('m1')
         if pygame.sprite.collide_mask(self, door2):
             all_sprites = pygame.sprite.Group()
             player_group = pygame.sprite.Group()
@@ -1168,7 +1288,7 @@ class Letters(pygame.sprite.Sprite):  # Буквы для атаки
     def update(self):
         self.rect.x -= 9
         if pygame.sprite.collide_mask(self, player):
-            end_screen(1, False)
+            end_screen(11, False)
             return
 
 
@@ -1229,11 +1349,11 @@ class Rectangle(pygame.sprite.Sprite):  # Атакующие объекты из
 
                 rectangle_group = pygame.sprite.Group()
                 if player.loc == 4:
-                    end_screen(1, False)
+                    end_screen(13, False)
                 elif player.loc == 11:
-                    end_screen(2, False)
+                    end_screen(22, False)
                 elif player.loc == 15:
-                    end_screen(3, False)
+                    end_screen(32, False)
                 return
 
 
@@ -1437,19 +1557,34 @@ def credits_screen():  # Субтитры
         clock.tick(FPS)
 
 
+def getResult(n):
+    con = sqlite3.connect("data/bd.sqlite")
+    cur = con.cursor()
+    result = cur.execute(f"""SELECT act, time FROM player
+                                    WHERE IdSaves == {n}""").fetchall()
+    result_act = [i[0] for i in result]
+    if len(result) == 1:
+        act_loc = 'Act - 1 location: - 1'
+    elif len(result_act[-1]) == 1:
+        act_loc = 'Act - ' + result_act[-1][0] + ' location - 1'
+    else:
+        act_loc = 'Act - ' + result_act[-1][0] + ' location - ' + result_act[-1][1]
+    return act_loc
+
+
 def other_color2(cl1, cl2, cl3, cl4, cl5):  # Смена цвета кнопки в меню
     global t1, t2, t3, t4, t5
     font_path = os.path.join("data/fonts", "comic.ttf")
-    font = pygame.font.Font(font_path, 40)
-    t1 = font.render(f"Сохранение 1",
+    font = pygame.font.Font(font_path, 30)
+    t1 = font.render(f"Сохранение 1: {getResult(1)}",
                      False, cl1)
-    t2 = font.render(f"Сохранение 2",
+    t2 = font.render(f"Сохранение 2: {getResult(2)}",
                      False, cl2)
-    t3 = font.render(f"Сохранение 3",
+    t3 = font.render(f"Сохранение 3: {getResult(3)}",
                      False, cl3)
-    t4 = font.render(f"Сохранение 4",
+    t4 = font.render(f"Сохранение 4: {getResult(4)}",
                      False, cl4)
-    t5 = font.render(f"Сохранение 5",
+    t5 = font.render(f"Сохранение 5: {getResult(5)}",
                      False, cl5)
 
 
@@ -1458,8 +1593,8 @@ def menuGet():  # Меню в начале
     COLOR1 = (64, 64, 64)
     COLOR2 = (255, 0, 0)
 
-    other_color2(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
-    colT = 5
+    other_color2(COLOR2, COLOR1, COLOR1, COLOR1, COLOR1)
+    colT = 1
     pygame.mixer.music.pause()
     while True:
         for event in pygame.event.get():
@@ -1529,21 +1664,42 @@ def menuGet():  # Меню в начале
                                 WHERE IdSaves == 5""").fetchall()
                         idSaves = 5
                     result = [i[0] for i in result]
-                    if '2' in result:
+                    if '32' in result:
                         act3()
+                        a3_location('m2')
+                    elif '31' in result:
+                        act3()
+                        a3_location('m1')
+                    elif '2' in result:
+                        act3()
+                    elif '22' in result:
+                        act2()
+                        a2_location('m2')
+                    elif '21' in result:
+                        act2()
+                        a2_location('m1')
                     elif '1' in result:
                         act2()
+                    elif '13' in result:
+                        act1()
+                        a1_location('m3')
+                    elif '12' in result:
+                        act1()
+                        a1_location('m2')
+                    elif '11' in result:
+                        act1()
+                        a1_location('m1')
                     else:
                         act1()
                     pygame.mixer.music.play(loops=-1)
                     con.close()
                     return
 
-        screen.blit(t1, (300, 50))
-        screen.blit(t2, (300, 130))
-        screen.blit(t3, (300, 210))
-        screen.blit(t4, (300, 290))
-        screen.blit(t5, (300, 370))
+        screen.blit(t1, (100, 50))
+        screen.blit(t2, (100, 130))
+        screen.blit(t3, (100, 210))
+        screen.blit(t4, (100, 290))
+        screen.blit(t5, (100, 370))
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -1652,10 +1808,14 @@ if __name__ == '__main__':  # Запуск программы
         keys = pygame.key.get_pressed()
 
         # Обновление игровых объектов
-        player.update(keys[pygame.K_UP], keys[pygame.K_DOWN],
-                      keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
-        player.update(keys[pygame.K_w], keys[pygame.K_s],
-                      keys[pygame.K_a], keys[pygame.K_d])
+        # Обновление игровых объектов
+        player.update(
+            keys[pygame.K_UP] or keys[pygame.K_w],
+            keys[pygame.K_DOWN] or keys[pygame.K_s],
+            keys[pygame.K_LEFT] or keys[pygame.K_a],
+            keys[pygame.K_RIGHT] or keys[pygame.K_d]
+        )
+        player.update(False, False, False, False)
         # обновляем положение всех спрайтов
         for sprite in all_sprites:
             camera.apply(sprite)
@@ -1839,7 +1999,7 @@ if __name__ == '__main__':  # Запуск программы
                             buttons = []
                         break
                 else:
-                    end_screen(3, False)
+                    end_screen(32, False)
 
             if loc14 == 1000:
                 p = [random.randint(0, 600),
@@ -1893,7 +2053,7 @@ if __name__ == '__main__':  # Запуск программы
                             buttons = []
                         break
                 else:
-                    end_screen(3, False)
+                    end_screen(32, False)
             if 3000 <= loc14 <= 3500 and loc14 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-50, 200), -3, 0,
@@ -1943,7 +2103,7 @@ if __name__ == '__main__':  # Запуск программы
                             buttons = []
                         break
                 else:
-                    end_screen(3, False)
+                    end_screen(32, False)
             if 5000 <= loc14 <= 5500 and loc14 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-50, 200), -3, 0,
