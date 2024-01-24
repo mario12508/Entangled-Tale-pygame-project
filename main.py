@@ -240,12 +240,7 @@ def terminate():
     sys.exit()
 
 
-def start_screen():  # Начальное окно
-    fon = pygame.transform.scale(load_image('camera-player/fon.png'),
-                                 (800, 500))
-    screen.blit(fon, (0, 0))
-    pygame.display.flip()
-    clock.tick(0.7)
+def learnScreen():
     fon = pygame.transform.scale(load_image('camera-player/blackfon.png'),
                                  (800, 500))
     screen.blit(fon, (0, 0))
@@ -256,13 +251,22 @@ def start_screen():  # Начальное окно
                 terminate()
             elif (event.type == pygame.KEYDOWN or event.type ==
                   pygame.MOUSEBUTTONDOWN):
-                if True:
-                    act1()
-                    return
+                return
         clock.tick(FPS)
 
 
+def start_screen():  # Начальное окно
+    fon = pygame.transform.scale(load_image('camera-player/fon.png'),
+                                 (800, 500))
+    screen.blit(fon, (0, 0))
+    pygame.display.flip()
+    clock.tick(0.7)
+    screen.fill((0, 0, 0))
+    menuGet()
+
+
 def end_screen(n, winOrdie):  # Окно при прохождении акта, либо при проигрыше
+    global idSaves
     fon = pygame.transform.scale(load_image('camera-player/gameover.jpg'),
                                  (800, 500))
     fon = pygame.transform.scale(fon, (800, 500))
@@ -272,8 +276,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 35)
     tm = (datetime.datetime.now() - time).total_seconds()
-    t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec",
-                     False, (0, 0, 0))
+    t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec", False, (0, 0, 0))
 
     if winOrdie:
         t = font.render(f"Win", False, (0, 0, 0))
@@ -283,8 +286,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(
-            f"INSERT INTO player(act, time) VALUES({n - 1}, '{int(tm // 60)} "
-            f"min {int(tm - (tm // 60) * 60)} sec')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {n - 1}, '{tm}')")
         con.commit()
         con.close()
     else:
@@ -298,18 +300,17 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
                 terminate()
             elif (event.type == pygame.KEYDOWN or event.type ==
                   pygame.MOUSEBUTTONDOWN):
-                if True:
-                    if n == 1:
-                        act1()
-                    elif n == 2:
-                        act2()
-                    elif n == 3:
-                        act3()
-                    else:
-                        credits_screen()
-                        results()
-                        act1()
-                    return
+                if n == 1:
+                    act1()
+                elif n == 2:
+                    act2()
+                elif n == 3:
+                    act3()
+                else:
+                    credits_screen()
+                    results()
+                    act1()
+                return
 
         screen.blit(t0, (300, 100))
         screen.blit(t, (300, 200))
@@ -386,7 +387,7 @@ def act2():  # Создание 2 акта
     pas = Pass(850, 700)
     img = load_image('objects/key.jpg')
     img = pygame.transform.scale(img, (50, 50))
-    pygame.mixer.music.load("data/music/act2_main.mp3")
+    pygame.mixer.music.load("data/music/act2_main.ogg")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
     x, y = 0, 0
@@ -468,37 +469,145 @@ t4 = None
 t5 = None
 
 
-def other_color(cl1, cl2, cl3, cl4, cl5):  # Смена цвета кнопки в меню
-    global t1, t2, t3, t4, t5
+def other_color(cl1, cl2, cl3, cl4):  # Смена цвета кнопки в меню
+    global t1, t2, t3, t4
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 40)
-    t1 = font.render(f"1 Act",
+    t1 = font.render(f"Music",
                      False, cl1)
-    t2 = font.render(f"2 Act",
+    t2 = font.render(f"How play",
                      False, cl2)
-    t3 = font.render(f"3 Act",
+    t3 = font.render(f"Exit",
                      False, cl3)
-    t4 = font.render(f"Tab result",
+    t4 = font.render(f"Cancel",
                      False, cl4)
-    t5 = font.render(f"Cancel",
-                     False, cl5)
+
+
+def music():
+    global running, valueMusic
+    # Цвета
+    white = (255, 0, 0)
+
+    # Создание ползунка
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    font = pygame.font.Font(font_path, 40)
+    texttt = font.render('Volume:', True, white)
+
+    pygame.mixer.music.set_volume(valueMusic)  # Установка начальной громкости
+
+    # Главный цикл
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    return
+
+        # Обработка ползунка
+        keys = pygame.key.get_pressed()
+        if (keys[pygame.K_UP] or keys[pygame.K_w]) and valueMusic < 1.0:
+            valueMusic += 0.01
+        elif (keys[pygame.K_DOWN] or keys[pygame.K_s]) and valueMusic > 0.0:
+            valueMusic -= 0.01
+
+        pygame.mixer.music.set_volume(valueMusic)  # Обновление громкости
+
+        # Обновление текста
+        volume_text = font.render(str(int(valueMusic * 100)), True, white)
+
+        # Отрисовка
+        all_sprites.draw(screen)
+        if player.loc <= 5:
+            screen.fill((2, 0, 0))
+        elif 5 < player.loc <= 12:
+            screen.fill((34, 177, 76))
+        else:
+            screen.fill((153, 217, 234))
+
+        # обновляем положение всех спрайтов
+        for sprite in all_sprites:
+            camera.apply(sprite)
+        camera.update(player)
+        wizardRus.update()
+        all_sprites.draw(screen)
+        if player.loc == 7:
+            screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
+
+        if not player.key and pygame.sprite.collide_mask(player, chest):
+            # Взаимодействие с сундуком
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 40)
+            task_text = font.render("Нужен ключ!", False, (255, 255, 255))
+            screen.blit(task_text, (300, 0))
+
+        if pygame.sprite.collide_mask(player,
+                                      traveler):  # Взаимодействие с нпс
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 25)
+            if player.apples not in [5, 6]:
+                task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
+                                        "мацию.", False, (0, 0, 0))
+                task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
+                                         False, (0, 0, 0))
+            else:
+                task_text = font.render(
+                    "Выпей воды из речки, и ты станешь невидимым.", False,
+                    (0, 0, 0))
+                task_text2 = font.render(
+                    'Это поможет тебе скрыться от стражника', False,
+                    (0, 0, 0))
+                player.apples = 6
+            screen.blit(task_text, (100, 0))
+            screen.blit(task_text2, (100, 40))
+
+        if (not player.pas and pygame.sprite.collide_mask(player, pas) and
+                player.loc == 6):  # Взаимодействие с автоматом
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            font = pygame.font.Font(font_path, 40)
+            task_text = font.render("Нужна монета!", False, (255, 255, 255))
+            screen.blit(task_text, (300, 0))
+        player_group.draw(screen)
+
+        if player.loc == 2:
+            word_group.draw(screen)
+
+        screen.blit(pygame.transform.scale(load_image("camera-player/run.png"),
+                                           (40, 40)),
+                    (5, 5))
+        font_path = os.path.join("data/fonts", "comic.ttf")
+        if runi == -600:  # Активация ускорения
+            txt = pygame.font.Font(font_path, 35).render("active", True,
+                                                         (255, 0, 0))
+            screen.blit(txt, (50, 0))
+        else:
+            txt = pygame.font.Font(font_path, 30).render(
+                f"{(runi + 660) // 60}", True, (255, 0, 0))
+            screen.blit(txt, (50, 5))
+
+        if player.key:
+            screen.blit(img, (750, 0))
+
+        if player.apples != 6:
+            for i in range(player.apples):
+                screen.blit(img, (770 - i * 30, 0))
+
+        door_group.draw(screen)
+        defense_group.draw(screen)
+        apple_trees_group.draw(screen)
+        apple_group.draw(screen)
+        screen.blit(texttt, (300, 160))
+        screen.blit(volume_text, (330, 260))
+        pygame.display.flip()
+        pygame.time.Clock().tick(60)
 
 
 def menu():  # Меню
-    con = sqlite3.connect("data/bd.sqlite")
-    cur = con.cursor()
-    result1 = cur.execute("""SELECT id FROM player
-            WHERE act == 1""").fetchall()
-    result2 = cur.execute("""SELECT id FROM player
-            WHERE act == 2""").fetchall()
-    con.close()
     COLOR1 = (64, 64, 64)
     COLOR2 = (255, 0, 0)
-    COLOR3 = (0, 0, 0)
 
-    other_color(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
-    colT = 5
-    pygame.mixer.music.pause()
+    other_color(COLOR1, COLOR1, COLOR1, COLOR2)
+    colT = 4
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -507,77 +616,48 @@ def menu():  # Меню
                 if event.key == pygame.K_w or event.key == pygame.K_UP:
                     colT -= 1
                     if colT == 0:
-                        colT = 5
-                        other_color(COLOR1, COLOR1, COLOR1, COLOR1,
+                        colT = 4
+                        other_color(COLOR1, COLOR1, COLOR1,
                                     COLOR2)
                     if colT == 1:
                         other_color(COLOR2, COLOR1, COLOR1,
-                                    COLOR1, COLOR1)
+                                    COLOR1)
                     if colT == 2:
-                        if result1:
-                            other_color(COLOR1, COLOR2, COLOR1,
-                                        COLOR1, COLOR1)
-                        else:
-                            other_color(COLOR1, COLOR3, COLOR1,
-                                        COLOR1, COLOR1)
+                        other_color(COLOR1, COLOR2, COLOR1,
+                                    COLOR1)
                     if colT == 3:
-                        if result2:
-                            other_color(COLOR1, COLOR1, COLOR2,
-                                        COLOR1, COLOR1)
-                        else:
-                            other_color(COLOR1, COLOR1, COLOR3,
-                                        COLOR1, COLOR1)
-                    if colT == 4:
-                        other_color(COLOR1, COLOR1, COLOR1,
-                                    COLOR2, COLOR1)
+                        other_color(COLOR1, COLOR1, COLOR2,
+                                    COLOR1)
 
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     colT += 1
-                    if colT == 6:
+                    if colT == 5:
                         colT = 1
                         other_color(COLOR2, COLOR1, COLOR1,
-                                    COLOR1, COLOR1)
-                    if colT == 5:
-                        other_color(COLOR1, COLOR1, COLOR1, COLOR1,
-                                    COLOR2)
-                    if colT == 2:
-                        if result1:
-                            other_color(COLOR1, COLOR2, COLOR1,
-                                        COLOR1, COLOR1)
-                        else:
-                            other_color(COLOR1, COLOR3, COLOR1,
-                                        COLOR1, COLOR1)
-                    if colT == 3:
-                        if result2:
-                            other_color(COLOR1, COLOR1, COLOR2,
-                                        COLOR1, COLOR1)
-                        else:
-                            other_color(COLOR1, COLOR1, COLOR3,
-                                        COLOR1, COLOR1)
+                                    COLOR1)
                     if colT == 4:
-                        other_color(COLOR1, COLOR1, COLOR1,
-                                    COLOR2, COLOR1)
+                        other_color(COLOR1, COLOR1, COLOR1, COLOR2)
+                    if colT == 2:
+                        other_color(COLOR1, COLOR2, COLOR1,
+                                    COLOR1)
+                    if colT == 3:
+                        other_color(COLOR1, COLOR1, COLOR2,
+                                    COLOR1)
 
                 if (event.key == pygame.K_SPACE or event.key == pygame.K_p or
                         event.key == pygame.K_RETURN):
                     if colT == 1:
-                        act1()
+                        music()
                     if colT == 2:
-                        if result1:
-                            act2()
+                        learnScreen()
                     if colT == 3:
-                        if result2:
-                            act3()
-                    if colT == 4:
-                        results()
-                    pygame.mixer.music.play(loops=-1)
+                        start_screen()
                     return
 
-        screen.blit(t1, (300, 50))
-        screen.blit(t2, (300, 130))
-        screen.blit(t3, (300, 210))
-        screen.blit(t4, (300, 290))
-        screen.blit(t5, (300, 370))
+        screen.blit(t1, (300, 80))
+        screen.blit(t2, (300, 160))
+        screen.blit(t3, (300, 240))
+        screen.blit(t4, (300, 320))
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -1310,6 +1390,8 @@ def results():  # Таблица результатов
             WHERE act == 2 ORDER BY time""").fetchall()[:10]
     result3 = cur.execute("""SELECT time FROM player
             WHERE act == 3 ORDER BY time""").fetchall()[:10]
+    cur.execute(f"""DELETE from player where idSaves == {idSaves} and (act == 1 or act == 2 or act == 3)""")
+    con.commit()
     con.close()
 
     while True:
@@ -1321,29 +1403,15 @@ def results():  # Таблица результатов
                 return
         screen.blit(load_image("camera-player/sybtit.png"), (0, 0))
         font_path = os.path.join("data/fonts", "comic.ttf")
-        font = pygame.font.Font(font_path, 20)
-        y = 0
-        for res in result1:
-            screen.blit(font.render(res[0], False, (255, 255, 255)),
-                        (150, 100 + y))
-            y += 40
-        y = 0
-        for res in result2:
-            screen.blit(font.render(res[0], False, (255, 255, 255)),
-                        (350, 100 + y))
-            y += 40
-        y = 0
-        for res in result3:
-            screen.blit(font.render(res[0], False, (255, 255, 255)),
-                        (550, 100 + y))
-            y += 40
+
         font = pygame.font.Font(font_path, 50)
-        text_1 = font.render("1 Act", False, (255, 255, 255))
-        text_2 = font.render("2 Act", False, (255, 255, 255))
-        text_3 = font.render("3 Act", False, (255, 255, 255))
-        screen.blit(text_1, (150, 0))
-        screen.blit(text_2, (350, 0))
-        screen.blit(text_3, (550, 0))
+        text_1 = font.render("WIN", False, (255, 255, 255))
+        text_2 = font.render("Your time:", False, (255, 255, 255))
+        tm = float(result1[0][0]) + float(result2[0][0]) + float(result3[0][0])
+        text_3 = font.render(f'{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec', False, (255, 255, 255))
+        screen.blit(text_1, (250, 50))
+        screen.blit(text_2, (250, 110))
+        screen.blit(text_3, (250, 170))
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -1366,6 +1434,117 @@ def credits_screen():  # Субтитры
         if j >= 1750:
             return
 
+        clock.tick(FPS)
+
+
+def other_color2(cl1, cl2, cl3, cl4, cl5):  # Смена цвета кнопки в меню
+    global t1, t2, t3, t4, t5
+    font_path = os.path.join("data/fonts", "comic.ttf")
+    font = pygame.font.Font(font_path, 40)
+    t1 = font.render(f"Сохранение 1",
+                     False, cl1)
+    t2 = font.render(f"Сохранение 2",
+                     False, cl2)
+    t3 = font.render(f"Сохранение 3",
+                     False, cl3)
+    t4 = font.render(f"Сохранение 4",
+                     False, cl4)
+    t5 = font.render(f"Сохранение 5",
+                     False, cl5)
+
+
+def menuGet():  # Меню в начале
+    global idSaves
+    COLOR1 = (64, 64, 64)
+    COLOR2 = (255, 0, 0)
+
+    other_color2(COLOR1, COLOR1, COLOR1, COLOR1, COLOR2)
+    colT = 5
+    pygame.mixer.music.pause()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
+                    colT -= 1
+                    if colT == 0:
+                        colT = 5
+                        other_color2(COLOR1, COLOR1, COLOR1, COLOR1,
+                                     COLOR2)
+                    if colT == 1:
+                        other_color2(COLOR2, COLOR1, COLOR1,
+                                     COLOR1, COLOR1)
+                    if colT == 2:
+                        other_color2(COLOR1, COLOR2, COLOR1,
+                                     COLOR1, COLOR1)
+                    if colT == 3:
+                        other_color2(COLOR1, COLOR1, COLOR2,
+                                     COLOR1, COLOR1)
+                    if colT == 4:
+                        other_color2(COLOR1, COLOR1, COLOR1,
+                                     COLOR2, COLOR1)
+
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                    colT += 1
+                    if colT == 6:
+                        colT = 1
+                        other_color2(COLOR2, COLOR1, COLOR1,
+                                     COLOR1, COLOR1)
+                    if colT == 5:
+                        other_color2(COLOR1, COLOR1, COLOR1, COLOR1,
+                                     COLOR2)
+                    if colT == 2:
+                        other_color2(COLOR1, COLOR2, COLOR1,
+                                     COLOR1, COLOR1)
+                    if colT == 3:
+                        other_color2(COLOR1, COLOR1, COLOR2,
+                                     COLOR1, COLOR1)
+                    if colT == 4:
+                        other_color2(COLOR1, COLOR1, COLOR1,
+                                     COLOR2, COLOR1)
+
+                if (event.key == pygame.K_SPACE or
+                        event.key == pygame.K_RETURN):
+                    con = sqlite3.connect("data/bd.sqlite")
+                    cur = con.cursor()
+                    if colT == 1:
+                        result = cur.execute("""SELECT act FROM player
+                                WHERE IdSaves == 1""").fetchall()
+                        idSaves = 1
+                    elif colT == 2:
+                        result = cur.execute("""SELECT act FROM player
+                                WHERE IdSaves == 2""").fetchall()
+                        idSaves = 2
+                    elif colT == 3:
+                        result = cur.execute("""SELECT act FROM player
+                                WHERE IdSaves == 3""").fetchall()
+                        idSaves = 3
+                    elif colT == 4:
+                        result = cur.execute("""SELECT act FROM player
+                                WHERE IdSaves == 4""").fetchall()
+                        idSaves = 4
+                    else:
+                        result = cur.execute("""SELECT act FROM player
+                                WHERE IdSaves == 5""").fetchall()
+                        idSaves = 5
+                    result = [i[0] for i in result]
+                    if '2' in result:
+                        act3()
+                    elif '1' in result:
+                        act2()
+                    else:
+                        act1()
+                    pygame.mixer.music.play(loops=-1)
+                    con.close()
+                    return
+
+        screen.blit(t1, (300, 50))
+        screen.blit(t2, (300, 130))
+        screen.blit(t3, (300, 210))
+        screen.blit(t4, (300, 290))
+        screen.blit(t5, (300, 370))
+        pygame.display.flip()
         clock.tick(FPS)
 
 
@@ -1420,6 +1599,7 @@ camera = Camera()
 apples = []
 tm = 0
 difference = 0
+valueMusic = 0.8
 
 door2 = Door(20000, 20000, 2, 1)
 door3 = Door(20000, 20000, 2, 1)
@@ -1427,6 +1607,7 @@ chest = Chest(20000, 20000)
 plat = Platform(20000, 20000)
 pas = Pass(20000, 20000)
 traveler = Traveler(20000, 20000)
+idSaves = 0
 
 if __name__ == '__main__':  # Запуск программы
     pygame.init()
@@ -1434,6 +1615,7 @@ if __name__ == '__main__':  # Запуск программы
     size = width, height = 800, 500
     screen = pygame.display.set_mode(size)
     start_screen()
+    results()
 
     text1 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
                              20).render('', False, (255, 255, 255))
@@ -1457,6 +1639,7 @@ if __name__ == '__main__':  # Запуск программы
             if event.type == pygame.KEYUP:
                 player.stop()
 
+        pygame.mixer.music.set_volume(valueMusic)
         if runi != -600:
             player.run = 9
         if runi < 0:
