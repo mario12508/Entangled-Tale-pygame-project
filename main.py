@@ -1615,7 +1615,6 @@ if __name__ == '__main__':  # Запуск программы
     size = width, height = 800, 500
     screen = pygame.display.set_mode(size)
     start_screen()
-    results()
 
     text1 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
                              20).render('', False, (255, 255, 255))
