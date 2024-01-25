@@ -256,7 +256,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {(n - 1) * 10}, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {n}, '{tm}')")
         con.commit()
         con.close()
     else:
@@ -417,7 +417,7 @@ def act3():  # Создание 3 акта
     background = Background('maps/a3_m1.png', (4000, 2480))
     all_sprites.add(background)
     pygame.mixer.music.load("data/music/act3_main.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     door = Door(550, 1720, 3, 3)
     door_group.add(door)
@@ -816,8 +816,8 @@ def menu():  # Меню
                     if colT == 2:
                         learnScreen()
                     if colT == 3:
+                        pygame.mixer.music.pause()
                         start_screen()
-                        pygame.mixer.music.stop()
                     return
                 if event.key == pygame.K_ESCAPE:
                     return
@@ -1562,13 +1562,27 @@ def getResult(n):
     cur = con.cursor()
     result = cur.execute(f"""SELECT act, time FROM player
                                     WHERE IdSaves == {n}""").fetchall()
-    result_act = [i[0] for i in result]
-    if len(result) == 1:
-        act_loc = 'Act - 1 location: - 1'
-    elif len(result_act[-1]) == 1:
-        act_loc = 'Act - ' + result_act[-1][0] + ' location - 1'
+    result = [i[0] for i in result]
+    if '32' in result:
+        act_loc = 'Act - 3 location - 3'
+    elif '31' in result:
+        act_loc = 'Act - 3 location - 2'
+    elif '2' in result:
+        act_loc = 'Act - 3 location - 1'
+    elif '22' in result:
+        act_loc = 'Act - 2 location - 3'
+    elif '21' in result:
+        act_loc = 'Act - 2 location - 2'
+    elif '1' in result:
+        act_loc = 'Act - 2 location - 1'
+    elif '13' in result:
+        act_loc = 'Act - 1 location - 4'
+    elif '12' in result:
+        act_loc = 'Act - 1 location - 3'
+    elif '11' in result:
+        act_loc = 'Act - 1 location - 2'
     else:
-        act_loc = 'Act - ' + result_act[-1][0] + ' location - ' + result_act[-1][1]
+        act_loc = 'Act - 1 location - 1'
     return act_loc
 
 
