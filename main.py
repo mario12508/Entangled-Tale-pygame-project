@@ -651,7 +651,7 @@ def a3_location(m):
         door.rect.x = 20000
         x = player.x
         y = player.y
-        loc14 = 5000
+        loc14 = 0
         pygame.mixer.music.load("data/music/act3_boss.ogg")
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play(loops=-1)
@@ -1991,8 +1991,8 @@ if __name__ == '__main__':  # Запуск программы
                 Rectangle(x - player.x - 300,
                           y - player.y + random.randint(200, 450), 3, 0,
                           240, 60, True, "objects/greenrect2.png")
-            if loc11 == 5400:
-                door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
+            if loc11 == 5800:
+                door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
                 player.loc = 12
             loc11 += 1
             rectangle_group.update()
