@@ -634,7 +634,7 @@ def a3_location(m):
         door.rect.x = 20000
         x = player.x
         y = player.y
-        loc14 = 0
+        loc14 = 5000
         pygame.mixer.music.load("data/music/act3_boss.ogg")
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play(loops=-1)
@@ -1380,9 +1380,9 @@ class Button(pygame.sprite.Sprite):  # Кнопки выбора
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(
-                    font.render(str(self.tm // 100 + 1), False, (0, 0, 0)),
+                    font.render(str(self.tm // 60 + 1), False, (0, 0, 0)),
                     (350, 0))
-                if self.tm // 100 + 1 == 0:
+                if self.tm // 60 + 1 == 0:
                     if self.tip == ok_tip + 1:
                         self.tm += 1
                         player.key = True
@@ -1500,21 +1500,18 @@ def act3_buttons():  # Создание кнопок для выбора отв�
     for j in range(1, 5):
         buttons.append(
             Button(x - player.x + j * 150, y - player.y + 200, j))
-    tm = 300
-    screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
+    tm = 180
+    screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                 (350, 0))
 
 
 def results():  # Таблица результатов
     con = sqlite3.connect("data/bd.sqlite")
     cur = con.cursor()
-    result1 = cur.execute("""SELECT time FROM player
-            WHERE act == 1 ORDER BY time""").fetchall()[:10]
-    result2 = cur.execute("""SELECT time FROM player
-            WHERE act == 2 ORDER BY time""").fetchall()[:10]
-    result3 = cur.execute("""SELECT time FROM player
-            WHERE act == 3 ORDER BY time""").fetchall()[:10]
-    cur.execute(f"""DELETE from player where idSaves == {idSaves} and (act == 1 or act == 2 or act == 3)""")
+    result1 = cur.execute(f"""SELECT time FROM player
+            WHERE idSaves == {idSaves} and act != 0 ORDER BY time""").fetchall()[:20]
+    cur.execute(f"""DELETE from player where idSaves == {idSaves} and act != 0""")
+
     con.commit()
     con.close()
 
@@ -1531,7 +1528,7 @@ def results():  # Таблица результатов
         font = pygame.font.Font(font_path, 50)
         text_1 = font.render("WIN", False, (255, 255, 255))
         text_2 = font.render("Your time:", False, (255, 255, 255))
-        tm = float(result1[0][0]) + float(result2[0][0]) + float(result3[0][0])
+        tm = float(sum([float(i) for i in result1[0]]))
         text_3 = font.render(f'{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec', False, (255, 255, 255))
         screen.blit(text_1, (250, 50))
         screen.blit(text_2, (250, 110))
@@ -2004,14 +2001,14 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
             elif loc14 == 600:
                 act3_buttons()
-            if 600 <= loc14 <= 900:
+            if 600 <= loc14 <= 780:
                 tm -= 1
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
+                screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
-            if loc14 == 900:
+            if loc14 == 780:
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
@@ -2062,14 +2059,14 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
             elif loc14 == 2500:
                 act3_buttons()
-            if 2500 <= loc14 <= 2800:
+            if 2500 <= loc14 <= 2680:
                 tm -= 1
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
+                screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
-            if loc14 == 2800:
+            if loc14 == 2680:
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
@@ -2114,14 +2111,14 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
             elif loc14 == 4500:
                 act3_buttons()
-            if 4500 <= loc14 <= 4800:
+            if 4500 <= loc14 <= 4680:
                 tm -= 1
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 100 + 1), False, (0, 0, 0)),
+                screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
-            if loc14 == 4800:
+            if loc14 == 4680:
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
