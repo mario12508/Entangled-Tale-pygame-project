@@ -1305,6 +1305,10 @@ class Background(pygame.sprite.Sprite):  # Задний фон
         pixel = pygame.PixelArray(self.image)
         return self.image.unmap_rgb(pixel[x][y])
 
+    def update(self, imageBoss, size):
+        self.image = load_image(imageBoss)
+        self.image = pygame.transform.scale(self.image, size)
+
 
 class Door(pygame.sprite.Sprite):  # Дверь
     def __init__(self, pos_x, pos_y, act, tip):
@@ -1778,6 +1782,7 @@ plat = Platform(20000, 20000)
 pas = Pass(20000, 20000)
 traveler = Traveler(20000, 20000)
 idSaves = 0
+background = Background('maps/a1_m1.png', (4000, 2480))
 
 if __name__ == '__main__':  # Запуск программы
     pygame.init()
@@ -1986,9 +1991,11 @@ if __name__ == '__main__':  # Запуск программы
             if loc14 == 200:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
+                background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 400:
                 plat.rect.x = 20000
+                background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
@@ -2018,9 +2025,11 @@ if __name__ == '__main__':  # Запуск программы
             if loc14 == 1000:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
+                background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 1200:
                 plat.rect.x = 20000
+                background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
@@ -2040,9 +2049,11 @@ if __name__ == '__main__':  # Запуск программы
             if loc14 == 2100:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
+                background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 2300:
                 plat.rect.x = 20000
+                background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
@@ -2090,9 +2101,11 @@ if __name__ == '__main__':  # Запуск программы
             if loc14 == 4100:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
+                background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 4300:
                 plat.rect.x = 20000
+                background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
