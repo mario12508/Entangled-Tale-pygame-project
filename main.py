@@ -1709,7 +1709,7 @@ def menuGet():  # Меню в начале
                     elif '22' in result:
                         act2()
                         a2_location('m2')
-                    elif '21' in result or True:
+                    elif '21' in result:
                         act2()
                         a2_location('m1')
                     elif '1' in result:
