@@ -248,7 +248,8 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
     font_path = os.path.join("data/fonts", "comic.ttf")
     font = pygame.font.Font(font_path, 35)
     tm = (datetime.datetime.now() - time).total_seconds()
-    t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec", False, (0, 0, 0))
+    t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec",
+                     False, (0, 0, 0))
 
     if winOrdie:
         t = font.render(f"Win", False, (0, 0, 0))
@@ -256,7 +257,8 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {n}, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, {n}, "
+            f"'{tm}')")
         con.commit()
         con.close()
     else:
@@ -473,7 +475,8 @@ def other_color(cl1, cl2, cl3, cl4):  # Смена цвета кнопки в м
 
 
 def a1_location(m):
-    global all_sprites, player_group, word_group, door_group, background, door, player, rectangle_group, x, y, loc5, time
+    global all_sprites, player_group, word_group, door_group, background, \
+        door, player, rectangle_group, x, y, loc5, time
     tm = (datetime.datetime.now() - time).total_seconds()
     time = datetime.datetime.now()
     if m == 'm1':
@@ -491,9 +494,11 @@ def a1_location(m):
         player.loc = 2
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 11""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 11""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 11, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 11, "
+            f"'{tm}')")
         con.commit()
         con.close()
     elif m == 'm2':
@@ -509,9 +514,11 @@ def a1_location(m):
         mathGame('maps/a1_m4.png')
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 12""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 12""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 12, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 12, "
+            f"'{tm}')")
         con.commit()
         con.close()
     elif m == 'm3':
@@ -533,15 +540,18 @@ def a1_location(m):
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 13""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 13""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 13, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 13, "
+            f"'{tm}')")
         con.commit()
         con.close()
 
 
 def a2_location(m):
-    global all_sprites, player_group, door_group, background, pas, door, door2, door3, pas, player, rectangle_group, x, y, loc11, time
+    global all_sprites, player_group, door_group, background, pas, door, \
+        door2, door3, pas, player, rectangle_group, x, y, loc11, time
     tm = (datetime.datetime.now() - time).total_seconds()
     time = datetime.datetime.now()
     if m == 'm1':
@@ -566,9 +576,11 @@ def a2_location(m):
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 21""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 21""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 21, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 21, "
+            f"'{tm}')")
         con.commit()
         con.close()
     else:
@@ -592,15 +604,18 @@ def a2_location(m):
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 22""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 22""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 22, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 22, "
+            f"'{tm}')")
         con.commit()
         con.close()
 
 
 def a3_location(m):
-    global all_sprites, player_group, background, player, rectangle_group, x, y, loc14, time
+    global all_sprites, player_group, background, player, rectangle_group, \
+        x, y, loc14, time
     tm = (datetime.datetime.now() - time).total_seconds()
     time = datetime.datetime.now()
     if m == 'm1':
@@ -617,9 +632,11 @@ def a3_location(m):
         pygame.mixer.music.play(loops=-1)
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 31""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 31""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 31, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 31, "
+            f"'{tm}')")
         con.commit()
         con.close()
     else:
@@ -641,9 +658,11 @@ def a3_location(m):
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
-        cur.execute(f"""DELETE from player where idSaves == {idSaves} and act == 32""")
+        cur.execute(f"""DELETE from player where idSaves == {idSaves} 
+        and act == 32""")
         cur.execute(
-            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 32, '{tm}')")
+            f"INSERT INTO player(IdSaves, act, time) VALUES({idSaves}, 32, "
+            f"'{tm}')")
         con.commit()
         con.close()
 
@@ -1332,7 +1351,7 @@ class Door(pygame.sprite.Sprite):  # Дверь
 class Rectangle(pygame.sprite.Sprite):  # Атакующие объекты из комнат боссов
     def __init__(self, pos_x, pos_y, vx, vy, xx, yy, canDamage, image):
         image_path = load_image(image)
-        image_path = pygame.transform.scale(image_path, (xx + 50, yy))
+        image_path = pygame.transform.scale(image_path, (xx, yy))
         sprite_image = image_path
         super().__init__(rectangle_group, all_sprites)
         self.image = sprite_image
@@ -1927,7 +1946,7 @@ if __name__ == '__main__':  # Запуск программы
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-100, 150), -3, 0, 10,
+                          y - player.y + random.randint(-100, 150), -3, 0, 60,
                           random.randint(50, 300), True, "objects/redrect.jpg")
             if 3200 <= loc5 <= 4000 and loc5 % 200 == 0:
                 n = random.randint(-1, 3) * 200
@@ -1954,30 +1973,24 @@ if __name__ == '__main__':  # Запуск программы
             if loc11 <= 2000 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/greenrect2.png")
+                          240, 60, True, "objects/greenrect2.png")
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(200, 450), -3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/greenrect2.png")
+                          240, 60, True, "objects/greenrect2.png")
             if 2300 <= loc11 <= 3400 and loc11 % 100 == 0:
                 Rectangle(x - player.x + random.randint(-100, 300),
-                          y - player.y - 200, 0, 1, 20,
-                          random.randint(100, 300),
-                          True, "objects/greenrect1.png")
+                          y - player.y - 400, 0, 1, 60,
+                          240, True, "objects/greenrect1.png")
                 Rectangle(x - player.x + random.randint(300, 800),
-                          y - player.y - 200, 0, 1, 20,
-                          random.randint(100, 300),
-                          True, "objects/greenrect1.png")
-            if 3400 <= loc11 <= 5000 and loc11 % 100 == 0:
+                          y - player.y - 400, 0, 1, 60,
+                          240, True, "objects/greenrect1.png")
+            if 3800 <= loc11 <= 5400 and loc11 % 100 == 0:
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/greenrect2.png")
+                          240, 60, True, "objects/greenrect2.png")
                 Rectangle(x - player.x - 300,
                           y - player.y + random.randint(200, 450), 3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/greenrect2.png")
+                          240, 60, True, "objects/greenrect2.png")
             if loc11 == 5400:
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 12
