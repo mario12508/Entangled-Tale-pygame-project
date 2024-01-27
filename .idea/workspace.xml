@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="processing">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="bd">
       <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -478,7 +476,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706385343181</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="bd">
+      <option name="closed" value="true" />
+      <created>1706385824413</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1706385824413</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -493,7 +499,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="animations main character" />
     <MESSAGE value="exit-enter_a1" />
     <MESSAGE value="letters and doors fix" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
@@ -518,6 +523,7 @@
     <MESSAGE value="sign done" />
     <MESSAGE value="exe" />
     <MESSAGE value="processing" />
-    <option name="LAST_COMMIT_MESSAGE" value="processing" />
+    <MESSAGE value="bd" />
+    <option name="LAST_COMMIT_MESSAGE" value="bd" />
   </component>
 </project>
