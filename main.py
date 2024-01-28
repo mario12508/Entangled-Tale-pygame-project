@@ -77,6 +77,10 @@ def mathGame(m):  # Комната с магом математики
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    if menu([render_fraze_1, render_fraze_2, render_fraze_3], m):
+                        return
+                    screen.blit(fon, (0, 0))
                 if ((event.key == pygame.K_z or event.key == pygame.K_RETURN)
                         and k == 0):
                     if player.loc <= 5:
@@ -317,7 +321,7 @@ def act1():  # Создание 1 акта
     fon = pygame.transform.scale(load_image('camera-player/act1.png'),
                                  (800, 500))
     pygame.mixer.music.load("data/music/start_sound.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -331,7 +335,7 @@ def act1():  # Создание 1 акта
     all_sprites.add(background)
     door_group.add(door)
     pygame.mixer.music.load("data/music/act1_main.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     player = Player(290, 470, 1)
     word_group = pygame.sprite.Group()
@@ -360,7 +364,7 @@ def act2():  # Создание 2 акта
     fon = pygame.transform.scale(load_image('camera-player/act2.png'),
                                  (800, 500))
     pygame.mixer.music.load("data/music/start_sound.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -379,7 +383,7 @@ def act2():  # Создание 2 акта
     img = load_image('objects/key.jpg')
     img = pygame.transform.scale(img, (50, 50))
     pygame.mixer.music.load("data/music/act2_main.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     x, y = 0, 0
     loc11 = 0
@@ -408,7 +412,7 @@ def act3():  # Создание 3 акта
                                  (800, 500))
     screen.blit(fon, (0, 0))
     pygame.mixer.music.load("data/music/start_sound.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     pygame.display.flip()
     clock.tick(1)
@@ -487,7 +491,7 @@ def a1_location(m):
         background = Background('maps/a1_m3.png', (2100, 500))
         all_sprites.add(background)
         pygame.mixer.music.load("data/music/act1_main.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
         door = Door(1800, 200, 1, 1)
         player = Player(200, 330, 1)
@@ -507,7 +511,7 @@ def a1_location(m):
         background = Background('maps/a1_m4.png', (700, 500))
         all_sprites.add(background)
         pygame.mixer.music.load("data/music/act1_main.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
         player = Player(385, 300, 1)
         player.loc = 3
@@ -528,7 +532,7 @@ def a1_location(m):
         background = Background('maps/a1_m6.png', (900, 784))
         all_sprites.add(background)
         pygame.mixer.music.load("data/music/act1_boss.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
         player = Player(450, 300, 1)
         player.loc = 4
@@ -571,7 +575,7 @@ def a2_location(m):
         player = Player(player.x, player.y - 60, 2)
         player.loc = 9
         pygame.mixer.music.load("data/music/act2_main.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
 
         con = sqlite3.connect("data/bd.sqlite")
@@ -599,7 +603,7 @@ def a2_location(m):
         y = player.y
         loc11 = 0
         pygame.mixer.music.load("data/music/act2_boss.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
 
         con = sqlite3.connect("data/bd.sqlite")
@@ -628,7 +632,7 @@ def a3_location(m):
         mathGame('maps/a3_m2.png')
 
         pygame.mixer.music.load("data/music/act3_main.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
@@ -653,7 +657,7 @@ def a3_location(m):
         y = player.y
         loc14 = 0
         pygame.mixer.music.load("data/music/act3_boss.ogg")
-        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
 
         con = sqlite3.connect("data/bd.sqlite")
@@ -667,7 +671,7 @@ def a3_location(m):
         con.close()
 
 
-def music():
+def music(arg, m):
     global running, valueMusic
     # Цвета
     white = (255, 0, 0)
@@ -679,6 +683,11 @@ def music():
 
     pygame.mixer.music.set_volume(valueMusic)  # Установка начальной громкости
 
+    try:
+        if running:
+            n = 0
+    except Exception:
+        running = True
     # Главный цикл
     while running:
         for event in pygame.event.get():
@@ -700,98 +709,118 @@ def music():
         # Обновление текста
         volume_text = font.render(str(int(valueMusic * 100)), True, white)
 
-        # Отрисовка
-        all_sprites.draw(screen)
-        if player.loc <= 5:
-            screen.fill((2, 0, 0))
-        elif 5 < player.loc <= 12:
-            screen.fill((34, 177, 76))
-        else:
-            screen.fill((153, 217, 234))
-
-        # обновляем положение всех спрайтов
-        for sprite in all_sprites:
-            camera.apply(sprite)
-        camera.update(player)
-        wizardRus.update()
-        all_sprites.draw(screen)
-        if player.loc == 7:
-            screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
-
-        if not player.key and pygame.sprite.collide_mask(player, chest):
-            # Взаимодействие с сундуком
-            font_path = os.path.join("data/fonts", "comic.ttf")
-            font = pygame.font.Font(font_path, 40)
-            task_text = font.render("Нужен ключ!", False, (255, 255, 255))
-            screen.blit(task_text, (300, 0))
-
-        if pygame.sprite.collide_mask(player,
-                                      traveler):  # Взаимодействие с нпс
-            font_path = os.path.join("data/fonts", "comic.ttf")
-            font = pygame.font.Font(font_path, 25)
-            if player.apples not in [5, 6]:
-                task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
-                                        "мацию.", False, (0, 0, 0))
-                task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
-                                         False, (0, 0, 0))
+        if arg:
+            fon = pygame.transform.scale(load_image(m), (800, 505))
+            screen.blit(fon, (0, 0))
+            if m == 'maps/a1_m4.png':
+                screen.blit(arg[0], (230, 85))
+                screen.blit(arg[1], (230, 115))
+                screen.blit(arg[2], (230, 145))
+            elif m == 'maps/a2_m5.png':
+                screen.blit(arg[0], (250, 33))
+                screen.blit(arg[1], (250, 51))
+                screen.blit(arg[2], (250, 69))
             else:
-                task_text = font.render(
-                    "Выпей воды из речки, и ты станешь невидимым.", False,
-                    (0, 0, 0))
-                task_text2 = font.render(
-                    'Это поможет тебе скрыться от стражника', False,
-                    (0, 0, 0))
-                player.apples = 6
-            screen.blit(task_text, (100, 0))
-            screen.blit(task_text2, (100, 40))
-
-        if (not player.pas and pygame.sprite.collide_mask(player, pas) and
-                player.loc == 6):  # Взаимодействие с автоматом
-            font_path = os.path.join("data/fonts", "comic.ttf")
-            font = pygame.font.Font(font_path, 40)
-            task_text = font.render("Нужна монета!", False, (255, 255, 255))
-            screen.blit(task_text, (300, 0))
-        player_group.draw(screen)
-
-        if player.loc == 2:
-            word_group.draw(screen)
-
-        screen.blit(pygame.transform.scale(load_image("camera-player/run.png"),
-                                           (40, 40)),
-                    (5, 5))
-        font_path = os.path.join("data/fonts", "comic.ttf")
-        if runi == -600:  # Активация ускорения
-            txt = pygame.font.Font(font_path, 35).render("active", True,
-                                                         (255, 0, 0))
-            screen.blit(txt, (50, 0))
+                screen.blit(arg[0], (230, 85))
+                screen.blit(arg[1], (230, 115))
+                screen.blit(arg[2], (230, 145))
+            player_group.draw(screen)
+            screen.blit(texttt, (300, 160))
+            screen.blit(volume_text, (330, 260))
         else:
-            txt = pygame.font.Font(font_path, 30).render(
-                f"{(runi + 660) // 60}", True, (255, 0, 0))
-            screen.blit(txt, (50, 5))
+            # Отрисовка
+            all_sprites.draw(screen)
+            if player.loc <= 5:
+                screen.fill((2, 0, 0))
+            elif 5 < player.loc <= 12:
+                screen.fill((34, 177, 76))
+            else:
+                screen.fill((153, 217, 234))
 
-        if player.key:
-            screen.blit(img, (750, 0))
+            # обновляем положение всех спрайтов
+            for sprite in all_sprites:
+                camera.apply(sprite)
+            camera.update(player)
+            wizardRus.update()
+            all_sprites.draw(screen)
+            if player.loc == 7:
+                screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
 
-        if player.apples != 6:
-            for i in range(player.apples):
-                screen.blit(img, (770 - i * 30, 0))
+            if not player.key and pygame.sprite.collide_mask(player, chest):
+                # Взаимодействие с сундуком
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 40)
+                task_text = font.render("Нужен ключ!", False, (255, 255, 255))
+                screen.blit(task_text, (300, 0))
 
-        door_group.draw(screen)
-        defense_group.draw(screen)
-        apple_trees_group.draw(screen)
-        apple_group.draw(screen)
-        screen.blit(texttt, (300, 160))
-        screen.blit(volume_text, (330, 260))
+            if pygame.sprite.collide_mask(player,
+                                          traveler):  # Взаимодействие с нпс
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 25)
+                if player.apples not in [5, 6]:
+                    task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
+                                            "мацию.", False, (0, 0, 0))
+                    task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
+                                             False, (0, 0, 0))
+                else:
+                    task_text = font.render(
+                        "Выпей воды из речки, и ты станешь невидимым.", False,
+                        (0, 0, 0))
+                    task_text2 = font.render(
+                        'Это поможет тебе скрыться от стражника', False,
+                        (0, 0, 0))
+                    player.apples = 6
+                screen.blit(task_text, (100, 0))
+                screen.blit(task_text2, (100, 40))
+
+            if (not player.pas and pygame.sprite.collide_mask(player, pas) and
+                    player.loc == 6):  # Взаимодействие с автоматом
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 40)
+                task_text = font.render("Нужна монета!", False, (255, 255, 255))
+                screen.blit(task_text, (300, 0))
+            player_group.draw(screen)
+
+            if player.loc == 2:
+                word_group.draw(screen)
+
+            screen.blit(pygame.transform.scale(load_image("camera-player/run.png"),
+                                               (40, 40)),
+                        (5, 5))
+            font_path = os.path.join("data/fonts", "comic.ttf")
+            if runi == -600:  # Активация ускорения
+                txt = pygame.font.Font(font_path, 35).render("active", True,
+                                                             (255, 0, 0))
+                screen.blit(txt, (50, 0))
+            else:
+                txt = pygame.font.Font(font_path, 30).render(
+                    f"{(runi + 660) // 60}", True, (255, 0, 0))
+                screen.blit(txt, (50, 5))
+
+            if player.key:
+                screen.blit(img, (750, 0))
+
+            if player.apples != 6:
+                for i in range(player.apples):
+                    screen.blit(img, (770 - i * 30, 0))
+
+            door_group.draw(screen)
+            defense_group.draw(screen)
+            apple_trees_group.draw(screen)
+            apple_group.draw(screen)
+            screen.blit(texttt, (300, 160))
+            screen.blit(volume_text, (330, 260))
         pygame.display.flip()
         pygame.time.Clock().tick(60)
 
 
-def menu():  # Меню
+def menu(arg, m):  # Меню
     COLOR1 = (64, 64, 64)
     COLOR2 = (255, 0, 0)
 
     other_color(COLOR1, COLOR1, COLOR1, COLOR2)
     colT = 4
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -831,12 +860,13 @@ def menu():  # Меню
                 if (event.key == pygame.K_SPACE or event.key == pygame.K_p or
                         event.key == pygame.K_RETURN):
                     if colT == 1:
-                        music()
+                        music(arg, m)
                     if colT == 2:
                         learnScreen()
                     if colT == 3:
                         pygame.mixer.music.pause()
                         start_screen()
+                        return True
                     return
                 if event.key == pygame.K_ESCAPE:
                     return
@@ -1560,7 +1590,7 @@ def credits_screen():  # Субтитры
     j = 0
     sybtit = load_image('camera-player/sybtit.png')
     pygame.mixer.music.load("data/music/final_melody.ogg")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(valueMusic)
     pygame.mixer.music.play(loops=-1)
     while True:
         for event in pygame.event.get():
@@ -1823,7 +1853,7 @@ if __name__ == '__main__':  # Запуск программы
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    menu()
+                    menu([], '')
                 if event.key == pygame.K_e and runi == -600:
                     runi = 300
             if event.type == pygame.KEYUP:
