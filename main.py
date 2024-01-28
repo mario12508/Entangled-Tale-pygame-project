@@ -1873,7 +1873,6 @@ if __name__ == '__main__':  # Запуск программы
         keys = pygame.key.get_pressed()
 
         # Обновление игровых объектов
-        # Обновление игровых объектов
         player.update(
             keys[pygame.K_UP] or keys[pygame.K_w],
             keys[pygame.K_DOWN] or keys[pygame.K_s],
@@ -2077,91 +2076,39 @@ if __name__ == '__main__':  # Запуск программы
                 plat.rect.x = 20000
                 rect.rect.x = 20000
             if 1400 <= loc14 <= 2000 and loc14 % 100 == 0:
-                Rectangle(x - player.x + 800,
+                Rectangle(x - player.x + 1000,
                           y - player.y + random.randint(-50, 200), -3, 0,
                           random.randint(100, 300),
                           10, True, "objects/damage_platform.jpg")
-                Rectangle(x - player.x - 300,
+                Rectangle(x - player.x - 500,
                           y - player.y + random.randint(200, 450), 3, 0,
                           random.randint(100, 300),
                           10, True, "objects/damage_platform.jpg")
 
-            if loc14 == 2100:
+            if loc14 == 2300:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
                 background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
-            elif loc14 == 2300:
-                plat.rect.x = 20000
-                background.update('maps/a3_m3.png', (2210, 1300))
-                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
-                                 "objects/damage_platform.jpg")
-                plat = Platform(x - player.x + p[0], y - player.y + p[1])
-            elif loc14 == 2400:
-                plat.rect.x = 20000
-                rect.rect.x = 20000
             elif loc14 == 2500:
-                act3_buttons()
-            if 2500 <= loc14 <= 2680:
-                tm -= 1
-                font_path = os.path.join("data/fonts", "comic.ttf")
-                font = pygame.font.Font(font_path, 50)
-                screen.blit(task_text, (300, 0))
-                screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
-                            (650, 0))
-            if loc14 == 2680:
-                for j in buttons:
-                    if pygame.sprite.collide_mask(player,
-                                                  j) and j.tip == difference:
-                        for k in buttons:
-                            k.rect.x = 20000
-                            buttons = []
-                        break
-                else:
-                    end_screen(32, False)
-            if 3000 <= loc14 <= 3500 and loc14 % 100 == 0:
-                Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-50, 200), -3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/damage_platform.jpg")
-                Rectangle(x - player.x - 300,
-                          y - player.y + random.randint(200, 450), 3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/damage_platform.jpg")
-
-            if 3500 <= loc14 <= 4000 and loc14 % 100 == 0:
-                Rectangle(x - player.x - 300,
-                          y - player.y + random.randint(-50, 200), 3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/damage_platform.jpg")
-                Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(200, 450), -3, 0,
-                          random.randint(100, 300),
-                          10, True, "objects/damage_platform.jpg")
-            if loc14 == 4100:
-                p = [random.randint(0, 600),
-                     random.randint(0, 300)]
-                background.update('maps/a3_m3.1.png', (2210, 1300))
-                plat = Platform(x - player.x + p[0], y - player.y + p[1])
-            elif loc14 == 4300:
                 plat.rect.x = 20000
                 background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
-            elif loc14 == 4400:
+            elif loc14 == 2600:
                 plat.rect.x = 20000
                 rect.rect.x = 20000
-            elif loc14 == 4500:
+            elif loc14 == 2700:
                 act3_buttons()
-            if 4500 <= loc14 <= 4680:
+            if 2700 <= loc14 <= 2880:
                 tm -= 1
                 font_path = os.path.join("data/fonts", "comic.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
-            if loc14 == 4680:
+            if loc14 == 2880:
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
@@ -2171,26 +2118,78 @@ if __name__ == '__main__':  # Запуск программы
                         break
                 else:
                     end_screen(32, False)
-            if 5000 <= loc14 <= 5500 and loc14 % 100 == 0:
-                Rectangle(x - player.x + 800,
+            if 3200 <= loc14 <= 3700 and loc14 % 100 == 0:
+                Rectangle(x - player.x + 1000,
+                          y - player.y + random.randint(-50, 200), -3, 0,
+                          random.randint(100, 300),
+                          10, True, "objects/damage_platform.jpg")
+                Rectangle(x - player.x - 500,
+                          y - player.y + random.randint(200, 450), 3, 0,
+                          random.randint(100, 300),
+                          10, True, "objects/damage_platform.jpg")
+
+            if 3700 <= loc14 <= 4200 and loc14 % 100 == 0:
+                Rectangle(x - player.x - 500,
+                          y - player.y + random.randint(-50, 200), 3, 0,
+                          random.randint(100, 300),
+                          10, True, "objects/damage_platform.jpg")
+                Rectangle(x - player.x + 1000,
+                          y - player.y + random.randint(200, 450), -3, 0,
+                          random.randint(100, 300),
+                          10, True, "objects/damage_platform.jpg")
+            if loc14 == 4500:
+                p = [random.randint(0, 600),
+                     random.randint(0, 300)]
+                background.update('maps/a3_m3.1.png', (2210, 1300))
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 4700:
+                plat.rect.x = 20000
+                background.update('maps/a3_m3.png', (2210, 1300))
+                rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
+                                 "objects/damage_platform.jpg")
+                plat = Platform(x - player.x + p[0], y - player.y + p[1])
+            elif loc14 == 4800:
+                plat.rect.x = 20000
+                rect.rect.x = 20000
+            elif loc14 == 4900:
+                act3_buttons()
+            if 4900 <= loc14 <= 5080:
+                tm -= 1
+                font_path = os.path.join("data/fonts", "comic.ttf")
+                font = pygame.font.Font(font_path, 50)
+                screen.blit(task_text, (300, 0))
+                screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
+                            (650, 0))
+            if loc14 == 5080:
+                for j in buttons:
+                    if pygame.sprite.collide_mask(player,
+                                                  j) and j.tip == difference:
+                        for k in buttons:
+                            k.rect.x = 20000
+                            buttons = []
+                        break
+                else:
+                    end_screen(32, False)
+            if 5400 <= loc14 <= 5900 and loc14 % 100 == 0:
+                Rectangle(x - player.x + 1000,
                           y - player.y + random.randint(-50, 200), -3, 0,
                           random.randint(100, 300),
                           13, True, "objects/damage_platform.jpg")
-                Rectangle(x - player.x - 300,
+                Rectangle(x - player.x - 500,
                           y - player.y + random.randint(200, 450), 3, 0,
                           random.randint(100, 300),
                           13, True, "objects/damage_platform.jpg")
-            if 5500 <= loc14 <= 6000 and loc14 % 100 == 0:
-                Rectangle(x - player.x - 300,
+            if 5900 <= loc14 <= 6400 and loc14 % 100 == 0:
+                Rectangle(x - player.x - 500,
                           y - player.y + random.randint(-50, 200), 3, 0,
                           random.randint(100, 300),
                           13, True, "objects/damage_platform.jpg")
-                Rectangle(x - player.x + 800,
+                Rectangle(x - player.x + 1000,
                           y - player.y + random.randint(200, 450), -3, 0,
                           random.randint(100, 300),
                           13, True, "objects/damage_platform.jpg")
-            if loc14 == 6200:
-                door = Door(x - player.x + 100, y - player.y + 150, 1, 1)
+            if loc14 == 6800:
+                door = Door(x - player.x + 100, y - player.y + 150, 3, 3)
                 player.loc = 16
 
             loc14 += 1
@@ -2203,17 +2202,16 @@ if __name__ == '__main__':  # Запуск программы
                     screen.blit(
                         pygame.transform.scale(
                             load_image("objects/text_window.png"),
-                            (600, 150)),
-                        (100, 0))
+                            (600, 150)), (100, 0))
             screen.blit(text1, (110, 10))
             screen.blit(text2, (110, 40))
             screen.blit(text3, (110, 70))
             screen.blit(text4, (110, 100))
-
         button_group.update()
         door_group.draw(screen)
-        defense_group.draw(screen)
-        apple_trees_group.draw(screen)
-        apple_group.draw(screen)
+        if player.loc == 13:
+            defense_group.draw(screen)
+            apple_trees_group.draw(screen)
+            apple_group.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
