@@ -1510,13 +1510,12 @@ class Platform(pygame.sprite.Sprite):  # Платформа 3 акта босс�
 
 class WizardRus(pygame.sprite.Sprite):  # Маг 1 акта
     image = load_image('npc/wizardRus.png')
-    image = pygame.transform.scale(image, (80, 90))
+    image = pygame.transform.scale(image, (90, 90))
 
     def __init__(self, pos_x, pos_y):
         super().__init__()
         self.image = WizardRus.image
-        self.rect = self.image.get_rect().move(
-            pos_x, pos_y)
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.canRun = False
         self.y = pos_y
 
@@ -1528,6 +1527,16 @@ class WizardRus(pygame.sprite.Sprite):  # Маг 1 акта
                 self.rect.y = -1000
         if player.y <= 800:
             self.canRun = True
+
+
+class WizardRus_2(pygame.sprite.Sprite):
+    def __init__(self, x_pos, y_pos):
+        super().__init__(all_sprites, wizardRus_2_group)
+        image = load_image('npc/wizardRus.png')
+        image = pygame.transform.scale(image, (110, 110))
+        image = pygame.transform.flip(image, True, False)
+        self.image = image
+        self.rect = self.image.get_rect().move(x_pos, y_pos)
 
 
 wizardRus = WizardRus(2000, 2000)
@@ -1797,6 +1806,7 @@ text_group = pygame.sprite.Group()
 defense_group = pygame.sprite.Group()
 apple_trees_group = pygame.sprite.Group()
 apple_group = pygame.sprite.Group()
+wizardRus_2_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
@@ -1821,6 +1831,7 @@ tm = 0
 difference = 0
 valueMusic = 0.8
 
+wizardRus_2 = WizardRus_2(1970, 20000)
 door2 = Door(20000, 20000, 2, 1)
 door3 = Door(20000, 20000, 2, 1)
 chest = Chest(20000, 20000)
@@ -1930,7 +1941,7 @@ if __name__ == '__main__':  # Запуск программы
                                  random.randint(y - player.y + 450,
                                                 y - player.y + 660))
                 word_group.add(letter)
-                wizardRus.rect.y = letter.rect.y
+                wizardRus_2.rect.y = letter.rect.y
             word_group.update()
             word_group.draw(screen)
 
@@ -2209,6 +2220,7 @@ if __name__ == '__main__':  # Запуск программы
             screen.blit(text4, (110, 100))
         button_group.update()
         door_group.draw(screen)
+        wizardRus_2_group.draw(screen)
         if player.loc == 13:
             defense_group.draw(screen)
             apple_trees_group.draw(screen)
