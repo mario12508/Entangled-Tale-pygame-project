@@ -22,7 +22,7 @@ def load_image(name, colorkey=None):  # Загрузка картинки из d
 
 
 def newDialog():  # Обновление диалога
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 20)
     render_fraze_1 = font.render('', False, (255, 255, 255))
     render_fraze_2 = font.render('', False, (255, 255, 255))
@@ -65,7 +65,7 @@ def mathGame(m):  # Комната с магом математики
     else:
         screen.fill((153, 217, 234))
     screen.blit(fon, (0, 0))
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 20)
     render_fraze_1, render_fraze_2, render_fraze_3 = newDialog()
 
@@ -243,20 +243,20 @@ def start_screen():  # Начальное окно
 
 def end_screen(n, winOrdie):  # Окно при прохождении акта, либо при проигрыше
     global idSaves
-    fon = pygame.transform.scale(load_image('camera-player/gameover.jpg'),
+    fon = pygame.transform.scale(load_image('camera-player/gameover.png'),
                                  (800, 500))
     fon = pygame.transform.scale(fon, (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
 
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 35)
     tm = (datetime.datetime.now() - time).total_seconds()
     t2 = font.render(f"{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec",
-                     False, (0, 0, 0))
+                     False, (64, 51, 64))
 
     if winOrdie:
-        t = font.render(f"Win", False, (0, 0, 0))
+        t = font.render(f"Win", False, (64, 51, 64))
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
@@ -266,7 +266,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
         con.commit()
         con.close()
     else:
-        t = font.render(f"Lose", False, (0, 0, 0))
+        t = font.render(f"Lose", False, (64, 51, 64))
 
     while True:
         for event in pygame.event.get():
@@ -308,8 +308,8 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
                         act1()
                 return
 
-        screen.blit(t, (300, 200))
-        screen.blit(t2, (300, 300))
+        screen.blit(t, (100, 250))
+        screen.blit(t2, (100, 300))
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -350,7 +350,7 @@ def act1():  # Создание 1 акта
     screen.blit(
         pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
         (5, 5))
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                  (255, 0, 0))
     screen.blit(txt, (50, 0))
@@ -397,7 +397,7 @@ def act2():  # Создание 2 акта
     screen.blit(
         pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
         (5, 5))
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                  (255, 0, 0))
     screen.blit(txt, (50, 0))
@@ -450,7 +450,7 @@ def act3():  # Создание 3 акта
     screen.blit(
         pygame.transform.scale(load_image("camera-player/run.png"), (40, 40)),
         (5, 5))
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     txt = pygame.font.Font(font_path, 35).render(f"active", True,
                                                  (255, 0, 0))
     screen.blit(txt, (50, 0))
@@ -466,7 +466,7 @@ t5 = None
 
 def other_color(cl1, cl2, cl3, cl4):  # Смена цвета кнопки в меню
     global t1, t2, t3, t4
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 40)
     t1 = font.render(f"Music",
                      False, cl1)
@@ -677,7 +677,7 @@ def music(arg, m):
     white = (255, 0, 0)
 
     # Создание ползунка
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 40)
     texttt = font.render('Volume:', True, white)
 
@@ -744,23 +744,26 @@ def music(arg, m):
             wizardRus.update()
             all_sprites.draw(screen)
             if player.loc == 7:
-                screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
+                screen.blit(task_text, (x - player.x + 780, y -
+                                        player.y + 160))
 
             if not player.key and pygame.sprite.collide_mask(player, chest):
                 # Взаимодействие с сундуком
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 40)
                 task_text = font.render("Нужен ключ!", False, (255, 255, 255))
                 screen.blit(task_text, (300, 0))
 
             if pygame.sprite.collide_mask(player,
                                           traveler):  # Взаимодействие с нпс
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 25)
                 if player.apples not in [5, 6]:
-                    task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
+                    task_text = font.render("Принеси мне 5 яблок, в обмен "
+                                            "на инфор"
                                             "мацию.", False, (0, 0, 0))
-                    task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
+                    task_text2 = font.render('Они находятся рядом с 3-мя '
+                                             'яблонями',
                                              False, (0, 0, 0))
                 else:
                     task_text = font.render(
@@ -775,7 +778,7 @@ def music(arg, m):
 
             if (not player.pas and pygame.sprite.collide_mask(player, pas) and
                     player.loc == 6):  # Взаимодействие с автоматом
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 40)
                 task_text = font.render("Нужна монета!", False, (255, 255, 255))
                 screen.blit(task_text, (300, 0))
@@ -784,10 +787,11 @@ def music(arg, m):
             if player.loc == 2:
                 word_group.draw(screen)
 
-            screen.blit(pygame.transform.scale(load_image("camera-player/run.png"),
+            screen.blit(pygame.transform.scale(load_image("camera-player/run."
+                                                          "png"),
                                                (40, 40)),
                         (5, 5))
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             if runi == -600:  # Активация ускорения
                 txt = pygame.font.Font(font_path, 35).render("active", True,
                                                              (255, 0, 0))
@@ -1082,7 +1086,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 for j in range(1, 5):
                     button_group.add(Button(775 + j * 150, 800, j))
                 player = Player(1600, 750, 2, key=player.key, pas=player.pas)
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 50)
                 ok_tip = random.randint(0, 3)
                 task_text = font.render(button_question[ok_tip], False,
@@ -1173,7 +1177,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             player.loc = 10
             mathGame('maps/a2_m5.png')
         elif pygame.sprite.collide_mask(self, sign1):
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
                 'Беги, пока не поздно! Это Маг Физик! Он владеет', False,
@@ -1188,7 +1192,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 'и это будет последнее, что ты увидишь!',
                 False, (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign2):
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render('Эти ворота скрывают ТЕБЯ от НЕГО!', False,
                                 (255, 255, 255))
@@ -1201,7 +1205,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             text4 = font.render('здесь очень манит его.', False,
                                 (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign3):
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
                 'Он умеет изменять структуру времени. ', False,
@@ -1215,7 +1219,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             text4 = font.render('', False,
                                 (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign4):
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
                 'Когда он разгневан, его силы становятся неописуемыми.', False,
@@ -1229,7 +1233,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             text4 = font.render('', False,
                                 (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign5):
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
                 'Его ум остр, как лучи света. Ни одна тайна не может', False,
@@ -1243,7 +1247,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             text4 = font.render('', False,
                                 (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign6):
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
                 'Он проник в самые глубины квантовой реальности.', False,
@@ -1257,7 +1261,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             text4 = font.render('многомерных исследованиях.', False,
                                 (255, 255, 255))
         elif self.loc == 3:
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render('', False, (255, 255, 255))
             text2 = font.render('', False, (255, 255, 255))
@@ -1278,7 +1282,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 if move_down:
                     self.rect.y -= self.run
                     self.y -= self.run
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 40)
                 task_text = font.render("Дальше нельзя", False, (0, 0, 0))
                 screen.blit(task_text, (300, 0))
@@ -1426,7 +1430,7 @@ class Button(pygame.sprite.Sprite):  # Кнопки выбора
     def update(self):
         if player.loc != 15:
             if pygame.sprite.spritecollideany(self, player_group):
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(
                     font.render(str(self.tm // 60 + 1), False, (0, 0, 0)),
@@ -1551,7 +1555,7 @@ def act3_buttons():  # Создание кнопок для выбора отв�
         question = f"{a}{b}"
     else:
         question = f"{a} + {b}"
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 50)
     task_text = font.render(question, False, (0, 0, 0))
     buttons = []
@@ -1567,8 +1571,10 @@ def results():  # Таблица результатов
     con = sqlite3.connect("data/bd.sqlite")
     cur = con.cursor()
     result1 = cur.execute(f"""SELECT time FROM player
-            WHERE idSaves == {idSaves} and act != 0 ORDER BY time""").fetchall()[:20]
-    cur.execute(f"""DELETE from player where idSaves == {idSaves} and act != 0""")
+            WHERE idSaves == {idSaves} and act != 0 ORDER BY 
+            time""").fetchall()[:20]
+    cur.execute(f"""DELETE from player where idSaves == {idSaves} and act 
+    != 0""")
 
     con.commit()
     con.close()
@@ -1581,13 +1587,15 @@ def results():  # Таблица результатов
                   pygame.MOUSEBUTTONDOWN):
                 return
         screen.blit(load_image("camera-player/sybtit.png"), (0, 0))
-        font_path = os.path.join("data/fonts", "comic.ttf")
+        font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
 
         font = pygame.font.Font(font_path, 50)
         text_1 = font.render("WIN", False, (255, 255, 255))
         text_2 = font.render("Your time:", False, (255, 255, 255))
         tm = float(sum([float(i) for i in result1[0]]))
-        text_3 = font.render(f'{int(tm // 60)} min {int(tm - (tm // 60) * 60)} sec', False, (255, 255, 255))
+        text_3 = font.render(f'{int(tm // 60)} min '
+                             f'{int(tm - (tm // 60) * 60)} sec',
+                             False, (255, 255, 255))
         screen.blit(text_1, (250, 50))
         screen.blit(text_2, (250, 110))
         screen.blit(text_3, (250, 170))
@@ -1647,7 +1655,7 @@ def getResult(n):
 
 def other_color2(cl1, cl2, cl3, cl4, cl5):  # Смена цвета кнопки в меню
     global t1, t2, t3, t4, t5
-    font_path = os.path.join("data/fonts", "comic.ttf")
+    font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
     font = pygame.font.Font(font_path, 30)
     t1 = font.render(f"Сохранение 1: {getResult(1)}",
                      False, cl1)
@@ -1848,13 +1856,13 @@ if __name__ == '__main__':  # Запуск программы
     screen = pygame.display.set_mode(size)
     start_screen()
 
-    text1 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+    text1 = pygame.font.Font(os.path.join("data/fonts", "Visitor Rus.ttf"),
                              20).render('', False, (255, 255, 255))
-    text2 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+    text2 = pygame.font.Font(os.path.join("data/fonts", "Visitor Rus.ttf"),
                              20).render('', False, (255, 255, 255))
-    text3 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+    text3 = pygame.font.Font(os.path.join("data/fonts", "Visitor Rus.ttf"),
                              20).render('', False, (255, 255, 255))
-    text4 = pygame.font.Font(os.path.join("data/fonts", "comic.ttf"),
+    text4 = pygame.font.Font(os.path.join("data/fonts", "Visitor Rus.ttf"),
                              20).render('', False, (255, 255, 255))
     i = 0
     running = True
@@ -1901,13 +1909,13 @@ if __name__ == '__main__':  # Запуск программы
             screen.blit(task_text, (x - player.x + 780, y - player.y + 160))
         if not player.key and pygame.sprite.collide_mask(player, chest):
             # Взаимодействие с сундуком
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужен ключ!", False, (255, 255, 255))
             screen.blit(task_text, (300, 0))
         if pygame.sprite.collide_mask(player,
                                       traveler):  # Взаимодействие с нпс
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 25)
             if player.apples not in [5, 6]:
                 task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
@@ -1926,7 +1934,7 @@ if __name__ == '__main__':  # Запуск программы
             screen.blit(task_text2, (100, 40))
         if (not player.pas and pygame.sprite.collide_mask(player, pas) and
                 player.loc == 6):  # Взаимодействие с автоматом
-            font_path = os.path.join("data/fonts", "comic.ttf")
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 40)
             task_text = font.render("Нужна монета!", False, (255, 255, 255))
             screen.blit(task_text, (300, 0))
@@ -1948,7 +1956,7 @@ if __name__ == '__main__':  # Запуск программы
         screen.blit(pygame.transform.scale(load_image("camera-player/run.png"),
                                            (40, 40)),
                     (5, 5))
-        font_path = os.path.join("data/fonts", "comic.ttf")
+        font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
         if runi == -600:  # Активация ускорения
             txt = pygame.font.Font(font_path, 35).render("active", True,
                                                          (255, 0, 0))
@@ -2056,7 +2064,7 @@ if __name__ == '__main__':  # Запуск программы
                 act3_buttons()
             if 600 <= loc14 <= 780:
                 tm -= 1
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
@@ -2114,7 +2122,7 @@ if __name__ == '__main__':  # Запуск программы
                 act3_buttons()
             if 2700 <= loc14 <= 2880:
                 tm -= 1
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
@@ -2166,7 +2174,7 @@ if __name__ == '__main__':  # Запуск программы
                 act3_buttons()
             if 4900 <= loc14 <= 5080:
                 tm -= 1
-                font_path = os.path.join("data/fonts", "comic.ttf")
+                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 50)
                 screen.blit(task_text, (300, 0))
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
