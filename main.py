@@ -243,8 +243,12 @@ def start_screen():  # Начальное окно
 
 def end_screen(n, winOrdie):  # Окно при прохождении акта, либо при проигрыше
     global idSaves
-    fon = pygame.transform.scale(load_image('camera-player/gameover.png'),
-                                 (800, 500))
+    if not winOrdie:
+        fon = pygame.transform.scale(load_image('camera-player/gameover.png'),
+                                    (800, 500))
+    else:
+        fon = pygame.transform.scale(load_image('camera-player/gamewin.png'),
+                                     (800, 500))
     fon = pygame.transform.scale(fon, (800, 500))
     screen.blit(fon, (0, 0))
     pygame.display.flip()
@@ -256,7 +260,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
                      False, (64, 51, 64))
 
     if winOrdie:
-        t = font.render(f"Win", False, (64, 51, 64))
+        t = font.render(f"", False, (64, 51, 64))
 
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
@@ -1949,7 +1953,6 @@ if __name__ == '__main__':  # Запуск программы
                                  random.randint(y - player.y + 450,
                                                 y - player.y + 660))
                 word_group.add(letter)
-                wizardRus_2.rect.y = letter.rect.y
             word_group.update()
             word_group.draw(screen)
 
@@ -2228,7 +2231,6 @@ if __name__ == '__main__':  # Запуск программы
             screen.blit(text4, (110, 100))
         button_group.update()
         door_group.draw(screen)
-        wizardRus_2_group.draw(screen)
         if player.loc == 13:
             defense_group.draw(screen)
             apple_trees_group.draw(screen)
