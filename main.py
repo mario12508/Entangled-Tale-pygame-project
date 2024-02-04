@@ -245,7 +245,7 @@ def end_screen(n, winOrdie):  # Окно при прохождении акта,
     global idSaves
     if not winOrdie:
         fon = pygame.transform.scale(load_image('camera-player/gameover.png'),
-                                    (800, 500))
+                                     (800, 500))
     else:
         fon = pygame.transform.scale(load_image('camera-player/gamewin.png'),
                                      (800, 500))
@@ -484,7 +484,7 @@ def other_color(cl1, cl2, cl3, cl4):  # Смена цвета кнопки в м
 
 def a1_location(m):
     global all_sprites, player_group, word_group, door_group, background, \
-        door, player, rectangle_group, x, y, loc5, time
+        door, player, rectangle_group, x, y, loc5, time, boss_Act1
     tm = (datetime.datetime.now() - time).total_seconds()
     time = datetime.datetime.now()
     if m == 'm1':
@@ -543,6 +543,7 @@ def a1_location(m):
         x = player.x
         y = player.y
 
+        boss_Act1 = Boss_act1(300, -180)
         loc5 = 0
         door = Door(20000, 20000, 1, 1)
 
@@ -623,7 +624,7 @@ def a2_location(m):
 
 def a3_location(m):
     global all_sprites, player_group, background, player, rectangle_group, \
-        x, y, loc14, time
+        x, y, loc14, time, boss_Act3, boss_Act3_group
     tm = (datetime.datetime.now() - time).total_seconds()
     time = datetime.datetime.now()
     if m == 'm1':
@@ -660,6 +661,9 @@ def a3_location(m):
         x = player.x
         y = player.y
         loc14 = 0
+        boss_Act3_group = pygame.sprite.Group()
+        boss_Act3 = Boss_act3(20000, 20000)
+        boss_Act3_group.add(boss_Act3)
         pygame.mixer.music.load("data/music/act3_boss.ogg")
         pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
@@ -1516,6 +1520,28 @@ class Platform(pygame.sprite.Sprite):  # Платформа 3 акта босс�
         self.mask = pygame.mask.from_surface(self.image)
 
 
+class Boss_act1(pygame.sprite.Sprite):  # Босс 1 акт
+    image = load_image('npc/wizard_physics.png')
+    image = pygame.transform.scale(image, (200, 200))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Boss_act1.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.mask = pygame.mask.from_surface(self.image)
+
+
+class Boss_act3(pygame.sprite.Sprite):  # Босс 3 акт
+    image = load_image('npc/wizard.png')
+    image = pygame.transform.scale(image, (200, 200))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Boss_act3.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.mask = pygame.mask.from_surface(self.image)
+
+
 class WizardRus(pygame.sprite.Sprite):  # Маг 1 акта
     image = load_image('npc/wizardRus.png')
     image = pygame.transform.scale(image, (90, 90))
@@ -1819,6 +1845,7 @@ defense_group = pygame.sprite.Group()
 apple_trees_group = pygame.sprite.Group()
 apple_group = pygame.sprite.Group()
 wizardRus_2_group = pygame.sprite.Group()
+boss_Act3_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
@@ -1852,6 +1879,8 @@ pas = Pass(20000, 20000)
 traveler = Traveler(20000, 20000)
 idSaves = 0
 background = Background('maps/a1_m1.png', (4000, 2480))
+boss_Act1 = Boss_act1(20000, 20000)
+boss_Act3 = Boss_act3(20000, 20000)
 
 if __name__ == '__main__':  # Запуск программы
     pygame.init()
@@ -2049,6 +2078,9 @@ if __name__ == '__main__':  # Запуск программы
             rectangle_group.update()
 
         if player.loc == 15:  # Босс 3 акта
+            if loc14 == 1:
+                boss_Act3 = Boss_act3(380, -220)
+                boss_Act3_group.add(boss_Act3)
             if loc14 == 200:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
@@ -2216,6 +2248,7 @@ if __name__ == '__main__':  # Запуск программы
 
             loc14 += 1
             rectangle_group.update()
+            boss_Act3_group.draw(screen)
 
         if player.loc == 3:  # Таблички 1 акта
             sign_group.update()
