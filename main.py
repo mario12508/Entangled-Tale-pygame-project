@@ -561,7 +561,7 @@ def a1_location(m):
 
 def a2_location(m):
     global all_sprites, player_group, door_group, background, pas, door, \
-        door2, door3, pas, player, rectangle_group, x, y, loc11, time
+        door2, door3, pas, player, rectangle_group, x, y, loc11, time, boss_Act2
     tm = (datetime.datetime.now() - time).total_seconds()
     time = datetime.datetime.now()
     if m == 'm1':
@@ -605,6 +605,7 @@ def a2_location(m):
         door.rect.x = 20000
         door2.rect.x = 20000
         door3.rect.x = 20000
+        boss_Act2 = Boss_act2(750, -35)
         x = player.x
         y = player.y
         loc11 = 0
@@ -1529,6 +1530,17 @@ class Boss_act1(pygame.sprite.Sprite):  # Босс 1 акт
         self.mask = pygame.mask.from_surface(self.image)
 
 
+class Boss_act2(pygame.sprite.Sprite):  # Босс 1 акт
+    image = load_image('npc/wizard_nature.png')
+    image = pygame.transform.scale(image, (200, 300))
+
+    def __init__(self, pos_x, pos_y):
+        super().__init__(all_sprites)
+        self.image = Boss_act2.image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.mask = pygame.mask.from_surface(self.image)
+
+
 class Boss_act3(pygame.sprite.Sprite):  # Босс 3 акт
     image = load_image('npc/wizard.png')
     image = pygame.transform.scale(image, (200, 200))
@@ -1878,6 +1890,7 @@ traveler = Traveler(20000, 20000)
 idSaves = 0
 background = Background('maps/a1_m1.png', (4000, 2480))
 boss_Act1 = Boss_act1(20000, 20000)
+boss_Act2 = Boss_act2(20000, 20000)
 boss_Act3 = Boss_act3(20000, 20000)
 
 if __name__ == '__main__':  # Запуск программы
