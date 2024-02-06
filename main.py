@@ -78,7 +78,8 @@ def mathGame(m):  # Комната с магом математики
                 terminate()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    if menu([render_fraze_1, render_fraze_2, render_fraze_3], m):
+                    if menu([render_fraze_1, render_fraze_2, render_fraze_3],
+                            m):
                         return
                     screen.blit(fon, (0, 0))
                 if ((event.key == pygame.K_z or event.key == pygame.K_RETURN)
@@ -788,7 +789,8 @@ def music(arg, m):
                     player.loc == 6):  # Взаимодействие с автоматом
                 font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
                 font = pygame.font.Font(font_path, 40)
-                task_text = font.render("Нужна монета!", False, (255, 255, 255))
+                task_text = font.render("Нужна монета!", False,
+                                        (255, 255, 255))
                 screen.blit(task_text, (300, 0))
             player_group.draw(screen)
 
@@ -1168,10 +1170,6 @@ class Player(pygame.sprite.Sprite):  # Игрок
                                                      self.y + self.run) == \
                 (0, 187, 255):
             player.vis = False
-            try:
-                del self.stena[self.stena.index((187, 122, 87))]
-            except Exception:
-                pass
 
         if pygame.sprite.collide_mask(self, pas) and self.loc != 9:
             if player.pas:
@@ -1194,10 +1192,10 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 'силами природы и науки. Ни один закон физики не может', False,
                 (255, 255, 255))
             text3 = font.render(
-                'ему противостоять. Ты на пути его научных исследований,',
+                'ему противостоять. Ты на пути его научных исследований',
                 False, (255, 255, 255))
             text4 = font.render(
-                'и это будет последнее, что ты увидишь!',
+                'исследований, и это будет последнее, что ты увидишь!',
                 False, (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign2):
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
@@ -1208,9 +1206,9 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 'Он никогда не проигрывал в научных битвах до этого.', False,
                 (255, 255, 255))
             text3 = font.render(
-                'Он мог бы сбежать отсюда, но власть, которую он получил',
+                'Он мог бы сбежать отсюда, но власть, которую он',
                 False, (255, 255, 255))
-            text4 = font.render('здесь очень манит его.', False,
+            text4 = font.render('получил здесь очень манит его.', False,
                                 (255, 255, 255))
         elif pygame.sprite.collide_mask(self, sign3):
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
@@ -1230,13 +1228,13 @@ class Player(pygame.sprite.Sprite):  # Игрок
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
-                'Когда он разгневан, его силы становятся неописуемыми.', False,
+                'Когда он разгневан, его силы становятся', False,
                 (255, 255, 255))
             text2 = font.render(
-                'Попадись на его пути, и ты станешь частью его', False,
+                'неописуемыми. Попадись на его пути, и ты станешь', False,
                 (255, 255, 255))
             text3 = font.render(
-                'физического эксперимента!',
+                'частью его физического эксперимента!',
                 False, (255, 255, 255))
             text4 = font.render('', False,
                                 (255, 255, 255))
