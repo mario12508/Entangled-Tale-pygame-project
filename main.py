@@ -1180,7 +1180,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             player_group = pygame.sprite.Group()
             background = Background('maps/a1_m4.png', (750, 400))
             all_sprites.add(background)
-            player = Player(335, 180, 1)
+            player = Player(335, 325, 1)
             player.loc = 10
             mathGame('maps/a2_m5.png')
         elif pygame.sprite.collide_mask(self, sign1):
@@ -1612,7 +1612,7 @@ def results():  # Таблица результатов
     cur = con.cursor()
     result1 = cur.execute(f"""SELECT time FROM player
             WHERE idSaves == {idSaves} and act != 0 ORDER BY 
-            time""").fetchall()[:20]
+            time""").fetchall()
     cur.execute(f"""DELETE from player where idSaves == {idSaves} and act 
     != 0""")
 
@@ -1632,7 +1632,7 @@ def results():  # Таблица результатов
         font = pygame.font.Font(font_path, 50)
         text_1 = font.render("WIN", False, (255, 255, 255))
         text_2 = font.render("Your time:", False, (255, 255, 255))
-        tm = float(sum([float(i) for i in result1[0]]))
+        tm = float(sum([float(i[0]) for i in result1]))
         text_3 = font.render(f'{int(tm // 60)} min '
                              f'{int(tm - (tm // 60) * 60)} sec',
                              False, (255, 255, 255))
