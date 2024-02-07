@@ -1180,7 +1180,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             player_group = pygame.sprite.Group()
             background = Background('maps/a1_m4.png', (750, 400))
             all_sprites.add(background)
-            player = Player(335, 325, 1)
+            player = Player(335, 180, 1)
             player.loc = 10
             mathGame('maps/a2_m5.png')
         elif pygame.sprite.collide_mask(self, sign1):
