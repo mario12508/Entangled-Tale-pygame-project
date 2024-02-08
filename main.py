@@ -2029,16 +2029,29 @@ if __name__ == '__main__':  # Запуск программы
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
                                  519, False, "objects/warning rect.png")
+
+            if 320 <= loc5 <= 1000 and loc5 % 200 == 130:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
             if 340 <= loc5 <= 1000 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
                                  519, True, "objects/grayrect.png")
+            if 340 <= loc5 <= 1000 and loc5 % 200 == 150:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (200, 200))
+
+            if 980 <= loc5 <= 3000 and loc5 % 100 == 90:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (200, 200))
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 150), -3, 0, 60,
                           random.randint(50, 300), True, "objects/redrect.jpg")
+            if 1000 <= loc5 <= 3000 and loc5 % 100 == 10:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
+
+            if 3180 <= loc5 <= 4140 and loc5 % 200 == 130:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
             if 3200 <= loc5 <= 4000 and loc5 % 200 == 0:
                 n = random.randint(-1, 3) * 200
                 while n == m:
@@ -2053,9 +2066,12 @@ if __name__ == '__main__':  # Запуск программы
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
                                  519, True, "objects/grayrect.png")
+            if 3200 <= loc5 <= 4140 and loc5 % 200 == 150:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (200, 200))
             if loc5 == 4200:
                 rect.rect.x = 20000
             if loc5 == 4400:
+                boss_Act1.rect.x = 20000
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 5
             loc5 += 1
@@ -2100,6 +2116,7 @@ if __name__ == '__main__':  # Запуск программы
                 boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
 
             if loc11 == 5800:
+                boss_Act1.rect.x = 20000
                 door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
                 player.loc = 12
             loc11 += 1
@@ -2271,6 +2288,7 @@ if __name__ == '__main__':  # Запуск программы
                           random.randint(100, 300),
                           13, True, "objects/damage_platform.jpg")
             if loc14 == 6800:
+                boss_Act3.rect.x = 20000
                 door = Door(x - player.x + 100, y - player.y + 150, 3, 3)
                 player.loc = 16
 
