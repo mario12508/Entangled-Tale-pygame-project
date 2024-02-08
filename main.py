@@ -2061,13 +2061,21 @@ if __name__ == '__main__':  # Запуск программы
             loc5 += 1
             rectangle_group.update()
         if player.loc == 11:  # Босс 2 акта
+            if loc11 <= 2000 and loc11 % 100 == 85:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
             if loc11 <= 2000 and loc11 % 100 == 0:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
                           240, 60, True, "objects/greenrect2.png")
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(200, 450), -3, 0,
                           240, 60, True, "objects/greenrect2.png")
+            if loc11 <= 2000 and loc11 % 100 == 10:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
+
+            if 2300 <= loc11 <= 3400 and loc11 % 100 == 85:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
             if 2300 <= loc11 <= 3400 and loc11 % 100 == 0:
                 Rectangle(x - player.x + random.randint(-100, 300),
                           y - player.y - 400, 0, 1, 60,
@@ -2075,13 +2083,22 @@ if __name__ == '__main__':  # Запуск программы
                 Rectangle(x - player.x + random.randint(300, 800),
                           y - player.y - 400, 0, 1, 60,
                           240, True, "objects/greenrect1.png")
+            if 2300 <= loc11 <= 3400 and loc11 % 100 == 10:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
+
+            if 3800 <= loc11 <= 5400 and loc11 % 100 and loc11 % 100 == 85:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
             if 3800 <= loc11 <= 5400 and loc11 % 100 == 0:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 200), -3, 0,
                           240, 60, True, "objects/greenrect2.png")
                 Rectangle(x - player.x - 300,
                           y - player.y + random.randint(200, 450), 3, 0,
                           240, 60, True, "objects/greenrect2.png")
+            if 3800 <= loc11 <= 5400 and loc11 % 100 and loc11 % 100 == 10:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
+
             if loc11 == 5800:
                 door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
                 player.loc = 12
