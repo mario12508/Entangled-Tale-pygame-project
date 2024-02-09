@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="шипы">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,14 +117,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1702663593127</updated>
-    </task>
-    <task id="LOCAL-00019" summary="5 location">
-      <option name="closed" value="true" />
-      <created>1703347045969</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1703347045969</updated>
     </task>
     <task id="LOCAL-00020" summary="5 location sign">
       <option name="closed" value="true" />
@@ -512,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707504543707</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="шипы">
+      <option name="closed" value="true" />
+      <created>1707506642526</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1707506642526</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
