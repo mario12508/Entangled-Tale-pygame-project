@@ -915,6 +915,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
         self.run = 5
         self.vis = True
         self.apples = 0
+        self.task_text = 0
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
@@ -1133,7 +1134,11 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 player.apples += 1
                 img = load_image('objects/apple.jpg')
                 img = pygame.transform.scale(img, (30, 30))
-
+        self.task_text = ''
+        if 740 < self.x < 1130 and 1100 < self.y < 1330 and self.vis:
+            font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
+            font = pygame.font.Font(font_path, 40)
+            self.task_text = font.render("Дальше нельзя", False, (0, 0, 0))
         if pygame.sprite.collide_mask(self, door3):
             if self.loc == 6 or self.loc == 9:
                 all_sprites = pygame.sprite.Group()
@@ -1180,7 +1185,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
             player_group = pygame.sprite.Group()
             background = Background('maps/a1_m4.png', (750, 400))
             all_sprites.add(background)
-            player = Player(335, 325, 1)
+            player = Player(335, 200, 1)
             player.loc = 10
             mathGame('maps/a2_m5.png')
         elif pygame.sprite.collide_mask(self, sign1):
@@ -1289,10 +1294,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 if move_down:
                     self.rect.y -= self.run
                     self.y -= self.run
-                font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
-                font = pygame.font.Font(font_path, 40)
-                task_text = font.render("Дальше нельзя", False, (0, 0, 0))
-                screen.blit(task_text, (300, 0))
+
         for apple_tree in apple_trees_group:
             if pygame.sprite.collide_mask(self, apple_tree):
                 # Откидываем игрока назад при коллизии
@@ -1308,7 +1310,6 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 if move_down:
                     self.rect.y -= self.run
                     self.y -= self.run
-
         camera.update(player)
         for sprite in all_sprites:
             camera.apply(sprite)
@@ -2097,8 +2098,6 @@ if __name__ == '__main__':  # Запуск программы
                 player.loc = 5
             loc5 += 1
             time_rect += 1
-            print(time_rect)
-            print(image)
             rectangle_group.update()
         if player.loc == 11:  # Босс 2 акта
             if loc11 <= 2000 and loc11 % 100 == 85:
@@ -2338,5 +2337,7 @@ if __name__ == '__main__':  # Запуск программы
             defense_group.draw(screen)
             apple_trees_group.draw(screen)
             apple_group.draw(screen)
+        if player.task_text:
+            screen.blit(player.task_text, (300, 0))
         pygame.display.flip()
         clock.tick(FPS)

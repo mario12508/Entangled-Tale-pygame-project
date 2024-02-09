@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="processing">
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="шипы">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/objects/grayrect.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,14 +119,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1702663593127</updated>
-    </task>
-    <task id="LOCAL-00018" summary="5 location">
-      <option name="closed" value="true" />
-      <created>1703339118774</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1703339118775</updated>
     </task>
     <task id="LOCAL-00019" summary="5 location">
       <option name="closed" value="true" />
@@ -513,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707499450082</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="шипы">
+      <option name="closed" value="true" />
+      <created>1707504543707</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1707504543707</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -528,7 +527,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="exit-enter_a1" />
     <MESSAGE value="letters and doors fix" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="first location done" />
@@ -553,6 +551,7 @@
     <MESSAGE value="exe" />
     <MESSAGE value="bd" />
     <MESSAGE value="processing" />
-    <option name="LAST_COMMIT_MESSAGE" value="processing" />
+    <MESSAGE value="шипы" />
+    <option name="LAST_COMMIT_MESSAGE" value="шипы" />
   </component>
 </project>
