@@ -771,20 +771,20 @@ def music(arg, m):
                 if player.apples not in [5, 6]:
                     task_text = font.render("Принеси мне 5 яблок, в обмен "
                                             "на инфор"
-                                            "мацию.", False, (0, 0, 0))
+                                            "мацию.", False, (255, 255, 255))
                     task_text2 = font.render('Они находятся рядом с 3-мя '
                                              'яблонями',
-                                             False, (0, 0, 0))
+                                             False, (255, 255, 255))
                 else:
                     task_text = font.render(
                         "Выпей воды из речки, и ты станешь невидимым.", False,
-                        (0, 0, 0))
+                        (255, 255, 255))
                     task_text2 = font.render(
                         'Это поможет тебе скрыться от стражника', False,
-                        (0, 0, 0))
+                        (255, 255, 255))
                     player.apples = 6
-                screen.blit(task_text, (100, 0))
-                screen.blit(task_text2, (100, 40))
+                screen.blit(task_text, (180, 0))
+                screen.blit(task_text2, (180, 40))
 
             if (not player.pas and pygame.sprite.collide_mask(player, pas) and
                     player.loc == 6):  # Взаимодействие с автоматом
@@ -1521,7 +1521,7 @@ class Platform(pygame.sprite.Sprite):  # Платформа 3 акта босс�
 
 class Boss_act1(pygame.sprite.Sprite):  # Босс 1 акт
     image = load_image('npc/wizard_physics.png')
-    image = pygame.transform.scale(image, (200, 200))
+    image = pygame.transform.scale(image, (300, 200))
 
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
@@ -1963,19 +1963,19 @@ if __name__ == '__main__':  # Запуск программы
             font = pygame.font.Font(font_path, 25)
             if player.apples not in [5, 6]:
                 task_text = font.render("Принеси мне 5 яблок, в обмен на инфор"
-                                        "мацию.", False, (0, 0, 0))
+                                        "мацию.", False, (255, 255, 255))
                 task_text2 = font.render('Они находятся рядом с 3-мя яблонями',
-                                         False, (0, 0, 0))
+                                         False, (255, 255, 255))
             else:
                 task_text = font.render(
                     "Выпей воды из речки, и ты станешь невидимым.", False,
-                    (0, 0, 0))
+                    (255, 255, 255))
                 task_text2 = font.render(
                     'Это поможет тебе скрыться от стражника', False,
-                    (0, 0, 0))
+                    (255, 255, 255))
                 player.apples = 6
-            screen.blit(task_text, (100, 0))
-            screen.blit(task_text2, (100, 40))
+            screen.blit(task_text, (180, 0))
+            screen.blit(task_text2, (180, 40))
         if (not player.pas and pygame.sprite.collide_mask(player, pas) and
                 player.loc == 6):  # Взаимодействие с автоматом
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
@@ -2031,27 +2031,27 @@ if __name__ == '__main__':  # Запуск программы
                                  519, False, "objects/warning rect.png")
 
             if 320 <= loc5 <= 1000 and loc5 % 200 == 130:
-                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (300, 200))
             if 340 <= loc5 <= 1000 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
                                  519, True, "objects/grayrect.png")
             if 340 <= loc5 <= 1000 and loc5 % 200 == 150:
-                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (200, 200))
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (300, 200))
 
-            if 980 <= loc5 <= 3000 and loc5 % 100 == 90:
-                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (200, 200))
+            if 980 <= loc5 <= 3000 and loc5 % 100 == 80:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_2.png'), (300, 200))
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(-100, 150), -3, 0, 100,
                           366, True, "objects/redrect.png")
-            if 1000 <= loc5 <= 3000 and loc5 % 100 == 10:
-                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
+            if 1000 <= loc5 <= 3005 and loc5 % 100 == 5:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (300, 200))
 
             if 3180 <= loc5 <= 4140 and loc5 % 200 == 130:
-                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_4.png'), (300, 200))
             if 3200 <= loc5 <= 4000 and loc5 % 200 == 0:
                 n = random.randint(-1, 3) * 200
                 while n == m:
@@ -2066,8 +2066,8 @@ if __name__ == '__main__':  # Запуск программы
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
                                  519, True, "objects/grayrect.png")
-            if 3200 <= loc5 <= 4140 and loc5 % 200 == 150:
-                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (200, 200))
+            if 3200 <= loc5 <= 4150 and loc5 % 200 == 150:
+                boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_3.png'), (300, 200))
             if loc5 == 4200:
                 rect.rect.x = 20000
             if loc5 == 4400:
@@ -2087,11 +2087,11 @@ if __name__ == '__main__':  # Запуск программы
                 Rectangle(x - player.x + 800,
                           y - player.y + random.randint(200, 450), -3, 0,
                           240, 60, True, "objects/greenrect2.png")
-            if loc11 <= 2000 and loc11 % 100 == 10:
+            if loc11 <= 2010 and loc11 % 100 == 10:
                 boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
 
-            if 2300 <= loc11 <= 3400 and loc11 % 100 == 85:
-                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
+            if 2200 <= loc11 <= 3400 and loc11 % 100 == 85:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_2.png'), (200, 300))
             if 2300 <= loc11 <= 3400 and loc11 % 100 == 0:
                 Rectangle(x - player.x + random.randint(-100, 300),
                           y - player.y - 400, 0, 1, 60,
@@ -2099,10 +2099,10 @@ if __name__ == '__main__':  # Запуск программы
                 Rectangle(x - player.x + random.randint(300, 800),
                           y - player.y - 400, 0, 1, 60,
                           240, True, "objects/greenrect1.png")
-            if 2300 <= loc11 <= 3400 and loc11 % 100 == 10:
-                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
+            if 2300 <= loc11 <= 3410 and loc11 % 100 == 10:
+                boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_3.png'), (200, 300))
 
-            if 3800 <= loc11 <= 5400 and loc11 % 100 and loc11 % 100 == 85:
+            if 3700 <= loc11 <= 5400 and loc11 % 100 and loc11 % 100 == 85:
                 boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
             if 3800 <= loc11 <= 5400 and loc11 % 100 == 0:
                 boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature.png'), (200, 300))
@@ -2112,12 +2112,12 @@ if __name__ == '__main__':  # Запуск программы
                 Rectangle(x - player.x - 300,
                           y - player.y + random.randint(200, 450), 3, 0,
                           240, 60, True, "objects/greenrect2.png")
-            if 3800 <= loc11 <= 5400 and loc11 % 100 and loc11 % 100 == 10:
+            if 3800 <= loc11 <= 5410 and loc11 % 100 == 10:
                 boss_Act2.image = pygame.transform.scale(load_image('npc/wizard_nature_1.png'), (200, 300))
 
             if loc11 == 5800:
-                boss_Act1.rect.x = 20000
-                door = Door(x - player.x + 350, y - player.y + 150, 2, 1)
+                boss_Act2.rect.x = 20000
+                door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 12
             loc11 += 1
             rectangle_group.update()
