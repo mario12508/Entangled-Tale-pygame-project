@@ -2155,12 +2155,14 @@ if __name__ == '__main__':  # Запуск программы
                 background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 400:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard_1.png'), (200, 200))
                 plat.rect.x = 20000
                 background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 500:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 plat.rect.x = 20000
                 rect.rect.x = 20000
             elif loc14 == 600:
@@ -2173,6 +2175,7 @@ if __name__ == '__main__':  # Запуск программы
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
             if loc14 == 780:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
@@ -2182,6 +2185,8 @@ if __name__ == '__main__':  # Запуск программы
                         break
                 else:
                     end_screen(32, False)
+            if loc14 == 800:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
 
             if loc14 == 1000:
                 p = [random.randint(0, 600),
@@ -2189,14 +2194,17 @@ if __name__ == '__main__':  # Запуск программы
                 background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 1200:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard_1.png'), (200, 200))
                 plat.rect.x = 20000
                 background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 1300:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 plat.rect.x = 20000
                 rect.rect.x = 20000
+
             if 1400 <= loc14 <= 2000 and loc14 % 100 == 0:
                 Rectangle(x - player.x + 1000,
                           y - player.y + random.randint(-50, 200), -3, 0,
@@ -2213,12 +2221,14 @@ if __name__ == '__main__':  # Запуск программы
                 background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 2500:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard_1.png'), (200, 200))
                 plat.rect.x = 20000
                 background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 2600:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 plat.rect.x = 20000
                 rect.rect.x = 20000
             elif loc14 == 2700:
@@ -2231,6 +2241,7 @@ if __name__ == '__main__':  # Запуск программы
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
             if loc14 == 2880:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
@@ -2240,6 +2251,9 @@ if __name__ == '__main__':  # Запуск программы
                         break
                 else:
                     end_screen(32, False)
+            if loc14 == 2900:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
+
             if 3200 <= loc14 <= 3700 and loc14 % 100 == 0:
                 Rectangle(x - player.x + 1000,
                           y - player.y + random.randint(-50, 200), -3, 0,
@@ -2259,18 +2273,21 @@ if __name__ == '__main__':  # Запуск программы
                           y - player.y + random.randint(200, 450), -3, 0,
                           random.randint(100, 300),
                           10, True, "objects/damage_platform.jpg")
+
             if loc14 == 4500:
                 p = [random.randint(0, 600),
                      random.randint(0, 300)]
                 background.update('maps/a3_m3.1.png', (2210, 1300))
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 4700:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard_1.png'), (200, 200))
                 plat.rect.x = 20000
                 background.update('maps/a3_m3.png', (2210, 1300))
                 rect = Rectangle(-200, -200, 0, 0, 2000, 2000, True,
                                  "objects/damage_platform.jpg")
                 plat = Platform(x - player.x + p[0], y - player.y + p[1])
             elif loc14 == 4800:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 plat.rect.x = 20000
                 rect.rect.x = 20000
             elif loc14 == 4900:
@@ -2283,6 +2300,7 @@ if __name__ == '__main__':  # Запуск программы
                 screen.blit(font.render(str(tm // 60 + 1), False, (0, 0, 0)),
                             (650, 0))
             if loc14 == 5080:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
                 for j in buttons:
                     if pygame.sprite.collide_mask(player,
                                                   j) and j.tip == difference:
@@ -2292,6 +2310,8 @@ if __name__ == '__main__':  # Запуск программы
                         break
                 else:
                     end_screen(32, False)
+            if loc14 == 5100:
+                boss_Act3.image = pygame.transform.scale(load_image('npc/wizard.png'), (200, 200))
             if 5400 <= loc14 <= 5900 and loc14 % 100 == 0:
                 Rectangle(x - player.x + 1000,
                           y - player.y + random.randint(-50, 200), -3, 0,
