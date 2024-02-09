@@ -1888,6 +1888,8 @@ plat = Platform(20000, 20000)
 pas = Pass(20000, 20000)
 traveler = Traveler(20000, 20000)
 idSaves = 0
+time_rect = 0
+image = ''
 background = Background('maps/a1_m1.png', (4000, 2480))
 boss_Act1 = Boss_act1(20000, 20000)
 boss_Act2 = Boss_act2(20000, 20000)
@@ -2036,7 +2038,24 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
-                                 519, True, "objects/grayrect.png")
+                                 519, True, "objects/grayrect_1.png")
+                image = 'objects/grayrect_1.png'
+                time_rect = 0
+            if image == 'objects/grayrect_1.png':
+                if time_rect == 10:
+                    rect.image = pygame.transform.scale(load_image('objects/grayrect_2.png'), (450, 519))
+                    image = 'objects/grayrect_2.png'
+                    time_rect = 0
+            if image == 'objects/grayrect_2.png':
+                if time_rect == 10:
+                    rect.image = pygame.transform.scale(load_image('objects/grayrect_3.png'), (450, 519))
+                    image = 'objects/grayrect_3.png'
+                    time_rect = 0
+            if image == 'objects/grayrect_3.png':
+                if time_rect == 10:
+                    rect.image = pygame.transform.scale(load_image('objects/grayrect_4.png'), (450, 519))
+                    image = 'objects/grayrect_4.png'
+                    time_rect = 0
             if 340 <= loc5 <= 1000 and loc5 % 200 == 150:
                 boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics.png'), (300, 200))
 
@@ -2065,7 +2084,9 @@ if __name__ == '__main__':  # Запуск программы
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
                                  y - player.y - 78, 0, 0, 450,
-                                 519, True, "objects/grayrect.png")
+                                 519, True, "objects/grayrect_1.png")
+                time_rect = 0
+                image = 'objects/grayrect_1.png'
             if 3200 <= loc5 <= 4150 and loc5 % 200 == 150:
                 boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_3.png'), (300, 200))
             if loc5 == 4200:
@@ -2075,6 +2096,9 @@ if __name__ == '__main__':  # Запуск программы
                 door = Door(x - player.x + 350, y - player.y + 150, 1, 1)
                 player.loc = 5
             loc5 += 1
+            time_rect += 1
+            print(time_rect)
+            print(image)
             rectangle_group.update()
         if player.loc == 11:  # Босс 2 акта
             if loc11 <= 2000 and loc11 % 100 == 85:
