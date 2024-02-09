@@ -1859,7 +1859,7 @@ boss_Act3_group = pygame.sprite.Group()
 
 time = datetime.datetime.now()
 x, y = 0, 0
-rect = Rectangle(20000, 20000, 0, 0, 10, 500, False, "objects/redrect.jpg")
+rect = Rectangle(20000, 20000, 0, 0, 10, 500, False, "objects/redrect.png")
 img = load_image('objects/key.jpg')
 img = pygame.transform.scale(img, (50, 50))
 sign1 = Sign(120, 20000)
@@ -2045,8 +2045,8 @@ if __name__ == '__main__':  # Запуск программы
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 0:
                 rect.rect.x = 20000
                 Rectangle(x - player.x + 800,
-                          y - player.y + random.randint(-100, 150), -3, 0, 60,
-                          random.randint(50, 300), True, "objects/redrect.jpg")
+                          y - player.y + random.randint(-100, 150), -3, 0, 100,
+                          366, True, "objects/redrect.png")
             if 1000 <= loc5 <= 3000 and loc5 % 100 == 10:
                 boss_Act1.image = pygame.transform.scale(load_image('npc/wizard_physics_1.png'), (200, 200))
 
