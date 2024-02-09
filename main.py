@@ -1135,7 +1135,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 img = load_image('objects/apple.jpg')
                 img = pygame.transform.scale(img, (30, 30))
         self.task_text = ''
-        if 740 < self.x < 1130 and 1100 < self.y < 1330 and self.vis:
+        if 740 < self.x < 1130 and 1100 < self.y < 1330 and self.loc == 13:
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 40)
             self.task_text = font.render("Дальше нельзя", False, (0, 0, 0))
