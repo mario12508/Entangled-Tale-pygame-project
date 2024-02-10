@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="end">
+    <list default="true" id="8b6f0fdc-2b1f-450a-a0fe-df5878d69a75" name="Changes" comment="exe">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entangled-Tale-game.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Пояснительная записка.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Презентация.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ТЗ.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/описание Entangled Tale.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data/bd.sqlite" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,14 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1702663593127</updated>
-    </task>
-    <task id="LOCAL-00022" summary="a2_m2 done?">
-      <option name="closed" value="true" />
-      <created>1704489862370</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1704489862370</updated>
     </task>
     <task id="LOCAL-00023" summary="maze done">
       <option name="closed" value="true" />
@@ -517,7 +503,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707558871714</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="exe">
+      <option name="closed" value="true" />
+      <created>1707559422733</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1707559422733</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -551,13 +545,13 @@
     <MESSAGE value="clearing data" />
     <MESSAGE value="buttons reborn" />
     <MESSAGE value="sign done" />
-    <MESSAGE value="exe" />
     <MESSAGE value="bd" />
     <MESSAGE value="processing" />
     <MESSAGE value="шипы" />
     <MESSAGE value="3 act boss" />
     <MESSAGE value="end" />
-    <option name="LAST_COMMIT_MESSAGE" value="end" />
+    <MESSAGE value="exe" />
+    <option name="LAST_COMMIT_MESSAGE" value="exe" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
