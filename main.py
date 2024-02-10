@@ -168,7 +168,7 @@ def mathGame(m):  # Комната с магом математики
                         elif m == 'maps/a2_m5.png':
                             a2_location('m2')
                         else:
-                            a3_location('m2')
+                            a3_location('m3')
                         camera.update(player)
                         for sprite in all_sprites:
                             camera.apply(sprite)
@@ -583,7 +583,6 @@ def a2_location(m):
         pygame.mixer.music.load("data/music/act2_main.ogg")
         pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
-
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(f"""DELETE from player where idSaves == {idSaves} 
@@ -636,11 +635,10 @@ def a3_location(m):
         all_sprites.add(background)
         player = Player(385, 300, 1)
         player.loc = 14
-        mathGame('maps/a3_m2.png')
-
         pygame.mixer.music.load("data/music/act3_main.ogg")
         pygame.mixer.music.set_volume(valueMusic)
         pygame.mixer.music.play(loops=-1)
+        mathGame('maps/a3_m2.png')
         con = sqlite3.connect("data/bd.sqlite")
         cur = con.cursor()
         cur.execute(f"""DELETE from player where idSaves == {idSaves} 
@@ -916,6 +914,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
         self.vis = True
         self.apples = 0
         self.task_text = 0
+        self.ones = True
         if stena == 1:
             self.stena = [(2, 0, 0)]
         elif stena == 2:
@@ -1135,7 +1134,7 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 img = load_image('objects/apple.jpg')
                 img = pygame.transform.scale(img, (30, 30))
         self.task_text = ''
-        if 740 < self.x < 1130 and 1100 < self.y < 1330 and self.loc == 13:
+        if 740 < self.x < 1130 and 1100 < self.y < 1330 and self.loc == 13 and self.vis:
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 40)
             self.task_text = font.render("Дальше нельзя", False, (0, 0, 0))
@@ -1167,11 +1166,13 @@ class Player(pygame.sprite.Sprite):  # Игрок
                 player.loc = 6
         if pygame.sprite.collide_mask(self, chest) and self.loc != 9:
             if player.key:
-                player.pas = True
-                img = load_image('objects/cash.jpg')
-                img = pygame.transform.scale(img, (50, 50))
-                chest.image = pygame.transform.scale(
-                    load_image('objects/chest_open.jpg'), (60, 40))
+                if self.ones:
+                    player.pas = True
+                    img = load_image('objects/cash.jpg')
+                    img = pygame.transform.scale(img, (50, 50))
+                    chest.image = pygame.transform.scale(
+                        load_image('objects/chest_open.jpg'), (60, 40))
+                    self.ones = False
         if player.apples == 6 and background.get_rgb(self.x + self.run,
                                                      self.y + self.run) == \
                 (0, 187, 255):
@@ -1192,13 +1193,13 @@ class Player(pygame.sprite.Sprite):  # Игрок
             font_path = os.path.join("data/fonts", "Visitor Rus.ttf")
             font = pygame.font.Font(font_path, 20)
             text1 = font.render(
-                'Беги, пока не поздно! Это Маг Физик! Он владеет', False,
+                'Беги, пока не поздно! Это Маг Физик! Он владеет силами', False,
                 (255, 255, 255))
             text2 = font.render(
-                'силами природы и науки. Ни один закон физики не может', False,
+                'природы и науки. Ни один закон физики не может ему', False,
                 (255, 255, 255))
             text3 = font.render(
-                'ему противостоять. Ты на пути его научных исследований',
+                'противостоять. Ты на пути его научных исследований',
                 False, (255, 255, 255))
             text4 = font.render(
                 'исследований, и это будет последнее, что ты увидишь!',
@@ -1500,7 +1501,7 @@ class Apple(pygame.sprite.Sprite):  # Яблоко
 
 class Traveler(pygame.sprite.Sprite):  # НПС, путник у реки
     image = load_image('npc/traveler.jpg')
-    image = pygame.transform.scale(image, (70, 90))
+    image = pygame.transform.scale(image, (70, 118))
 
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
@@ -2038,7 +2039,7 @@ if __name__ == '__main__':  # Запуск программы
             if 340 <= loc5 <= 1000 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
-                                 y - player.y - 78, 0, 0, 450,
+                                 y - player.y - 95, 0, 0, 450,
                                  519, True, "objects/grayrect_1.png")
                 image = 'objects/grayrect_1.png'
                 time_rect = 0
@@ -2084,7 +2085,7 @@ if __name__ == '__main__':  # Запуск программы
             if 3200 <= loc5 <= 4140 and loc5 % 200 == 140:
                 rect.rect.x = 20000
                 rect = Rectangle(x - player.x + m,
-                                 y - player.y - 78, 0, 0, 450,
+                                 y - player.y - 95, 0, 0, 450,
                                  519, True, "objects/grayrect_1.png")
                 time_rect = 0
                 image = 'objects/grayrect_1.png'
@@ -2338,6 +2339,7 @@ if __name__ == '__main__':  # Запуск программы
             loc14 += 1
             rectangle_group.update()
             boss_Act3_group.draw(screen)
+            player_group.draw(screen)
 
         if player.loc == 3:  # Таблички 1 акта
             sign_group.update()
